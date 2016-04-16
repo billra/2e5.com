@@ -12,10 +12,8 @@ order allow,deny
 deny from all
 </Files>
 
-<files .htaccess>
-order allow,deny
-deny from all
-</files>
+# .htaccess -> 404
+RedirectMatch 404 /\.ht
 
 # .git -> 404
 RedirectMatch 404 /\.git
