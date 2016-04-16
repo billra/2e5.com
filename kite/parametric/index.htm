@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+<TITLE>Parametric Kite Design</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Bill Rasmussen"> 
+<meta name="keywords" content="Parametric, Kite Design, Rhino, Python">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD>
+<body>
+<div class="head">
+<div class="rflo">
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div>
+<h1>Parametric Kite Design</h1></div>
+
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../tags/kite/">kite</a>,
+<a href="../../tags/code/">code</a>,
+<a href="../../tags/cad/">cad</a>
+</div>
+<a href="../..">2e5</a> &raquo;
+<a href="..">kite</a> &raquo;
+parametric
+</div>
+<div class="main">
+
+<p> 
+ 
+This article describes how to use Python Rhino Automation for Parametric Kite Design.
+<h3>Terminology</h3>
+<a href="http://www.python.org">Python</a> is a high level programming language with clear syntax and powerful built in data types. I have been a C++ programmer for a number of years, but Python is my first choice for quick development and concise code.
+<p>
+<a href="http://www.rhino3d.com">Rhino</a> is a three dimensional CAD program which supports NURBS and surface unrolling. NURBS, <a href="http://en.wikipedia.org/wiki/NURBS">Non-Uniform Rational B-Splines</a>, are a standard mathematical model for describing curves. Surface unrolling is the ability to create a flat shape from a three dimensional surface.
+<p>
+Parametric automation is the ability to create an object based on key values. When the key values are updated, the object under automation reflects those changes.
+<p>
+Thus, "Python Rhino Automation for Parametric Kite Design" translates to creating a Python program which scripts a Rhino CAD model of a kite. This model can be updated by changing key features of a kite. There is no need to create the model from scratch by hand when an element of the kite design changes.
+<h3>Motivation</h3>
+A program such as foilmaker (stable link needed) or <a href="http://www.surfplan.com.au">surfplan</a> are the mainstream kite design programs. These are excellent in their domain, but like any program, are bound by the standard trade off of features vs. ease of use. If you have never designed a kite before, these programs are the place to start. They are effectively a system for parametric kite design where the set of parameters and the method for meeting them is determined by the program.
+<p>
+When a kite designer is not satisfied with the available parameters or how the parameters are solved, two paths are left: using a CAD program or implementing a new kite design program to cater for their special needs. Examples:
+<ul>
+<li><a href="http://www.redhot.freeuk.com/Hangtime.htm">Hangtime kite design software</a> takes the "new kite design program" approach to achieve long panels with smooth lines for inflatable kites. 
+<li><a href="http://members.shaw.ca/kiteman">Tom White</a> has programs which specialize in NPW single skin kites.
+<li><a href="http://foilivier.free.fr">Olivier</a> gives an excellent walkthrough of the complete customization of all parameters of kite design available when using a CAD program.
+</ul>
+<p>
+The "new kite design program" solution removes the limitations of the mainstream kite design program which bothered the author of the new program, but also introduce a new fixed set of parameters and solutions to those parameters. Using a CAD program gives ultimate flexibility, but if a design decision changes, the model must be rebuilt by hand to incorporate the new idea.
+<p>
+This article aims to achieve the best of both worlds: ultimate flexibility of a CAD program, combined with the ease of changing fundamental design parameters. Caveat et emptor: nothing is free! This requires some (relatively simple, depending on your ambition) programming. I don't take any credit here - I beleive it was Andy Wardley who pioneered
+parametric kite design using Perl. Check out
+<a href="http://www.template-toolkit.org/tpc5/kitesurfing/index.html">his article</a> to see the other area he pioneered.  
+<h3>Automating Rhino with Python</h3>
+There are three approaches or levels to automating Rhino:
+<ol>
+<li>Command Pasting: a simple set of Rhino commands are pasted into the command window.
+<li>Command Languate Automation: a program is created to generate the commands which are pasted into the command window.
+<li>COM Automation: Rhino is controlled at the component level.
+</ol>
+The level chosen is dependent on the complexity of the parameterization required.
+
+<h4>Command Pasting</h4>
+Rhino has a command window which can be used tell Rhino what to do.
+<p>
+<img class="box" src="rhinocommand.jpg" width="166" height="72" alt="Rhino command window">
+<p>
+Copy the following text and paste it into the command window, and some lines will show up in the Rhino viewport. 
+<p><div class="box">
+line 10,10 20,20<br>
+line 3,4 22.5,3
+</div><p>
+See also the code used on the <a href="../npwc/v8/">NPWC v8 page</a>. This level of Parametric Design is appropriate if the parameters being varied are quite simple, like the control points for drawing the wing panel on the v8 page.
+
+<h4>Command Language Automation</h4>
+This approach is a level of indirection from from Command Pasting where code is written to generate the commands,
+instead of editing the command code directly. To elaborate on this I will go through an example to create a kite skin based on the following parameters:
+
+<ul>
+<li>Tip width, how wide the tips of the kite should be.
+<li>Tip start angle in degrees. This controls the aspect ratio of the kite.
+<li>Number of notches to sew in fabric.
+<li>How deep to sew the notches. This controls the  LE/TE ratio.
+<li>The total concavity of the trailing edge in degrees.
+<li>Trailing edge length.
+</ul>
+
+The code is all in one file, but described here in three blocks. The first block sets up the parameters and 
+converts them into values usable for the calculations.
+<p>
+<pre class="box">
+<span class="comment"># python script to generate Rhino commands for SSTEA
+</span><span class="comment"># 2007-4-1, v1.0, Bill Ola Rasmussen, based on NPWK code
+</span><span class="comment"># 2007-4-6, v1.1, Bill Ola Rasmussen, vertical notch
+</span><span class="keyword">from</span> <span class="name">math</span> <span class="keyword">import</span> <span class="name">sin</span><span class="operator">,</span> <span class="name">cos</span><span class="operator">,</span> <span class="name">pi</span><span class="operator">,</span> <span class="name">radians</span>
+<span class="comment"># parameters ------------------------------------------------------------------
+</span><span class="name">tw</span> <span class="operator">=</span> <span class="number">3</span>  <span class="comment"># - tip width</span>
+<span class="name">sa</span> <span class="operator">=</span> <span class="number">45</span> <span class="comment"># - start angle (degrees)</span>
+<span class="name">nc</span> <span class="operator">=</span> <span class="number">6</span>  <span class="comment"># - notch count</span>
+<span class="name">nd</span> <span class="operator">=</span> <span class="number">60</span> <span class="comment"># - notch depth % (controls LE/TE ratio)</span>
+<span class="name">tc</span> <span class="operator">=</span> <span class="number">8</span>  <span class="comment"># - TE concavity (degrees)</span>
+<span class="name">tl</span> <span class="operator">=</span> <span class="number">50</span> <span class="comment"># - TE length</span>
+<span class="comment"># conversions -----------------------------------------------------------------
+</span><span class="name">sa</span><span class="operator">,</span><span class="name">ca</span><span class="operator">,</span><span class="name">tc</span> <span class="operator">=</span> <span class="name">radians</span><span class="operator">(</span><span class="name">sa</span><span class="operator">)</span><span class="operator">,</span><span class="name">radians</span><span class="operator">(</span><span class="name">sa</span><span class="operator">)</span><span class="operator">,</span><span class="name">radians</span><span class="operator">(</span><span class="name">tc</span><span class="operator">)</span> <span class="comment"># math operates with radians</span>
+<span class="name">nd</span> <span class="operator">=</span> <span class="name">nd</span><span class="operator">*</span><span class="number">.01</span>         <span class="comment"># convert percentage</span>
+<span class="name">tl</span> <span class="operator">=</span> <span class="name">tl</span><span class="operator">/</span><span class="name">float</span><span class="operator">(</span><span class="name">nc</span><span class="operator">+</span><span class="number">1</span><span class="operator">)</span> <span class="comment"># convert TE length to TE segment length</span>
+<span class="name">tc</span> <span class="operator">=</span> <span class="name">tc</span><span class="operator">/</span><span class="name">float</span><span class="operator">(</span><span class="name">nc</span><span class="operator">*</span><span class="number">2</span><span class="operator">)</span> <span class="comment"># convert TE concavity to half notch concavity</span>
+<span class="name">na</span> <span class="operator">=</span> <span class="number">2</span><span class="operator">*</span><span class="name">ca</span><span class="operator">/</span><span class="name">nc</span>        <span class="comment"># notch angle without tc (same as TE notch deflection)</span>
+<span class="comment"># all notches are vertical, only calculate angles once
+</span><span class="name">cpa</span> <span class="operator">=</span> <span class="name">na</span><span class="operator">/</span><span class="number">2</span><span class="operator">+</span><span class="name">tc</span><span class="operator">-</span><span class="name">pi</span><span class="operator">/</span><span class="number">2</span>  <span class="comment"># control point angle of notch</span>
+<span class="name">lwa</span> <span class="operator">=</span> <span class="operator">(</span><span class="name">cpa</span><span class="operator">-</span><span class="name">pi</span><span class="operator">/</span><span class="number">2</span><span class="operator">)</span><span class="operator">/</span><span class="number">2</span>  <span class="comment"># left wall angle of notch</span>
+</pre>
+<p>
+The second block sets up utility classes for calculations on lines, points, and splines. These classes represent their
+respective concepts, and allow themselves to be expressed as Rhino commands.
+<p>
+<pre class="box">
+<span class="comment"># classes ---------------------------------------------------------------------
+</span><span class="keyword">class</span> <span class="name">Point</span><span class="operator">:</span>
+    <span class="string">'2D Point from x and y values.'</span>
+    <span class="keyword">def</span> <span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">x</span><span class="operator">,</span> <span class="name">y</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="name">self</span><span class="operator">.</span><span class="name">x</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">y</span> <span class="operator">=</span> <span class="name">float</span><span class="operator">(</span><span class="name">x</span><span class="operator">)</span><span class="operator">,</span><span class="name">float</span><span class="operator">(</span><span class="name">y</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">__str__</span><span class="operator">(</span><span class="name">self</span><span class="operator">)</span><span class="operator">:</span> <span class="comment"># rhino script format</span>
+        <span class="keyword">return</span> <span class="string">'_point '</span><span class="operator">+</span><span class="name">self</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">pt</span><span class="operator">(</span><span class="name">self</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="keyword">return</span> <span class="string">'%f,%f'</span><span class="operator">%</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">x</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">to</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">a</span><span class="operator">,</span><span class="name">m</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Make new line from point: angle a, length m.'</span>
+        <span class="keyword">return</span> <span class="name">Line</span><span class="operator">(</span><span class="name">Point</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">x</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">,</span>
+                    <span class="name">Point</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">x</span><span class="operator">+</span><span class="name">cos</span><span class="operator">(</span><span class="name">a</span><span class="operator">)</span><span class="operator">*</span><span class="name">m</span><span class="operator">,</span> <span class="name">self</span><span class="operator">.</span><span class="name">y</span><span class="operator">+</span><span class="name">sin</span><span class="operator">(</span><span class="name">a</span><span class="operator">)</span><span class="operator">*</span><span class="name">m</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">toP</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Make new line to Point.'</span>
+        <span class="keyword">return</span> <span class="name">Line</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span>
+<span class="keyword">class</span> <span class="name">Line</span><span class="operator">:</span>
+    <span class="string">'Line segment from two Points.'</span>
+    <span class="keyword">def</span> <span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">p1</span><span class="operator">,</span> <span class="name">p2</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span> <span class="operator">=</span> <span class="name">p1</span><span class="operator">,</span><span class="name">p2</span>
+    <span class="keyword">def</span> <span class="name">__str__</span><span class="operator">(</span><span class="name">self</span><span class="operator">)</span><span class="operator">:</span> <span class="comment"># rhino script format</span>
+        <span class="keyword">return</span> <span class="string">'_line %s %s'</span><span class="operator">%</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">mid</span><span class="operator">(</span><span class="name">self</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="keyword">return</span> <span class="name">Point</span><span class="operator">(</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">+</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">/</span><span class="number">2</span><span class="operator">,</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">+</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">/</span><span class="number">2</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">intersect</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">line</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Intersection of two lines. Intersects can occur outside of segment.'</span>
+        <span class="comment"># see http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d
+</span>        <span class="name">denom</span> <span class="operator">=</span> <span class="operator">(</span><span class="name">line</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">-</span> \
+                <span class="operator">(</span><span class="name">line</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span>
+        <span class="comment">#If the denominator is 0 then the two lines are parallel.
+</span>        <span class="keyword">if</span> <span class="number">0</span><span class="operator">==</span><span class="name">denom</span><span class="operator">:</span> <span class="keyword">raise</span> <span class="comment"># todo: error handling</span>
+        <span class="name">ua</span> <span class="operator">=</span> <span class="operator">(</span><span class="operator">(</span><span class="name">line</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">-</span> \
+              <span class="operator">(</span><span class="name">line</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">-</span><span class="name">line</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">)</span><span class="operator">/</span><span class="name">denom</span>
+        <span class="keyword">return</span> <span class="name">Point</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">+</span><span class="name">ua</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">x</span><span class="operator">)</span><span class="operator">,</span> \
+               <span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">+</span><span class="name">ua</span><span class="operator">*</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">-</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">to</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">a</span><span class="operator">,</span><span class="name">m</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Make new line followng this one: angle a, length m.'</span>
+        <span class="keyword">return</span> <span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="name">m</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">toP</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Make new line followng this one: to Point.'</span>
+        <span class="keyword">return</span> <span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">toP</span><span class="operator">(</span><span class="name">p</span><span class="operator">)</span>
+    <span class="keyword">def</span> <span class="name">toY</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span><span class="name">a</span><span class="operator">,</span><span class="name">y</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="string">'Make new line followng this one: angle a, ends at location ?,y.'</span>
+        <span class="name">al</span> <span class="operator">=</span> <span class="name">self</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="number">1</span><span class="operator">)</span>                <span class="comment"># angle 'a' line</span>
+        <span class="name">hl</span> <span class="operator">=</span> <span class="name">Line</span><span class="operator">(</span><span class="name">Point</span><span class="operator">(</span><span class="number">0</span><span class="operator">,</span><span class="name">y</span><span class="operator">)</span><span class="operator">,</span><span class="name">Point</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span><span class="name">y</span><span class="operator">)</span><span class="operator">)</span> <span class="comment"># horizontal line at y</span>
+        <span class="keyword">return</span> <span class="name">Line</span><span class="operator">(</span><span class="name">Point</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">x</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">,</span><span class="name">al</span><span class="operator">.</span><span class="name">intersect</span><span class="operator">(</span><span class="name">hl</span><span class="operator">)</span><span class="operator">)</span>
+<span class="keyword">class</span> <span class="name">Spline</span><span class="operator">:</span>
+    <span class="string">'Spline from three Points.'</span>
+    <span class="keyword">def</span> <span class="name">__init__</span><span class="operator">(</span><span class="name">self</span><span class="operator">,</span> <span class="name">p1</span><span class="operator">,</span> <span class="name">p2</span><span class="operator">,</span> <span class="name">p3</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p3</span> <span class="operator">=</span> <span class="name">p1</span><span class="operator">,</span><span class="name">p2</span><span class="operator">,</span><span class="name">p3</span>
+    <span class="keyword">def</span> <span class="name">__str__</span><span class="operator">(</span><span class="name">self</span><span class="operator">)</span><span class="operator">:</span> <span class="comment"># rhino script format</span>
+        <span class="keyword">return</span> <span class="string">'_curve %s %s %s _enter'</span><span class="operator">%</span><span class="operator">(</span><span class="name">self</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span><span class="operator">,</span><span class="name">self</span><span class="operator">.</span><span class="name">p3</span><span class="operator">.</span><span class="name">pt</span><span class="operator">(</span><span class="operator">)</span><span class="operator">)</span>
+</pre>
+<p>
+The third block is where the heavy lifting happens. The code sets a starting location and draws lines for each trailing edge segment and splines for each notch. The key thing that happens here is that the center control point for the spline is defined so that each notch creates a concave juncture at the trailing edge (when the tc parameter is positive).
+<p>
+<pre class="box">
+<span class="comment"># start of main code ----------------------------------------------------------
+</span><span class="keyword">print</span> <span class="string">'_selall\n_delete'</span> <span class="comment"># clear previous drawing</span>
+<span class="name">start</span> <span class="operator">=</span> <span class="name">Point</span><span class="operator">(</span><span class="number">0</span><span class="operator">,</span><span class="number">0</span><span class="operator">)</span>
+<span class="name">te</span> <span class="operator">=</span> <span class="name">start</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">ca</span><span class="operator">,</span><span class="name">tl</span><span class="operator">)</span><span class="operator">;</span>                     <span class="keyword">print</span> <span class="name">te</span> <span class="comment"># virtual trailing edge</span>
+<span class="name">tip</span> <span class="operator">=</span> <span class="name">start</span><span class="operator">.</span><span class="name">toP</span><span class="operator">(</span><span class="name">Point</span><span class="operator">(</span><span class="number">0</span><span class="operator">,</span><span class="name">tw</span><span class="operator">)</span><span class="operator">)</span><span class="operator">;</span>             <span class="keyword">print</span> <span class="name">tip</span>
+<span class="name">ete</span> <span class="operator">=</span> <span class="name">tip</span><span class="operator">.</span><span class="name">toP</span><span class="operator">(</span><span class="name">te</span><span class="operator">.</span><span class="name">p2</span><span class="operator">)</span><span class="operator">;</span>                     <span class="keyword">print</span> <span class="name">ete</span> <span class="comment"># extended trailing edge</span>
+<span class="keyword">for</span> <span class="name">i</span> <span class="keyword">in</span> <span class="name">range</span><span class="operator">(</span><span class="name">nc</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="comment"># notch splines
+</span>    <span class="name">depth</span> <span class="operator">=</span> <span class="operator">(</span><span class="number">1</span><span class="operator">-</span><span class="name">nd</span><span class="operator">)</span><span class="operator">*</span><span class="name">te</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span>
+    <span class="name">lsw</span> <span class="operator">=</span> <span class="name">te</span><span class="operator">.</span><span class="name">toY</span><span class="operator">(</span><span class="name">lwa</span><span class="operator">,</span><span class="name">depth</span><span class="operator">)</span>             <span class="comment"># left spline wall</span>
+    <span class="name">mnl</span> <span class="operator">=</span> <span class="name">lsw</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">pi</span><span class="operator">/</span><span class="number">2</span><span class="operator">,</span><span class="number">1</span><span class="operator">)</span>                <span class="comment"># mid notch line</span>
+    <span class="name">cpl</span> <span class="operator">=</span> <span class="name">te</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">cpa</span><span class="operator">,</span><span class="number">1</span><span class="operator">)</span>                  <span class="comment"># control point line</span>
+    <span class="name">ccp</span> <span class="operator">=</span> <span class="name">mnl</span><span class="operator">.</span><span class="name">intersect</span><span class="operator">(</span><span class="name">cpl</span><span class="operator">)</span><span class="operator">;</span>             <span class="keyword">print</span> <span class="name">ccp</span> <span class="comment"># center control point</span>
+    <span class="keyword">print</span> <span class="name">Spline</span><span class="operator">(</span><span class="name">lsw</span><span class="operator">.</span><span class="name">p1</span><span class="operator">,</span> <span class="name">ccp</span><span class="operator">,</span> <span class="name">lsw</span><span class="operator">.</span><span class="name">p2</span><span class="operator">)</span>
+    <span class="name">rsw</span> <span class="operator">=</span> <span class="name">lsw</span><span class="operator">.</span><span class="name">toY</span><span class="operator">(</span><span class="operator">-</span><span class="name">lwa</span><span class="operator">,</span><span class="name">lsw</span><span class="operator">.</span><span class="name">p1</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span><span class="operator">;</span>       <span class="comment"># right spline wall</span>
+    <span class="keyword">print</span> <span class="name">Spline</span><span class="operator">(</span><span class="name">rsw</span><span class="operator">.</span><span class="name">p1</span><span class="operator">,</span> <span class="name">ccp</span><span class="operator">,</span> <span class="name">rsw</span><span class="operator">.</span><span class="name">p2</span><span class="operator">)</span>
+    <span class="comment"># TE
+</span>    <span class="name">ca</span> <span class="operator">-=</span> <span class="name">na</span>
+    <span class="name">te</span> <span class="operator">=</span> <span class="name">rsw</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">ca</span><span class="operator">,</span><span class="name">tl</span><span class="operator">)</span><span class="operator">;</span>                   <span class="keyword">print</span> <span class="name">te</span>
+<span class="name">tip</span> <span class="operator">=</span> <span class="name">te</span><span class="operator">.</span><span class="name">to</span><span class="operator">(</span><span class="name">pi</span><span class="operator">/</span><span class="number">2</span><span class="operator">,</span><span class="name">tw</span><span class="operator">)</span><span class="operator">;</span>                     <span class="keyword">print</span> <span class="name">tip</span>
+<span class="name">ete</span> <span class="operator">=</span> <span class="name">tip</span><span class="operator">.</span><span class="name">toP</span><span class="operator">(</span><span class="name">te</span><span class="operator">.</span><span class="name">p1</span><span class="operator">)</span><span class="operator">;</span>                     <span class="keyword">print</span> <span class="name">ete</span> <span class="comment"># extended trailing edge</span>
+<span class="keyword">print</span> <span class="string">'_zoom extents'</span>
+<span class="keyword">print</span> <span class="string">'done, angle error: %f, y error: %f'</span><span class="operator">%</span><span class="operator">(</span><span class="name">ca</span><span class="operator">+</span><span class="name">sa</span><span class="operator">,</span><span class="name">te</span><span class="operator">.</span><span class="name">p2</span><span class="operator">.</span><span class="name">y</span><span class="operator">)</span>
+</pre>
+<p>
+When the above three blocks of code are joined together and run in the Python interpreter, the following output is produced:
+<p>
+<pre class="box">_selall
+_delete
+_line 0.000000,0.000000 5.050763,5.050763
+_line 0.000000,0.000000 0.000000,3.000000
+_line 0.000000,3.000000 5.050763,5.050763
+_point 5.267103,3.543256
+_curve 5.050763,5.050763 5.267103,3.543256 5.267103,2.020305 _enter
+_curve 5.267103,2.020305 5.267103,3.543256 5.483442,5.050763 _enter
+_line 5.483442,5.050763 11.669338,8.622191
+_point 12.038653,6.048716
+_curve 11.669338,8.622191 12.038653,6.048716 12.038653,3.448877 _enter
+_curve 12.038653,3.448877 12.038653,6.048716 12.407969,8.622191 _enter
+_line 12.407969,8.622191 19.307439,10.470899
+_point 19.755940,7.345638
+_curve 19.307439,10.470899 19.755940,7.345638 19.755940,4.188360 _enter
+_curve 19.755940,4.188360 19.755940,7.345638 20.204441,10.470899 _enter
+_line 20.204441,10.470899 27.347298,10.470899
+_point 27.795799,7.345638
+_curve 27.347298,10.470899 27.795799,7.345638 27.795799,4.188360 _enter
+_curve 27.795799,4.188360 27.795799,7.345638 28.244301,10.470899 _enter
+_line 28.244301,10.470899 35.143771,8.622191
+_point 35.513086,6.048716
+_curve 35.143771,8.622191 35.513086,6.048716 35.513086,3.448877 _enter
+_curve 35.513086,3.448877 35.513086,6.048716 35.882401,8.622191 _enter
+_line 35.882401,8.622191 42.068297,5.050763
+_point 42.284637,3.543256
+_curve 42.068297,5.050763 42.284637,3.543256 42.284637,2.020305 _enter
+_curve 42.284637,2.020305 42.284637,3.543256 42.500977,5.050763 _enter
+_line 42.500977,5.050763 47.551740,0.000000
+_line 47.551740,0.000000 47.551740,3.000000
+_line 47.551740,3.000000 42.500977,5.050763
+_zoom extents</pre>
+<p>
+Copying the above command language into the Rhino command window produces the lovely kite skin design below:
+<p>
+<img class="box" src="sstea.jpg" width="696" height="205" alt="sstea kite skin">
+<p>
+The key to this excercise is that we can create a totally new drawing - just change a parameter in the Python file,
+run the program again, then paste the output into Rhino to create another drawing. Various adjustments can
+be made, and we do not need to draw by hand from scratch when a requirement changes.
+<p>
+The purpose of this particular skunk works skin design will be kept secret for now.
+[Update: no longer a secret, see the <a href="../npwc/foilnose2/">FoilNose2</a>
+page.]
+However, some clues can be gleaned from my theory of sparless single skin kite design: the combination one necessary
+condition and one key value helps determine if the kite will fly. The necessary condition is that there are no unsupported (e.g. unbridled) convex sections on the (3D) outline of the kite. The one key value is the ratio between the length of the leading edge and trailing edge of the kite.
+<p>
+The code presented enforces the necessary condition via the tc parameter.
+Adding the ratio calculation and reporting is left as a excercise for the reader.
+
+<h4>COM Automation</h4>
+
+<a href="http://www.flickr.com/photos/billra/27175709/" title="Bill's flickr account"><img class="rbox" src="http://farm1.static.flickr.com/21/27175709_e472053963_s.jpg" width="75" height="75" alt="arc" /></a>
+When even more control over Rhino is desired, COM automation can be employed to interface to Rhino.
+This opens up the possibility to manipulate objects after drawing them. 
+I will leave this for an entirely new article, as this one has already grown large
+enough. Until then, you can click on the image to see a kite model created using Python via the Rhino COM interface.
+
+<h3>Closing</h3>
+Use an existing kite design program if it fits your needs. Programmed CAD automation can be used for design cases where existing programs are too limiting.
+<p>
+Variations are possible. This article uses Python and Rhino, which means a Windows environment.
+My main computer now runs Ubuntu, so I would love to learn how to accomplish something similar
+with <a href="http://www.blender.org">Blender</a>.
+<p>
+Related pages:<br>
+ <a href="../parameters/">Kite Design Parameters</a><br>
+ <a href="../npwc/foilnose2/">FoilNose2</a>
+
+<p>
+</div>
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../tags/kite/">kite</a>,
+<a href="../../tags/code/">code</a>,
+<a href="../../tags/cad/">cad</a>
+</div>
+<a href="../..">2e5</a> &raquo;
+<a href="..">kite</a> &raquo;
+parametric
+</div>
+
+<p>
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a>
+
+<p>&copy;2007 Bill Rasmussen
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-701785-1";
+urchinTracker();
+</script>
+
+</BODY>
+</HTML>
+
+

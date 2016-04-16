@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <updated>2011-07-15T06:33:04Z</updated>
+  <title type="text">2e5.com</title>
+  <subtitle type="text">maker musings</subtitle>
+  <link rel="self" type="application/atom+xml" href="http://2e5.com/feed/atom.xml"/>
+  <link rel="alternate" type="text/html" hreflang="en" href="http://2e5.com/"/>
+  <id>urn:uuid:20e0d5b3-e5d7-44c0-bad4-802d2617f869</id>
+  <icon>feedIcon.jpg</icon>
+  <logo>feedLogo.jpg</logo>
+  <rights>© 2011 Bill Ola Rasmussen</rights>
+  <author>
+    <name>Bill Ola Rasmussen</name>
+    <email>billra@gmail.com</email>
+    <uri>http://2e5.com/</uri>
+  </author>
+
+
+  <entry>
+    <updated>2011-07-15T06:33:04Z</updated>
+    <title>Maeko</title>
+    <category term="kite"/> 
+    <link href="http://2e5.com/kite/maeko/" />
+    <id>urn:uuid:01025249-74e1-4e0e-9c17-9cf0ba07c8dc</id>
+    <summary>A sparless SLE single skin foil hybrid kite.</summary>
+    <content type="html">
+ 
+&lt;img class="rbox" src="http://2e5.com/kite/maeko/IMG_6446s2.JPG" align="right" height="1162" alt="Maeko side view" style="border-color: #c0c0ff; margin: 0 0 0 0.5em; background-color: #f0f0ff; padding: 0.5em; border: 1px solid; vertical-align: top; float: right;" width="501" /> 
+&lt;p> 
+Maeko a sparless single skin SLE sled using tailored bumps on the leading edge
+to maintain canopy shape. It is lighter, uses less material, and is easier to
+make than a standard parafoil.
+&lt;p> 
+&lt;ul>
+&lt;li>Flat aspect ratio: 5.1&lt;/li>
+&lt;li>Area: 1 m&lt;sup>2&lt;/sup>&lt;/li>
+&lt;li>Tip to Tip: 225 cm&lt;/li>
+&lt;li>Center chord: 57.4 cm&lt;/li>
+&lt;/ul>
+&lt;p> 
+Maeko is a minimalistic soft kite with nice flying characteristics. It is a
+result of the experiments done with 
+&lt;a href="http://2e5.com/kite/npwc/foilnose3/" style="margin: 0; border: none; padding: 0;">Foil Nose 3&lt;/a>.
+
+&lt;h3 style="font-size: 140%;">Design Highlights&lt;/h3>
+
+The combination of four key features come together in the Maeko design:
+&lt;p>
+&lt;ul>
+&lt;li>Tailored leading edge bumps.&lt;/li>
+&lt;li>All flat sewing.&lt;/li>
+&lt;li>SLE bridle.&lt;/li>
+&lt;li>Load and sheet tension lines.&lt;/li>
+&lt;/ul>
+&lt;p>
+ 
+&lt;a href="http://2e5.com/kite/maeko/">Read More at 2e5.com&lt;/a>
+
+    </content>
+  </entry>
+
+
+  <entry>
+    <updated>2011-04-09T16:33:03Z</updated>
+    <title>Wireless Configuration</title>
+    <category term="tool"/> 
+    <link href="http://2e5.com/tool/wifi/" />
+    <id>urn:uuid:c9980d02-f163-4c1c-b1fe-24aef9e317ff</id>
+    <summary>Using Tomato firmware to create a reliable wireless internet connection.</summary>
+    <content type="html">
+ 
+&lt;img class="rbox" src="http://2e5.com/tool/wifi/logo.png" align="right" height="330" alt="Wifi Logo" style="border-color: #c0c0ff; margin: 0 0 0 0.5em; background-color: #f0f0ff; padding: 0.5em; border: 1px solid; vertical-align: top; float: right;" width="500" />
+&lt;p>
+
+This article describes reconfiguring the wireless access point portion of a home network
+in order to provide a more reliable internet connection.
+
+&lt;h3 style="font-size: 140%;">Background&lt;/h3>
+
+My employer provides home internet and telephony. The choice of provider
+is predetermined and there is no option for selecting alternate hardware. 
+&lt;p>
+Connectivity is fine when using a wired connection.
+However, the wireless connection is quite unstable. The wireless network
+often experiences problems with temporary and permanent disconnections.
+I am often greeted with "Dad, the internet is down again!" when coming
+home from work.
+&lt;p>
+At the place we used to live, the internet was "part of the apartment"
+and each owner bought their own hardware to make a connection. Back then
+I bought a small wireless router and installed Tomato firmware. Tomato
+was chosen because I needed QOS to protect internet voice calls against
+streaming video bandwith usage. Tomato was so trouble free that I did not
+think about it until the current wireless problems.
+&lt;p>
+Below I describe how I replace the wireless section of my "all in one"
+box with a Tomato powered access point ...
+&lt;p>
+&lt;a href="http://2e5.com/tool/wifi/">Read More at 2e5.com&lt;/a>
+
+    </content>
+  </entry>
+
+
+  <entry>
+    <updated>2011-02-20T16:30:03Z</updated>
+    <title>Site Feed</title>
+    <category term="tool"/> 
+    <link href="http://2e5.com/feed/" />
+    <id>urn:uuid:23fde8b9-47d2-451a-bc11-844f0ea2fd2f</id>
+    <summary>Creating a site or blog Atom feed.</summary>
+    <content type="html">
+
+&lt;img class="rbox" src="http://2e5.com/feed/brFeed_256_230.png" align="right" height="230" alt="large feed icon" style="border-color: #c0c0ff; margin: 0 0 0 0.5em; background-color: #f0f0ff; padding: 0.5em; border: 1px solid; vertical-align: top; float: right;" width="256" /> 
+&lt;p>
+This article describes the bare metal mechanics of a site or blog feed.
+Layers of abstraction have been piled upon what is actually a simple
+method for getting information out to the world. Here we uncover the original
+basics in creating a feed.
+&lt;p>
+At the lowest level, a feed has two parts:
+&lt;ul>
+&lt;li>Autodiscovery code in a HTML page.
+&lt;li>Feed information in a XML file.
+&lt;/ul>
+Details follow.
+&lt;h3 style="font-size: 140%;">Autodiscovery&lt;/h3>
+Autodiscovery is code in a HTML page which tells browsers (or other software)
+that the site contains a feed. When visiting a site with autodiscovery, a
+browser indicates the presence of a feed on the site. For example, Firefox
+indicates a feed with an icon in the address bar: 
+&lt;p> 
+&lt;img class="box" src="http://2e5.com/feed/feedMark.png" height="64" alt="browser feed display" style="border-color: #c0c0ff; margin: 0; background-color: #f0f0ff; padding: 0.5em; border: 1px solid; vertical-align: top;" width="405" /> 
+&lt;p>
+Clicking on the feed icon will begin the subscription process for the site feed.
+&lt;p>
+This behavior is triggered by an entry ...
+&lt;p>
+&lt;a href="http://2e5.com/feed/">Read More at 2e5.com&lt;/a>
+
+    </content>
+  </entry>
+
+
+  <entry>
+    <updated>2011-01-27T16:30:02Z</updated>
+    <title>V Plotter Design</title>
+    <category term="tool"/> 
+    <link href="http://2e5.com/plotter/V/design/" />
+    <id>urn:uuid:d4cadb23-74f1-4ada-978f-fd463b4d4aab</id>
+    <summary>Math and code for designing a minimalistic plotter.</summary>
+    <content type="html">
+
+A V plotter is a minimalistic design which uses a pair of steppers, some
+string, and a pen head to create a plotter. These are sometimes made by students
+or technology sector employees as a way to avoid "real work".
+&lt;/p>&lt;p>
+In this article, I dig into the math behind these machines, and also write a
+program to calculate the configuration of a V setup needed to produce a working
+device.
+
+&lt;/p>&lt;h3 style="font-size: 140%">Requirements&lt;/h3>
+
+What is the optimal configuration of control lines for an area to be plotted?
+Obviously, we can't have a drawing area above the control lines — our friend gravity
+sees to that. But, can we do better than hand waving and "somewhere below the control lines"
+for the plot area? Yes: we think up some constraints and model them 
+with math and code (two more friends!):
+
+&lt;ul>&lt;li>Tension: We can imagine that the control lines have to be under some tension
+in order to be effective. For the purposes of this article we say that both string tensions
+must be in the range [ m/2, m*1.5 ], where m is the mass of the plotter head.
+Lines can neither be too slack nor too heavily loaded. The effect of this
+constraint is to prevent any line from being too close to horizontal or too close to vertical.
+&lt;/li>&lt;li>Resolution: There is a change in resolution when we map a change of length in one or both of the strings
+into X and Y coordinates. I.e. Coordinate system conversion causes a non-uniform step resolution.
+We say that, for each control line, a one unit change causes at
+most a 1.4 unit change in the X,Y coordinate system.  We limit plotting to the area of reasonable
+resolution. Here our definition of reasonable is a 40% change.
+&lt;/li>&lt;/ul>
+
+To implement these requirements, we need to know how to calculate them. The next few sections
+talk math and have pretty pictures.
+
+&lt;h3 style="font-size: 140%">Line Tension Calculation&lt;/h3>
+The below diagram shows a mass m suspended by two lines. Each line can (and usually will) have a different angle
+to the X axis. We wish to calculate the tension of each line in the diagram.
+&lt;p>
+&lt;img class="box" src="http://2e5.com/plotter/V/design/forceVector.png" alt="V plotter force vectors" width="562" height="340" style="border: 1px solid;background: #f0f0ff;border-color: #c0c0ff;margin: 0;padding: 0.5em;vertical-align: top"/>&lt;/p>&lt;p>
+To describe the horizontal forces along the X axis (in balance), we write ...
+&lt;p>
+
+&lt;a href="http://2e5.com/plotter/V/design/">Read More at 2e5.com&lt;/a>
+
+    </content>
+  </entry>
+
+
+
+  <entry>
+    <updated>2011-01-16T16:30:02Z</updated>
+    <title>ssh Configuration</title>
+    <category term="tool"/> 
+    <link href="http://2e5.com/tool/ssh/" />
+    <id>urn:uuid:77522070-2198-11E0-BBE0-E928E0D72085</id>
+    <summary>Setup and configuration of openssh, including rsync.</summary>
+    <content type="html">
+
+&lt;img style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em" src="http://2e5.com/tool/ssh/sshrx.png" width="150" height="138" alt="ssh rsync X"> 
+&lt;p> 
+On a Linux or Unix system, ssh is used to make a secure connection to a remote machine.
+This connection can be used as a communications transport for other programs. In this article I describe
+how to setup an encrypted ssh connection between two machines. This connection can be used to
+log in to the remote machine, synchronize files between the machines, or display locally
+the GUI of a program running on a remote machine.
+&lt;p>
+For the purposes of this article, alfa and beta are the peer machines we wish to configure. Both have
+a user account named bill.
+
+&lt;h3>Install openssh&lt;/h3>
+
+&lt;p>
+The first step is to install openssh on machine alfa:
+&lt;pre style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em">
+&lt;span style="color:#400080;">bill@alfa:&lt;/span> sudo apt-get install openssh-server openssh-client
+&lt;span style="color:#400080;">bill@alfa:&lt;/span> sudo apt-get install rssh molly-guard openssh-blacklist openssh-blacklist-extra
+&lt;/pre>
+&lt;p>
+We install both the ssh client and server portion as we will both be ssh'ing from and to these machines.
+The packages on the second line are optional, but a good idea. Refer to the man pages for more information.
+&lt;p>
+At this point, we could use ssh to access a remote machine (running a ssh server) and be prompted
+for a password to validate access. Password login validation for ssh is a bad idea because it opens a security hole.
+Instead we follow the steps below to exchange security keys with the target machine and eliminate the ability
+to ssh using a password.
+&lt;p>
+Create the encryption key on alfa:
+&lt;p>
+&lt;pre style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em">
+&lt;span style="color:#400080;">bill@alfa:&lt;/span> ssh-keygen -t rsa -C "user bill on alfa"
+&lt;/pre> 
+&lt;p>
+Enter a filename, for example: bill_on_alfa. If the generated files are not created in ~/.ssh, move them there.
+The -C comment at the end of the command is optional, but a good idea as it help human readers identify the key.
+The public portion of the key and the comment ends up as part of the identity string
+in alfa's authentication agent, and in beta's authorized_keys file.
+&lt;p>
+Now add the RSA identity to alfa's authentication agent. On alfa, type:
+&lt;pre style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em">
+&lt;span style="color:#400080;">bill@alfa:&lt;/span> ssh-add bill_on_alfa
+&lt;/pre>
+&lt;p>
+Listing the RSA identities in alfa's authentication agent is done by:
+&lt;pre style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em">
+&lt;span style="color:#400080;">bill@alfa:&lt;/span> ssh-add -L
+&lt;/pre>
+&lt;p>
+You should see the public key parameter of the just generated key as well as the "user bill on alfa" comment.
+&lt;p>
+Since the identity is registered in alfa's authentication agent, we can use the 'short form'
+of ssh-copy-id to propagate the public key to beta's authorized_keys file.
+&lt;p>
+&lt;pre style="border:1px solid;background:#f0f0ff;border-color:#c0c0ff;margin:0;padding:0.5em">
+&lt;span style="color:#400080;">bill@alfa:&lt;/span>ssh-copy-id beta.local
+&lt;/pre> 
+&lt;p>
+This command behaves nicely, creating the authorized_keys file if none exists, or appending the key if the
+file already exists.
+&lt;p>
+&lt;a href="http://2e5.com/tool/ssh/">Read More at 2e5.com&lt;/a>
+
+    </content>
+  </entry>
+
+
+
+  <entry>
+    <updated>2011-01-11T16:30:02Z</updated>
+    <title>Volkite</title>
+    <category term="kite"/> 
+    <link href="http://2e5.com/kite/volkite/" />
+    <id>urn:uuid:a15d2440-e3c5-4ee6-ba3d-7db645a0697d</id>
+    <summary>Volkite, a new design</summary>
+    <content type="html">
+
+&lt;img class="rbox" src="http://2e5.com/kite/volkite/IMG_3368_left_front_1s.jpg" width="400" height="765" alt="Volkite front left view"> 
+&lt;p> 
+Volkite is a kite with two skin foil construction on the leading edge and single
+skin for the rest of the canopy. It is lighter and uses less material than a standard
+parafoil.
+&lt;p> 
+&lt;ul>&lt;li> Flat aspect ratio: 3
+&lt;/li>&lt;li> Area: 1.5 m&lt;sup>2&lt;/sup> 
+&lt;/li>&lt;li> Tip to Tip: 212 cm
+&lt;/li>&lt;li> Chord: 70.5 cm
+&lt;/li>&lt;/ul> 
+ 
+The LE has 14 cells comprised of 7 mini-ribs and 6 full ribs.
+The mini-ribs stop short of the point where the lower and upper skin
+meet, allowing for air passage between adjoining cells. This also helps
+to avoid the pucker distortion which can occur when a rib narrows to join
+two skins.
+&lt;p> 
+Working with a (partially) single skinned kite is illuminating because it clearly shows
+when a section of canopy is not not contributing to lift.
+&lt;p>
+&lt;a href="http://2e5.com/kite/volkite/">Read More at 2e5.com&lt;/a>    
+
+    </content>
+  </entry>
+
+
+</feed>

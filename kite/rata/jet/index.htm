@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+<TITLE>Rata Jet</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Bill Rasmussen"> 
+<meta name="keywords" content="Kite Design, NASA, NPW, Parawing">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD>
+<body>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-701785-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script>
+<div class="head">
+<div class="rflo">
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div>
+<h1>Rata Jet</h1></div>
+
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../../">2e5</a> &raquo;
+<a href="../../">kite</a> &raquo;
+<a href="../">rata</a> &raquo;
+jet
+</div>
+
+
+<div class="main">
+
+<p>
+<img class="rbox" src="front_img_0769s.jpg" width="600" height="603" alt="Rata Jet kite front view">
+<p>
+Rata Jet is a single skin kite descending from NASA parawing (NPW) line. This design
+attempts to increase single skin kite performance by delaying the point at which
+nose collapse occurs. This is done by using a RATA (rib angled to airflow) to slow
+airflow and increase pressure under the nose area.
+
+<ul>
+<li> Flat aspect ratio: 4.2 (using the w<sup>2</sup>/a formula)
+<li> Area: 1.5 m<sup>2</sup>
+<li> Tip to Tip: 2.5 m
+<li> Center chord: 1.0 m
+</ul>
+
+A view of the front of the kite is on the right side of this page.
+There are no spars in this design, only flat fabric to fabric sew lines.
+
+<h3>Design</h3>
+
+Below is the plan for this kite. The small square boxes indicate canopy bridle attachment points.
+Three dimensional sail shape is controlled by notches in the canopy. The notches in the
+nose of the kite are in the canopy, not the RATA ribs. The RATA ribs are sewn flat to the
+kite along the curved line. Unfolding these produces a three dimensional shape in the canopy.
+Scaling this plan by [grid line = 50cm] gives the specifications listed in the first section.
+<p>
+One "design leap" in this model is the reduced number of LE bridle attachment points in comparison
+with a standard NPW design. Both notches and increased fabric (described further below) are used
+in an attempt to reduce the canopy folds which occur at high point loads.
+<p>
+<img class="box" src="RataJetPlan.jpg" width="765" height="363" alt="Rata Jet kite plan">
+
+<p>
+CAD code for producing this drawing follow. The points for the notches on the leading
+edges lie on the circle centered at (5,-3). 
+<p>
+<pre class="box">; Rata Jet v.1, 2008, Bill Ola Rasmussen
+; bridle points
+_points 0,0 0.552941,0.771427 1.22857,1.44706 1,0 2,0 2.48,2 _enter
+; LE and notches
+_lines 2.5,0 0,0 0.538737,0.751589 0.780057,0.578816 0.570193,0.78868 
+       1.21132,1.42981 1.42118,1.21994 1.24841,1.46126 2,2 _enter
+; nose
+_line 2,2 2.5,2
+; rata trim line
+_line 2,1 2.5,1
+; rata sew curve
+_circle _3point 2,2 2.48,1 4,2
+; (manual step: trim circle to arc between nose and rata trim line)
+; bottom of rata
+_line 2.48,1 2.48,2
+; nose notches
+_lines 2.28,2 2.3,1.86 2.32,2 _enter
+; TE notches
+_lines 0.98,0  1,0.2 1.02,0 _enter
+_lines 1.975,0 2,0.3 2.025,0 _enter
+; (manual step: reflect around x=2.5)</pre>
+<p>
+Two manual steps are indicated in order to keep the code brief.
+<p>
+Differences between this and the <a href="../">original RATA model</a>:
+<ul>
+<li>Fewer RATA's: The most critical area to support is the nose of the kite. If it starts
+folding, performance degrades quickly. Each RATA does contribute to drag, so this current iteration
+reduces RATA's to the minimum.
+<li>Lower AR: not necessarily a design goal in itself, but it is easier to tune a lower AR kite. Once
+other parameters are optimized, a higher AR can be tried.
+<li>Notches: Since some bridle lines are not connected directly to RATA's, we no longer have have
+a built in load curtain to distribute the bridle forces. Notches pull in material from the sides so
+that point loads are less likely to induce a fold in the fabric. 
+<li>LE bulge: Also a workaround for not having the RATA load curtain aspect. This also makes more
+material available in the direction of load in an attempt to reduce the point load folding.
+<li>TE control lines: Less force is needed in the tips for turning if some of the canopy load is taken
+by the rear lines attached to the TE.
+</ul>
+This is RATA iteration #3. The second try did not turn out to be a
+step forward.
+
+
+<p>
+<img class="rbox" src="side_img_0759s.jpg" width="300" height="561" alt="Rata Jet kite side view">
+<h3>Analysis</h3>
+Looking at the pictures on this page, there are at least three things to note:
+
+<ul>
+<li> Nose: 
+The first picture on this page shows a front view. In addition to the nose area, the sections just
+to the left and right of the RATA's seem especially prone to folding. Possible culprits are the RATA's
+adjacent to each of these areas, and the bridle setting near the nose. 
+<li> Canopy folds: 
+Seen just to the right, note the two folds leading away from the bridle
+to canopy attachment points. These are not traveling along the notch fold, but rather into the canopy
+on a path parallel to the TE. There does not appear to be any appreciable folding at the TE bridle connections.
+<li> Tips: 
+Just to the right the tip extremities seem to have a very high AOA. Below, this angle looks more normal.
+Note how the notches just before the tips on both the LE and TE absorb enough material so that the tip fold
+barely appears.
+</ul>
+
+<img class="box" src="back_img_0694s.jpg" width="600" height="547" alt="Rata Jet kite TE view">
+<p>
+The above tail view shows the bridling of the kite. Cascaded primaries and secondaries are used for the LE,
+and just primaries for the TE. Bridle adjustment is done by Prusik knot, as shown on the 
+<a href="../../npwc/twolinebridle/">NPWC 2 Line Bridle</a> page.
+
+<p>
+<img class="rbox" src="LD_img_0715s.jpg" width="350" height="826" alt="Rata Jet kite L/D view">
+<h3>Performance</h3>
+To the right we see Rata Jet flying quite high up in the window. From the angle of the flying lines,
+<a href="../../ld/">LD</a> appears to be greater than 4! Ok, it looks really nice and is what we
+are aiming for, but normal flight aspects are not so rosy. At times, the performance of this
+kite is brilliant. The next moment, an edge will fold and the kite will slide back down in the window.
+<p>
+See a <a href="RataJet.wmv">a video of single line flight</a>.
+It's a 17mb download. A smaller, lower quality version of the video is
+<a href="http://www.youtube.com/watch?v=P3a2W-zBvnc">available on YouTube</a>. 
+Mid video, near apogee, you can see the nose and leading
+edges folding and unfolding. This indicates that the airflow is switching between splitting
+just above and just below the leading edge. I believe maximum performance is to be had at a bridle
+setting where the airflow splits just under the leading edge.
+<p>
+More bridle tuning may be able to fix this spotty behavior. If you also want to work on this, 
+email me and I will give you the latest bridle measurements. Canopy plans are included on this page.
+
+<p>
+Possible improvements for the next iteration:
+<ul>
+<li> RATA design: Nose fold may be due to the RATA itself operating at too low an AOA. This can be fixed by
+lengthening the front leg and/or shortening the back leg.
+<li> Notch orientation: Even with the notches, folding appears at the bridle canopy interface.
+I think that this can be at least partially mitigated by orienting the notches in line with the folds.
+I.e. instead of running the LE notches following the angle of LE segment intersection, run them
+horizontally (parallel to the TE).
+<li> Should something be done about the tips? In some pictures they look good, but
+in others, they appear to be operating at too high an AOA. I have see some single skin designs
+where the tips are clipped off at an angle. This might be worth trying.
+</ul>
+<p>
+Rata Jet is a design which gives glimpses of brilliant performance and deserves further development.
+<p>
+Related pages:<br>
+ <a href="../">Rata Wing Kite</a><br>
+ <a href="../../ld/">Lift to Drag Ratio</a>
+<p>
+
+</div>
+
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../../">2e5</a> &raquo;
+<a href="../../">kite</a> &raquo;
+<a href="../">rata</a> &raquo;
+jet
+</div>
+
+<p>
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a>
+
+<p>&copy;2008 Bill Rasmussen
+
+</BODY>
+</HTML>

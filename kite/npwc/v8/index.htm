@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML>
+<HEAD>
+  <TITLE>NPWC v8</TITLE>
+  <META NAME="author" CONTENT="Bill Ola Rasmussen">
+  <META NAME="generator" CONTENT="picpub.py">
+  <META NAME="generated" CONTENT="Fri Jan 26 08:01:00 2007">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="NASA, Parawing, Research, npw">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD>
+<BODY> 
+
+<div class="head">
+<div class="rflo">
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div>
+<h1>NPWC v8</h1></div>
+
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../..">2e5</a> &raquo;
+<a href="../..">kite</a> &raquo;
+<a href="..">npwc</a> &raquo;
+v8
+</div>
+<div class="main">
+
+    <p>
+This is version 8 of a single skin sparless kite based on NASA's Parawing (NPW) series. It is still in the experimental development stage. If you are looking for the best NPW available today, then I suggest
+<a href="http://freedom2000.free.fr/NPW_Teega_plans_eng.html">Fredrik Lejonklou's Teega</a>, or 
+<a href="http://users.pandora.be/claeskites/index.html">Jan Claes'</a>
+HA. An excellent plan calculator for the HA (among other NPW goodies!) 
+is available from
+<a href="http://members.shaw.ca/kiteman/">Tom White</a>.
+More background on the NPWC series is 
+<a href="..">back this way</a>.
+    <p>
+Unlike the first NPWC's, I wanted to try this one with a minimal bridle. I talked with my wife about putting a wind tunnel in the apartment in order to quickly tune the bridle. There is a clear path from the kitchen window to the living room window which would be ideal. Unfortunately, she did not buy the idea even though I explained that, to the right buyer, a wind tunnel would significantly increase the value of our apartment. Alas, I was vetoed and forced to the beach with a bridle tuning jig I improvised with clam cleats and dog anchor stakes. See the pictures for details.
+<p>
+
+<DIV ALIGN=CENTER>
+    <tt>
+      <a href="NPWC-V8.htm">[<< prev]</a>
+      <a href=".">[index]</a>
+      <a href="IMG_3016.htm">[next >>]</a>
+    </tt>
+    <p>
+
+<table>
+<tr>
+<td align=center><a href="IMG_3016.htm"><img src="IMG_3016t.JPG" width=80 height=60 border=0 alt="After sewing."></a></td>
+<td align=center><a href="IMG_3040.htm"><img src="IMG_3040t.JPG" width=80 height=60 border=0 alt="Bridle adjustment jig."></a></td>
+<td align=center><a href="IMG_3260.htm"><img src="IMG_3260t.JPG" width=60 height=80 border=0 alt="Flying 1."></a></td>
+<td align=center><a href="IMG_3261.htm"><img src="IMG_3261t.JPG" width=60 height=80 border=0 alt="Flying 2."></a></td>
+<td align=center><a href="IMG_3263.htm"><img src="IMG_3263t.JPG" width=80 height=60 border=0 alt="Flying 3."></a></td>
+<td align=center><a href="IMG_3271.htm"><img src="IMG_3271t.JPG" width=80 height=60 border=0 alt="Flying 4."></a></td>
+</tr><tr>
+<td align=center><a href="IMG_3274.htm"><img src="IMG_3274t.JPG" width=80 height=60 border=0 alt="Flying 5."></a></td>
+<td align=center><a href="IMG_3277.htm"><img src="IMG_3277t.JPG" width=80 height=60 border=0 alt="View from back."></a></td>
+<td align=center><a href="IMG_3279.htm"><img src="IMG_3279t.JPG" width=80 height=60 border=0 alt="Closeup 1."></a></td>
+<td align=center><a href="IMG_3280.htm"><img src="IMG_3280t.JPG" width=80 height=60 border=0 alt="Closeup 2."></a></td>
+<td align=center><a href="NPWC-V8.htm"><img src="NPWC-V8t.JPG" width=80 height=45 border=0 alt="Plan design."></a></td>
+</tr>
+</table>
+    <p>
+    <tt>
+      <a href="NPWC-V8.htm">[<< prev]</a>
+      <a href=".">[index]</a>
+      <a href="IMG_3016.htm">[next >>]</a>
+    </tt>
+</DIV>
+All the outdoor shots were taken at 
+<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=55%C2%B039%2745%22N++12%C2%B038%2716%22E&amp;ie=UTF8&amp;z=12&amp;om=1&amp;iwloc=addr">55°39'45"N  12°38'16"E</a>. Copenhagen's artificial island is so new that it is missing from Google's satellite view. 
+
+As you can see from the pictures, 3:30 is close to sunset during winter time in Denmark. 
+
+    <p>
+The wing outline is described by a Cubic Bézier curve. Information about
+Bézier curves can be seen in the 
+<a href="http://en.wikipedia.org/wiki/Bezier_curve">wikipedia</a>.
+Most CAD programs support Bézier curves. The below macro was used
+with <a href="http://www.rhino3d.com">Rhino</a> to draw a full sized wing panel:<p>
+
+<pre class="box">
+; Rhino macro for creating NPWC v8 wing panel
+; Bill Ola Rasmussen 2006-7-8
+; in Rhino open with: Tools, Commands, Read from file...
+;
+; clear previous drawing
+;
+_selall
+_delete
+;
+; change units to centimeters
+;
+_-DocumentProperties units unitsystem centimeter no enter enter
+;
+; create wing panel
+;
+_polyline 0,7     0,0 5,0 enter
+_curve    0,7 2,9 6,4 5,0 enter
+;
+; scale panel
+;
+_selall
+_scale2d 0 16.4 enter
+_zoom _all _extents enter
+;
+; grid for a4 paper 21x29.5, lines just inside drawing area of page
+;
+_polyline 0,27 0,0 18,0 enter
+_invert
+_array 10 10 1 18 27
+;
+; all done, remove selection
+; 
+_selall
+_invert
+;
+; It would be nice to array a point across all the lines
+; to give better printing, but for now we do this manually.
+;</pre>
+
+<p>
+Findings:<br>
+The nose seemed to be collapsing a lot, perhaps I was trying for too low an AOA.<br>
+The bridle tuning rig seemed to work. I was able to adjust the 4 line lengths on each side while the kite 'took care of itself'. I should have tried leading the lines to one location to see if stable flight was possible on a single line.<br>
+There was not even a hint of latitudinal folding, next version will be flatter to see how far I can push this.
+<p>
+Have fun!<br>
+<a href="..">Back to the NPWC page</a>.
+<p>
+
+</div>
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../..">2e5</a> &raquo;
+<a href="../..">kite</a> &raquo;
+<a href="..">npwc</a> &raquo;
+v8
+</div>
+
+<p>
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a>
+
+<p>&copy;2007 Bill Rasmussen
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-701785-1";
+urchinTracker();
+</script>
+
+</BODY>
+</HTML>
+
+

@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
+<HTML> 
+<HEAD> 
+<TITLE>Wireless Configuration</TITLE> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<META NAME="author" CONTENT="Bill Ola Rasmussen"> 
+<meta name="keywords" content="wifi wireless dns dhcp router"> 
+<link rel="stylesheet" type="text/css" href="http://2e5.com/style.css"> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD> 
+ 
+<body> 
+<script type="text/javascript"> 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-701785-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script> 
+<div class="head"> 
+<div class="rflo"> 
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div> 
+<h1>Wireless Configuration</h1></div> 
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../tags/tool/">tool</a> 
+</div> 
+<a href="../..">2e5</a> &raquo;
+<a href="..">tool</a> &raquo;
+wifi
+</div> 
+<div class="main"> 
+<p> 
+ 
+<img class="rbox" src="http://2e5.com/tool/wifi/logo.png" width="500" height="330" alt="Wifi Logo" >
+<p>
+
+This article describes reconfiguring the wireless access point portion of a home network
+in order to provide a more reliable internet connection.
+
+<h3>Background</h3>
+
+My employer provides home internet and telephony. The choice of provider
+is predetermined and there is no option for selecting alternate hardware. 
+<p>
+Connectivity is fine when using a wired connection.
+However, the wireless connection is quite unstable. The wireless network
+often experiences problems with temporary and permanent disconnections.
+I am often greeted with "Dad, the internet is down again!" when coming
+home from work.
+<p>
+At the place we used to live, the internet was "part of the apartment"
+and each owner bought their own hardware to make a connection. Back then
+I bought a small wireless router and installed Tomato firmware. Tomato
+was chosen because I needed QOS to protect internet voice calls against
+streaming video bandwith usage. Tomato was so trouble free that I did not
+think about it until the current wireless problems.
+<p>
+Below I describe how I replace the wireless section of my "all in one"
+box with a Tomato powered access point.
+<p>
+To ease description, I refer to the new access point where we
+install Tomato firmware as "Tomato hardware", and the all-in-one service
+provider box which connects to the internet and provides wireless and wired
+connectivity as "original hardware".
+
+<h3>Tomato Configuration</h3>
+
+First we need an access point separate from the service provider's original harware.
+Install Tomato on this device.
+<p>
+Google <a href="http://www.google.com/search?q=tomato+firmware">tomato firmware</a>
+to get information on device compatibility and firmware installation.
+<p>
+I use the following configuration to set up my access point:
+<p>
+<img class="box" src="TomatoConfig.png" width="759" height="795" alt="Tomato Firmware Configuration" >
+<p>
+Note the following settings:
+<ul>
+<li>The WAN port is disabled, and "Use WAN port for LAN" is checked. This allows the
+access point to be connected to the original hardware via the WAN port.
+<li>The "Router IP Address" is set to a value outside of the block allocated by
+the original hardware DHCP server. (described in the next section)
+<li>Uncheck "DHCP Server" as one is already active in the "all in one" box.
+<li>Wireless is configured as an access point, and details are configured as desired. I do
+a scan to determine a channel in the least populated part of the spectrum.
+</ul>
+The "Router IP Address" is dependent on the configuration of the original
+hardware. The configuration of the service provider's original hardware is described below.
+
+<h3>Original Hardware Configuration</h3>
+
+The original hardware is usually configured by a web
+interface at a specific internal IP address. In my network this address is 192.168.1.1.
+See the documentation which came with your device for details.
+<p>
+Navigate to the configuration section for LAN DHCP setup.
+<p>
+<img class="box" src="dhcpSetupGoogle.png" width="524" height="444" alt="DHCP setup with Google DNS" >
+<p>
+It is important to ensure that the static IP address given to the Tomato hardware will not also
+be allocated to another device in the internal network. In the picture above, the
+"IP Pool starting Address" is 192.168.1.33, so our static access point address
+at 192.168.1.20 (see previous section) is safe enough.
+<p>
+After the above configurations, the Tomato hardware can be connected to the
+original hardware via a network cable. Wireless connections to the Tomato hardware
+will use the internet connection provided by the original hardware. Disabling the
+wireless access point in the original hardware is left as an excercise to the
+reader. (hint: look on the original hardware's wireless LAN configuration page)
+
+<h3>DNS Server Configuration</h3>
+
+A DNS server translates a named address into an IP address. For example, a DNS lookup can be
+used to map "google.com" to "74.125.79.147".
+<p>
+Custom DNS servers can be specified in the "DNS Server" section of the original hardware.
+The default value is the addresses of the service provider's DNS servers. In the picture
+in the previous section, two custom DNS servers are specified: 8.8.8.8 and 8.8.4.4. These
+are public DNS servers made available by Google.
+<p>
+There are two reasons one might want to specify custom DNS servers:
+<ul>
+<li>Speed: the lag between clicking on a link and bringing up a new website can be due to
+the performance of a DNS server lookup. It is worthwhile to experiment with other DNS servers
+to see if browsing responsiveness can be enhanced.
+<li>Censorship: one way censorship can be implemented is to program a DNS server to not return
+the real IP address of a page. To avoid this censorship, an alternative DNS server can be used.
+</ul>
+An example of DNS server implemented censorship in Denmark can be seen in the browser window below:
+<p>
+<img src="stop.png" width="597" height="590" alt="internet censorship" >
+<p>
+The actual site name has been altered to protect the guilty. Switching to
+Google's DNS servers avoids this censorship.
+
+<h3>Workarounds</h3>
+
+After surfing for a while and enjoying the rock solid wireless connection, I noticed
+that some settings in the original hardware had reset themselves to service provider
+defaults. Notice the "DNS Server" settings in the picture below have reset themselves
+to service provider values!
+<p>
+<img class="box" src="dhcpSetupOriginal.png" width="524" height="444" alt="DHCP setup with service provider DNS" >
+<p>
+I am able to reproduce this behavior, and it is quite mysterious. There are no other
+settings in the original hardware which would indicate an automatic reset to factory
+defaults of individual configuration entries. Unlike Tomato, the original hardware uses closed source software, so it is quite
+difficult to dig in to see what is going on. I stop short of claiming some sort of dark conspiracy, and use net-fu
+skills to work around this "feature".
+<p>
+At home I run Ubuntu. The screenshot below is from the connection settings dialog for
+the wireless network I connect to.
+<p>
+<img src="ClientSettings.png" width="453" height="543" alt="DNS Client Settings" >
+<p>
+There are two configuration changes:
+<ul>
+<li>Method is changed from "Automatic (DHCP)" to "Automatic (DHCP) addresses only". This means
+that we will get our internal IP address from the DHCP server, but will ignore the DNS server information
+provided by the DHCP server.
+<li>Since we don't use the provided DNS server information, we specify DNS servers for this connection
+in a comma separated list. In the dialog above, we see Google's DNS servers: 8.8.8.8 and 8.8.4.4.
+</ul>
+The only drawback with this workaround is that it must be done on each machine connecting to the wireless
+network.
+
+<h3>TLDR</h3>
+
+Hurray! Now our wireless internet connection is solid as a rock. No unhappy family members
+and no more trips to the basement to reset the internet hardware.
+
+<p> 
+</div> 
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../tags/tool/">tool</a> 
+</div> 
+<a href="../..">2e5</a> &raquo;
+<a href="..">tool</a> &raquo;
+wifi
+</div> 
+ 
+<p> 
+<div class="rflo"> 
+<div class="g-plusone"></div> 
+</div> 
+<div>
+<a href="http://validator.w3.org/check?uri=referer"> 
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a> 
+<a href="http://jigsaw.w3.org/css-validator/check/referer"> 
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a> 
+</div> 
+
+<p>&copy;2011 Bill Ola Rasmussen
+
+<script type="text/javascript">
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.async = true;
+g.src = 'https://apis.google.com/js/plusone.js';
+s.parentNode.insertBefore(g, s);
+})(document, 'script');
+</script>  
+</BODY> 
+</HTML>

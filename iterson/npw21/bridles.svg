@@ -1,0 +1,89 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="540" height="240">
+	<g id="bridles">
+		<g transform="translate(260,10) scale(250,250)">
+			<polygon transform="translate(-0.225,0) rotate(37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#left_nose);stroke:#000000;stroke-width:0.002"/>
+			<polygon points="-0.225,0 0.225,0 0.458,0.870 -0.458,0.870" style="fill:url(defs.svgdefs#main_nose); stroke:#000000;stroke-width:0.002"/>
+			<polygon transform="translate(0.225,0) rotate(-37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#right_nose); stroke:#000000;stroke-width:0.002"/>
+			<g stroke="black" stroke-width="0.001" fill="yellow">
+				<g id="bridles-left" transform="translate(-0.225,0) rotate(37.5)">
+					<!-- Additional bridle at nose -->
+					<circle cx="0" cy="0" r="0.01"/>
+
+					<!-- Center panel bridles -->
+					<circle cx="0.02875" cy="0.069" r="0.01"/>
+					<circle cx="0.0575" cy="0.139" r="0.01"/>
+					<circle cx="0.08625" cy="0.208" r="0.01"/>
+					<circle cx="0.115" cy="0.277" r="0.01"/>
+					<circle cx="0.14375" cy="0.347" r="0.01"/>
+					<circle cx="0.1725" cy="0.416" r="0.01"/>
+					<circle cx="0.20125" cy="0.485" r="0.01"/>
+					<circle cx="0.23" cy="0.555" r="0.01"/>
+					<circle cx="0.25875" cy="0.624" r="0.01"/>
+					<circle cx="0.2875" cy="0.693" r="0.01"/>
+					<circle cx="0.31625" cy="0.763" r="0.01"/>
+					<circle cx="0.345" cy="0.832" r="0.01"/>
+					
+					<!-- Edge bridles -->
+					<circle cx="-0.0575" cy="0.139" r="0.01"/>
+					<circle cx="-0.115" cy="0.277" r="0.01"/>
+					<circle cx="-0.1725" cy="0.416" r="0.01"/>
+					<circle cx="-0.23" cy="0.555" r="0.01"/>
+					<circle cx="-0.2875" cy="0.693" r="0.01"/>
+					<circle cx="-0.345" cy="0.832" r="0.01"/>
+				</g>
+				<g id="bridles-right" transform="translate(0.225,0) rotate(-37.5)">
+					<!-- Additional bridle at nose -->
+					<circle cx="0" cy="0" r="0.01"/>
+
+					<!-- Center panel bridles -->
+					<circle cx="-0.02875" cy="0.069" r="0.01"/>
+					<circle cx="-0.0575" cy="0.139" r="0.01"/>
+					<circle cx="-0.08625" cy="0.208" r="0.01"/>
+					<circle cx="-0.115" cy="0.277" r="0.01"/>
+					<circle cx="-0.14375" cy="0.347" r="0.01"/>
+					<circle cx="-0.1725" cy="0.416" r="0.01"/>
+					<circle cx="-0.20125" cy="0.485" r="0.01"/>
+					<circle cx="-0.23" cy="0.555" r="0.01"/>
+					<circle cx="-0.25875" cy="0.624" r="0.01"/>
+					<circle cx="-0.2875" cy="0.693" r="0.01"/>
+					<circle cx="-0.31625" cy="0.763" r="0.01"/>
+					<circle cx="-0.345" cy="0.832" r="0.01"/>
+					
+					<!-- Edge bridles -->
+					<circle cx="0.0575" cy="0.139" r="0.01"/>
+					<circle cx="0.115" cy="0.277" r="0.01"/>
+					<circle cx="0.1725" cy="0.416" r="0.01"/>
+					<circle cx="0.23" cy="0.555" r="0.01"/>
+					<circle cx="0.2875" cy="0.693" r="0.01"/>
+					<circle cx="0.345" cy="0.832" r="0.01"/>
+				</g>
+			</g>
+		</g>
+		<g id="texts" transform="translate(260,10)">
+			<text x="36" y="3">A0</text>
+			<text x="41" y="21">A1</text>
+			<text x="46" y="39">A2</text>
+			<text x="51" y="57">A3</text>
+			<text x="56" y="76">A4</text>
+			<text x="61" y="94">A5</text>
+			<text x="65" y="112">A6</text>
+			<text x="70" y="130">A7</text>
+			<text x="75" y="148">A8</text>
+			<text x="80" y="166">A9</text>
+			<text x="79" y="185">A10</text>
+			<text x="84" y="203">A11</text>
+.			<text x="89" y="221">A12</text>
+
+			<text x="95" y="22">B1</text>
+			<text x="127" y="41">B2</text>
+			<text x="159" y="59">B3</text>
+			<text x="191" y="78">B4</text>
+			<text x="223" y="96">B5</text>
+			<text x="256" y="115">B6</text>
+		</g>
+	</g>
+</svg>

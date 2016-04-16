@@ -1,0 +1,4 @@
+# robots.txt for http://2e5.com/
+User-agent: *
+Disallow:
+#Disallow: /*.pdf$

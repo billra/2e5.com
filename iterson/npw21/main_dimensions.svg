@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="no"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="650" height="330">
+	<g id="main_dimensions">
+		<g transform="translate(310,10) scale(300,300)">
+			<polygon transform="translate(-0.225,0) rotate(37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#left_nose);stroke:#000000;stroke-width:0.002"/>
+			<polygon points="-0.225,0 0.225,0 0.458,0.870 -0.458,0.870" style="fill:url(defs.svgdefs#main_nose); stroke:#000000;stroke-width:0.002"/>
+			<polygon transform="translate(0.225,0) rotate(-37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#right_nose); stroke:#000000;stroke-width:0.002"/>
+			<g id="size-arrows" stroke="black" stroke-width="0.003">
+				<g id="bottom-arrow">
+					<line x1="-1" y1="1" x2="1" y2="1"/>
+					<line x1="-1" y1="1" x2="-0.97" y2="0.98"/>
+					<line x1="-1" y1="1" x2="-0.97" y2="1.02"/>
+					<line x1="1" y1="1" x2="0.97" y2="0.98"/>
+					<line x1="1" y1="1" x2="0.97" y2="1.02"/>
+				</g>
+				<g id="right-arrow">
+					<line x1="1.1" y1="0" x2="1.1" y2="0.87"/>
+					<line x1="1.1" y1="0" x2="1.08" y2="0.03"/>
+					<line x1="1.1" y1="0" x2="1.12" y2="0.03"/>
+					<line x1="1.08" y1="0.84" x2="1.1" y2="0.87"/>
+					<line x1="1.12" y1="0.84" x2="1.1" y2="0.87"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,57 @@
+body{	font-family:Verdana,sans-serif;
+	margin:0;padding-left:0.5em;padding-right:0.5em}
+.head{margin-right:-0.5em;height:42px} /*height: avoid ie clear bug*/
+.main{}
+.navBar,.box,.lbox,.rbox{
+	border:1px solid;
+	background:#f0f0ff;border-color:#c0c0ff}
+.navBar{clear:both;
+	font-family:Arial,sans-serif;
+	margin-left:-0.5em;margin-right:-0.5em;
+	padding-left:0.5em;padding-right:0.5em;padding-top:0.25em;padding-bottom:0.25em; 
+	border-left:none;border-right:none}
+.rflo,.rpad{float:right}
+.rpad{padding-left:0.5em;padding-right:0.5em;padding-bottom:0.25em}
+.box,.lbox,.rbox{margin:0;padding:0.5em}
+.lbox{float:left;margin-right:0.5em}
+.rbox{float:right;margin-left:0.5em}
+a,img,pre,h1{margin:0;padding:0}
+a,img{border:none}
+img{vertical-align:top}
+h1{font-size:200%}
+h2{font-size:180%}
+h2{font-size:160%}
+h3{font-size:140%}
+h4{font-size:120%}
+h5{font-size:100%}
+.x{text-decoration:line-through}
+.cb{clear:both}
+hr{border: 0;color:#c0c0ff;background-color:#c0c0ff;height:1px}
+pre{font-family:"Lucida Console",monospace;font-size:80%}
+.number{color:#FF0000;}
+.operator{color:#000000;}
+.string{color:#808000;}
+.comment{color:#008000;}
+.name{color:#400080;}
+.keyword{color:#0000FF;}
+.label{font-weight:bold;color:#8080ff}
+table.nice{
+	border-width:1px;
+	border-style:solid;
+	border-color:#c0c0ff;
+	border-collapse:collapse;
+	text-align:center}
+table.nice th {
+	padding:3px;
+	font-weight:normal;
+	border-width:1px;
+	border-style:solid;
+	border-color:#c0c0ff;
+	background-color:#f0f0ff}
+table.nice td {
+	padding:3px;
+	border-width:1px;
+	border-style:solid;
+	border-color:#c0c0ff}
+ol.a {list-style-type:lower-alpha;}
+ol.A {list-style-type:upper-alpha;}

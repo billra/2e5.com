@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title>Nasa Parawing 21</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Walter van Iterson"> 
+<meta name="keywords" content="kite, parawing, NASA, NPW21">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+<script type="text/javascript" src="../calc.js"></script>
+<style type="text/css">
+	.valueSet div {
+		position:absolute;
+		background-color:#cfcfcf;
+		text-align:center;
+		border: 1px solid #3f3f3f;
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+	.valueSetNoBG div {
+		position:absolute;
+		text-align:right;
+		width: 46px;
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+	.todo {
+		background-color: #ffcfcf;
+		border: 1px solid #3f3f3f;
+		font-style: italic;
+	}
+</style>
+</head>
+<body onload="setLk(169.21); setBridlesCascade(true)">
+<div class="head">
+<div class="rflo">
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div>
+<h1>Nasa Parawing 21</h1>
+</div>
+
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../..">2e5</a> »
+<a href="..">npw21</a> »
+<a href="index.html">nl</a> »
+bouwbeschrijving
+</div>
+
+<div class="main">
+
+<h2>De vlieger</h2>
+<div>
+Vul &eacute;&eacute;n van de waarden hieronder in om de grootte van de vlieger te bepalen:
+<table>
+<tr><td>L<sub>k</sub></td><td><input id="lkField" type="text" onkeyup="setLk(this.value, 'lk')" style="width:80px;"/> cm</td></tr>
+<tr><td>L<sub>k,1</sub></td><td><input id="lk1Field" type="text" onkeyup="setLk1(this.value)" style="width:80px;"/> cm</td></tr>
+<tr><td>Oppervlakte: </td><td><input id="surfaceField" type="text" onkeyup="setSurface(this.value)" style="width:80px;"/> m<sup>2</sup></td></tr>
+<tr><td>Spanwijdte: </td><td id="spanwijdte"></td></tr>
+<tr><td>Hoogte middenpaneel: </td><td id="hoogte_midden"></td></tr>
+</table>
+</div>
+<h2>Afmetingen</h2>
+<div class="valueSet" id="dimensions" style="position:relative">
+	<img src="../main_dimensions.png">
+	<div id="dimensions-width" style="left:300px;top:300px"></div>
+	<div id="dimensions-height" style="left:620px;top:170px"></div>
+	<div id="dimensions-center-top" style="left:300px;top:0px"></div>
+	<div id="dimensions-center-bottom" style="left:300px;top:260px"></div>
+	<div id="dimensions-center-left" style="left:190px;top:90px"></div>
+	<div id="dimensions-center-right" style="left:380px;top:90px"></div>
+	<div id="dimensions-edge-left" style="left:70px;top:90px"></div>
+	<div id="dimensions-edge-right" style="left:500px;top:90px"></div>
+	<div id="dimensions-wing-left" style="left:60px;top:200px"></div>
+	<div id="dimensions-wing-right" style="left:500px;top:200px"></div>
+</div>
+<h2>Materialen</h2>
+<div class="todo">
+Hier komt nog een indicatie bij van hoe veel van de materialen je nodig hebt
+</div>
+<div>
+<table>
+<tr><td>Vliegerstof: </td><td id="materialen-vliegerstof"></td></tr>
+<tr><td>Patroonpapier: </td><td id="materialen-patroonpapier"></td></tr>
+<tr><td>Toomlijnen: </td><td id="materialen-toomlijnen"></td></tr>
+<tr><td>Versterkingslijnen: </td><td id="materialen-versterkingslijnen"></td><td>60-80 kg dacron</td></tr>
+<tr><td>Q-punt lijnen: </td><td id="materialen-qpuntlijnen"></td></tr>
+<tr><td>Naaigaren: </td><td id="materialen-naaigaren"></td></tr>
+<tr><td>Vliegerlijn: </td><td id="materialen-vliegerlijn"></td></tr>
+<tr><td>Handvatten: </td><td id="materialen-handvatten"></td></tr>
+</table>
+</div>
+<h2>Mallen</h2>
+<div class="todo">
+Bij de indeling van de stof kun je kiezen tussen zo min mogelijk naden of zo min mogelijk stofverlies.<br/>
+Dit is de versie met zo min mogelijk naden. De versie de minder stof kost komt hier nog bij.
+</div>
+<div>
+Bij de NPW5 en NPW9b heeft het middenpaneel hoeken van 90<sup>o</sup>. Daar kun je het patroon met een potlood rechtstreeks op het papier tekenen. 
+Bij de NPW21 is het een iets ander verhaal. Met hoeken van 75 en 105<sup>o</sup> is het wat lastiger tekenen, dus heb ik er voor gekozen om met een 
+mal te werken. Een tweede voordeel van een mal is dat je de mal-delen op de stof kunt leggen, om de stof zo optimaal mogelijk te gebruiken.
+<p>
+In de afbeeldingen hieronder staan links de maten van de mal, rechts de markeringen die je op de mal kunt aanbrengen
+</p>
+Het middenpaneel:
+<div class="valueSet" id="template-center" style="position:relative">
+	<img src="../template_center.png">
+	<div id="template-center-top-width" style="left:110px;top:0px"></div>
+	<div id="template-center-bottom-width" style="left:110px;top:210px"></div>
+	<div id="template-center-left-edge" style="left:25px;top:100px"></div>
+	<div id="template-center-right-edge" style="left:180px;top:100px"></div>
+	<div id="template-center-diag" style="left:105px;top:70px"></div>
+
+	<div id="template-center-margin-top" style="left:445px;top:10px;background-color:transparent;border: 0px;"></div>
+	<div id="template-center-margin-bottom" style="left:445px;top:210px;background-color:transparent;border: 0px;"></div>
+	<div id="template-center-margin-left" style="left:385px;top:100px;background-color:transparent;border: 0px;"></div>
+	<div id="template-center-margin-right" style="left:505px;top:100px;background-color:transparent;border: 0px;"></div>
+</div>
+De zijkanten:
+<div class="valueSet" id="template-center" style="position:relative">
+	<img src="../template_wings.png">
+	<div id="template-wing-left-edge" style="left:20px;top:130px"></div>
+	<div id="template-wing-right-edge" style="left:120px;top:130px"></div>
+	<div id="template-wing-bottom-width" style="left:70px;top:205px"></div>
+
+	<div id="template-wing-left-margin-left" style="left:320px;top:130px;background-color:transparent;border: 0px;"></div>
+	<div id="template-wing-left-margin-right" style="left:380px;top:130px;background-color:transparent;border: 0px;"></div>
+	<div id="template-wing-left-margin-bottom" style="left:345px;top:200px;background-color:transparent;border: 0px;"></div>
+	<div id="template-wing-right-margin-left" style="left:520px;top:130px;background-color:transparent;border: 0px;"></div>
+	<div id="template-wing-right-margin-right" style="left:580px;top:130px;background-color:transparent;border: 0px;"></div>
+	<div id="template-wing-right-margin-bottom" style="left:545px;top:200px;background-color:transparent;border: 0px;"></div>
+</div>
+</div>
+<h2>Vliegerstof snijden</h2>
+<div>
+Leg de mallen op de vliegerstof, met zo veel tussenruimte dat de zoombreedtes er ook uit gesneden kunnen worden. Let op de richting van de stof, anders kan de stof scheef gaan vervormen.
+<p>
+Hieronder zie je een voorbeeld van hoe je de mallen op de stof kan plaatsen. Als je de mallen met de rechte kant op <span id="outermargin0"></span> cm van de rand van de stof legt, krijg je 3 rechte zijden kado!<br/>
+<img src="../template_on_cloth.png">
+<p>
+Speld de mallen vast, teken met potlood een dunne lijn direct langs de mal, en teken op de zoombreedte afstand hulpstreepjes, om je snijlineaal langs te leggen. (Als je knip in plaats van snijdt, een aaneengesloten lijn tekenen, in plaats van de hulpstreepjes). Leg de snijlineaal langs de zoom-hulplijnen en snij de delen uit met een stanleymes. Breek een punt van het mes af als de stof meetrekt met het snijden.
+</p>
+<p>
+Snij twee strookjes stof uit: van 2.5x<span id="t-length-total">40</span> cm voor de T-touwtjes, en van 2.5x<span id="neusversterking"></span> cm voor de strook die de versterkingslijn in de neus afdekt. 
+</p>
+</div>
+<h2>Vliegerdelen naaien</h2>
+<h3>Delen aan elkaar</h3>
+<p>
+Stik, als je de vliegerdelen aan elkaar zet, steeds de zelfde kant op, van de neus (LE) naar de achterkant (TE). Als de stof dan tijdens het naaien opstroopt, is de kans dat het symmetrisch gaat zo groot mogelijk.</p>
+<p>
+Speld de vliegerdelen met de "buitenkant" op elkaar, zodat de lijnen die je direct langs de mal hebt getekend op elkaar liggen. Naai de delen vast met een rechte steek, in de lengte over de mal-lijn heen. Vouw de vliegerdelen uit elkaar, en vouw de zoom plat richting de vleugels. De versterkingslijn kun je onder deze zoom leggen. Naai de zoom + versterkingslijn met een stevige steek (driedubbele zigzag, zigzag met tussensteken) plat op de vleugel. <a href="http://picasaweb.google.com/lh/photo/VZbkaYeUd1Dq2SH-7vkrBA?feat=directlink">(foto)</a> Leg in de versterkingslijn aan de TE een lus van 10 cm, waarvan 6 cm onder de TE uitsteekt, en 4 cm mee wordt vastgestikt met de stevige steek. Aan deze lussen kun je de toomlijnen vastmaken als je de vlieger opbergt.
+</p>
+<h3>Randen</h3>
+<p>
+In de TE, in de vleugels komt een trimlijn. Dit zijn dus de randen die hieronder met de gele pijlen zijn aangegeven:<br/>
+<img src="../edges_trimlines.png"/><br/>
+Leg de versterkingslijn op de rand van de vlieger, en sla de rand 2 keer om. Schuif de versterkingslijn binnen het 'rolletje' zo veel mogelijk naar de buitenkant van de vlieger. Stik met een rechte steek over het rolletje, zo dicht mogelijk langs de versterkingslijn, maar kijk uit dat je de versterkingslijn niet vastnaait. Naai de trimlijnen op de buitenste hoekpunten wel vast, en laat ze bij het middenpaneel een paar centimeter uitsteken. Leg er daar een 8-knoop in om te zorgen dat de lijn niet in de rolzoom wordt teruggetrokken.
+</p>
+<p>
+De versterkingslijn moet in de overige randen juist niet schuifbaar zijn. Leg een versterkingslijn op de rand vande vlieger en sla de rand 2 keer om. Stik de rand, inclusief verstekingslijn vast met een stevige steek.
+</p>
+<h2>De neus</h2>
+<div class="todo">Dit is het oorspronkelijke plaatje uit het Nasa rapport. Voor deze specifieke vlieger kunnen er nog wat dingen makkelijker (bv. D, N en O hebben de zelfde waarde). Dat zou de afbeelding wat eenvoudiger kunnen maken. Verder gaat de beschrijving er vanuit dat je weet wat coupenaden en T-touwtjes zijn.</div>
+<p>
+In de tabel hieronder zie je
+</p>
+<ul>
+<li>Waar de neusversterkingslijn moet komen (D, N en O)</li>
+<li>Waar de T-touwtjes worden aan de versterkingslijn en neus-rand worden bevestigd (midden, H met L en I met M)</li>
+<li>Hoe lang de T-touwtjes zijn (J en K)</li>
+<li>Waar de coupenaden komen (A, B en C)</li>
+<li>Hoe diep de coupenaden de stof in lopen (D en E)</li>
+<li>Hoe breed de coupenaden zijn (F en G)</li>
+</ul>
+<p>
+Als je de aanhechtingspunten vande T-touwtjes op de stof aftekent voordat je de coupenaden naait, scheelt dat later rekenwerk!
+</p>
+<table border="1">
+<tr><td rowspan="15"><img src="../nose.png"/></td><td width="40px">A</td><td id="nose_a"></td></tr>
+<tr><td>B</td><td id="nose_b"></td></tr>
+<tr><td>C</td><td id="nose_c"></td></tr>
+<tr><td>D</td><td id="nose_d"></td></tr>
+<tr><td>E</td><td id="nose_e"></td></tr>
+<tr><td>F</td><td id="nose_f"></td></tr>
+<tr><td>G</td><td id="nose_g"></td></tr>
+<tr><td>H</td><td id="nose_h"></td></tr>
+<tr><td>I</td><td id="nose_i"></td></tr>
+<tr><td>J</td><td id="nose_j"></td></tr>
+<tr><td>K</td><td id="nose_k"></td></tr>
+<tr><td>L</td><td id="nose_l"></td></tr>
+<tr><td>M</td><td id="nose_m"></td></tr>
+<tr><td>N</td><td id="nose_n"></td></tr>
+<tr><td>0</td><td id="nose_o"></td></tr>
+</table>
+<h2>Toomplank</h2>
+<div class="todo">Hier komt de beschrijving van hoe je een toomplank maakt.
+</div>
+<h2>Toomlijnen</h2>
+Door het naaien kunnen de vliegerdelen iets groter of kleiner zijn dan wat je in het begin hebt opgegeven. Dit is het moment om deze afwijking te corrigeren. Meet, voordat je met de toming begint, de lengte van de zijkant van het middenpaneel op (waar in de afbeelding hieronder de A's bij staan). Vul bovenaan deze pagina de gemeten lengte in in het veld "L<sub>k,1</sub>". 
+<h3>Bevestiging</h3>
+<p>
+Om de bevestigingspunten van de toomlijnen aan te kunnen wijzen gebruiken we de volgende codes:
+</p>
+<img src="../bridles.png" style="display:block"/>
+<div><!-- Lege div, want anders wordt de volgende regel gebroken ...? --></div>
+Afstand tussen de bevestigingspunten van de A-toomlijnen: <div id="bridles-distance-a" style="display:inline"></div> cm<br/>
+Afstand tussen de bevestigingspunten van de B-toomlijnen: <div id="bridles-distance-b" style="display:inline"></div> cm
+<h3>Toming</h3>
+<p>
+Je kunt de toming op verschillende manieren knopen: de klassieke toming en de cascade toming. De klassieke toming is de originele manier van knopen. Deze kun je het beste kiezen als je een kleine vlieger maakt (minder dan 1.5 m<sup>2</sup>), of als je wilt experimenteren met toomlengtes. De cascade toming gebruikt wat minder meters toomlijn, wat tot minder luchtweerstand leidt.
+</p>
+<p>
+Kies welke soort toming je wilt gebruiken: <input type="radio" id="bridles_choice_classic" onClick="setBridlesCascade(false)"  checked="checked">Klassiek</input><input type="radio" id="bridles_choice_cascade" onClick="setBridlesCascade(true)">Cascade</input>
+</p>
+<div id="bridles_classic" style="display:block">
+<h3>Klassieke toming</h3>
+<p>
+Bij een klassieke toming kun je de toomlijnen op de lengtes hieronder knopen. Let op: Dit zijn de lenges van knoop tot knoop. Markeer deze lengtes op de lijn (stift, wasco krijt), en knip de lijnen aan beide kanten 8 - 10 cm langer af (afhankelijk van welke knoop je gebruikt).
+</p>
+<div id="bridles-classic-sizes" style="position:relative" class="valueSetNoBG">
+	<img src="../bridles_classic.png"/>
+	<div id="bridles-classic-a0" style="left:35px;top:12px"></div>
+	<div id="bridles-classic-a1" style="left:35px;top:42px"></div>
+	<div id="bridles-classic-a2" style="left:35px;top:72px"></div>
+	<div id="bridles-classic-a3" style="left:35px;top:102px"></div>
+	<div id="bridles-classic-a4" style="left:35px;top:132px"></div>
+	<div id="bridles-classic-a5" style="left:35px;top:162px"></div>
+	<div id="bridles-classic-a6" style="left:35px;top:192px"></div>
+	<div id="bridles-classic-a7" style="left:35px;top:222px"></div>
+	<div id="bridles-classic-a8" style="left:35px;top:252px"></div>
+	<div id="bridles-classic-a9" style="left:35px;top:282px"></div>
+	<div id="bridles-classic-a10" style="left:35px;top:312px"></div>
+	<div id="bridles-classic-a11" style="left:35px;top:342px"></div>
+	<div id="bridles-classic-a12" style="left:35px;top:372px"></div>
+	<div id="bridles-classic-b1" style="left:35px;top:422px"></div>
+	<div id="bridles-classic-b2" style="left:35px;top:452px"></div>
+	<div id="bridles-classic-b3" style="left:35px;top:482px"></div>
+	<div id="bridles-classic-b4" style="left:35px;top:512px"></div>
+	<div id="bridles-classic-b5" style="left:35px;top:542px"></div>
+	<div id="bridles-classic-b6" style="left:35px;top:572px"></div>
+	<div style="left:520px;top:240px">Stuurlijn</div>
+	<div style="left:520px;top:345px">Remlijn</div>
+</div>
+</div>
+<div id="bridles_cascade" style="display:none">
+<h3>Cascade toming</h3>
+<p>
+Bij een cascade toming kun je de toomlijnen op de lengtes hieronder knopen. Let op: Dit zijn de lenges van knoop tot knoop. Markeer deze lengtes op de lijn (stift, wasco krijt), en knip de lijnen aan beide kanten 8 - 10 cm langer af (afhankelijk van welke knoop je gebruikt).
+</p>
+<div id="bridles-cascade-sizes" style="position:relative" class="valueSetNoBG">
+	<img src="../bridles_cascade.png"/>
+	<div id="bridles-cascade-a0" style="left:35px;top:12px"></div>
+	<div id="bridles-cascade-a1" style="left:35px;top:42px"></div>
+	<div id="bridles-cascade-a2" style="left:35px;top:72px"></div>
+	<div id="bridles-cascade-a3" style="left:35px;top:102px"></div>
+	<div id="bridles-cascade-a4" style="left:35px;top:132px"></div>
+	<div id="bridles-cascade-a5" style="left:35px;top:162px"></div>
+	<div id="bridles-cascade-a6" style="left:35px;top:192px"></div>
+	<div id="bridles-cascade-a7" style="left:35px;top:222px"></div>
+	<div id="bridles-cascade-a8" style="left:35px;top:252px"></div>
+	<div id="bridles-cascade-a9" style="left:35px;top:282px"></div>
+	<div id="bridles-cascade-a10" style="left:35px;top:312px"></div>
+	<div id="bridles-cascade-a11" style="left:35px;top:342px"></div>
+	<div id="bridles-cascade-a12" style="left:35px;top:372px"></div>
+	<div id="bridles-cascade-b1" style="left:35px;top:422px"></div>
+	<div id="bridles-cascade-b2" style="left:35px;top:452px"></div>
+	<div id="bridles-cascade-b3" style="left:35px;top:482px"></div>
+	<div id="bridles-cascade-b4" style="left:35px;top:512px"></div>
+	<div id="bridles-cascade-b5" style="left:35px;top:542px"></div>
+	<div id="bridles-cascade-b6" style="left:35px;top:572px"></div>
+
+	<div style="left:390px;top:115px">Primaire toomlijnen</div>
+	<div id="bridles-cascade-primary" style="left:485px;top:133px"></div>
+	<div style="left:520px;top:240px">Stuurlijn</div>
+	<div style="left:520px;top:345px">Remlijn</div>
+</div>
+</div>
+<div class="todo">Hier komt een tabel met op welke lengte de toomplank komt te staan, en waar je het middelpunt moet aftekenen. Verder komt er nog een uitleg van de Q-punten. <a href="http://picasaweb.google.com/lh/photo/FrSns59XCMhrCA0pk3HYgA?feat=directlink">(foto)</a></div>
+</div>
+<div class="navBar">
+<div class="rflo">
+tags:
+<a href="../../../tags/kite/">kite</a>
+</div>
+<a href="../../..">2e5</a> »
+<a href="..">npw21</a> »
+<a href="index.html">nl</a> »
+bouwbeschrijving
+</div>
+
+<p>
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" width="88" height="31"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" width="88" height="31"></a>
+
+</p><p>©2009 Walter van Iterson
+
+<script style="display: none;" src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-701785-1";
+urchinTracker();
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
+<HTML> 
+<HEAD> 
+<TITLE>ssh Configuration</TITLE> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<META NAME="author" CONTENT="Bill Ola Rasmussen"> 
+<meta name="keywords" content="ssh X11 rsync"> 
+<link rel="stylesheet" type="text/css" href="http://2e5.com/style.css"> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD> 
+ 
+<body> 
+<script type="text/javascript"> 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-701785-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script> 
+<div class="head"> 
+<div class="rflo"> 
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div> 
+<h1>ssh Configuration</h1></div> 
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../tags/tool/">tool</a> 
+</div> 
+<a href="../..">2e5</a> &raquo;
+<a href="..">tool</a> &raquo;
+ssh
+</div> 
+<div class="main"> 
+<p> 
+ 
+<img class="rbox" src="sshrx.png" width="150" height="138" alt="ssh rsync"> 
+<p> 
+On a Linux or Unix system, ssh is used to make a secure connection to a remote machine.
+This connection can be used as a communications transport for other programs. In this article I describe
+how to setup an encrypted ssh connection between two machines. This connection can be used to
+log in to the remote machine, synchronize files between the machines, or display locally
+the GUI of a program running on a remote machine.
+<p>
+For the purposes of this article, alfa and beta are the peer machines we wish to configure. Both have
+a user account named bill.
+
+<h3>Install openssh</h3>
+
+<p class="cb">
+The first step is to install openssh on machine alfa:
+<pre class="box">
+<span class="name">bill@alfa:</span> sudo apt-get install openssh-server openssh-client
+<span class="name">bill@alfa:</span> sudo apt-get install rssh molly-guard openssh-blacklist openssh-blacklist-extra
+</pre>
+<p>
+We install both the ssh client and server portion as we will both be ssh'ing from and to these machines.
+The packages on the second line are optional, but a good idea. Refer to the man pages for more information.
+<p>
+At this point, we could use ssh to access a remote machine (running a ssh server) and be prompted
+for a password to validate access. Password login validation for ssh is a bad idea because it opens a security hole.
+Instead we follow the steps below to exchange security keys with the target machine and eliminate the ability
+to ssh using a password.
+<p>
+Create the encryption key on alfa:
+<p>
+<pre class="box">
+<span class="name">bill@alfa:</span> ssh-keygen -t rsa -C "user bill on alfa"
+</pre> 
+<p>
+Enter a filename, for example: bill_on_alfa. If the generated files are not created in ~/.ssh, move them there.
+The -C comment at the end of the command is optional, but a good idea as it help human readers identify the key.
+The public portion of the key and the comment ends up as part of the identity string
+in alfa's authentication agent, and in beta's authorized_keys file.
+<p>
+Now add the RSA identity to alfa's authentication agent. On alfa, type:
+<pre class="box">
+<span class="name">bill@alfa:</span> ssh-add bill_on_alfa
+</pre>
+<p>
+Listing the RSA identities in alfa's authentication agent is done by:
+<pre class="box">
+<span class="name">bill@alfa:</span> ssh-add -L
+</pre>
+<p>
+You should see the public key parameter of the just generated key as well as the "user bill on alfa" comment.
+<p>
+Since the identity is registered in alfa's authentication agent, we can use the 'short form'
+of ssh-copy-id to propagate the public key to beta's authorized_keys file.
+<p>
+<pre class="box">
+<span class="name">bill@alfa:</span>ssh-copy-id beta.local
+</pre> 
+<p>
+This command behaves nicely, creating the authorized_keys file if none exists, or appending the key if the
+file already exists.
+<p>
+Test the configuration by ssh to beta. No password should be required if things are configured correctly:
+<p>
+<pre class="box">
+<span class="name">bill@alfa:</span> ssh beta.local
+<span class="name">bill@beta:</span>
+</pre> 
+<p>  
+To test this further, rename beta's authorized_keys to another filename. A ssh from alfa to beta
+should again require a password. Restore beta's authorized_keys to restore the ssh key configuration.
+
+<h3>ssh Password Security</h3>
+
+The best password security for ssh is removing the ability to ssh using a password!
+<p>
+Since a key has been installed for authentication, we no longer need a password to log in.
+Let's change the ssh server settings on beta to only authenticate using a key.
+First, make a write protected backup of the original sshd_config file: 
+<p>
+<pre class="box">
+<span class="name">bill@beta:</span> sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+<span class="name">bill@beta:</span> sudo chmod a-w /etc/ssh/sshd_config.bak
+</pre> 
+<p>
+The sshd_config file contains password authentication settings. To remove the possibility
+to log in with a password, we find the line:
+<p>
+<pre class="box">
+#PasswordAuthentication yes
+</pre> 
+<p>
+And replace it with a line that looks like this:
+<p>
+<pre class="box">
+PasswordAuthentication no
+</pre> 
+<p>
+What editor will you use to make the change? If you answered Emacs, then no further
+hoops need jumping through as Emacs can run from the command line. Alternatively, gedit
+can be run with a little ssh magic: X11 forwarding.
+<p>
+From alfa, start gedit on beta, but have the GUI displayed on alfa:
+<pre class="box">
+<span class="name">bill@alfa:</span> ssh -X beta.local
+<span class="name">bill@beta:</span> sudo gedit /etc/ssh/sshd_config
+</pre> 
+<p>
+For the password authentication setting to take effect we need to restart the ssh server on beta.
+<p>
+<pre class="box">
+<span class="name">bill@beta:</span> sudo /etc/init.d/ssh restart
+</pre> 
+<p>
+That's it. Now (only) alfa can ssh to beta. Invert the instructions above for
+the secure ssh connection from beta to alfa.
+
+<h3>Extras</h3>
+
+We have already seen X11 forwarding with gedit over X. Another powerful tool is the use of rsync over ssh.
+I use this to keep my files synchronized between my machines. I gain the
+ability to work on local files on my machines, with the bonus side effect of
+having each machine function as file backup repository.
+<p>
+<pre class="box">
+<span class="name">bill@alfa:</span> rsync --progress -avz -e ssh bill@beta.local:~/Desktop/bu/ ~/Desktop/bu
+</pre> 
+<p>
+It is a good idea to experiment first with an additional parameter, -n, so that a 'dry run' is done
+with no changes.
+<p>
+Notes:
+<ul>
+<li>As with all information found on the internet, especially information which could affect
+the security on your computer, don't rely on this as an oracle of correct information. Please read the man pages and do web searches on all information
+presented here.
+<li>Please contact <a href="../../about/">me</a> if you do see any errors here.
+<li>If you have trouble making ssh contact with a computer using a wireless network, ensure that wireless connection
+is configured so that it starts without anyone logging in. Under Ubuntu: right click on the connection icon,
+select 'Edit Connections', click on the Wireless tab,
+double-click on the active wireless connection and mark both 'Connect automatically' (at the top) and
+'Available to all users' (at the bottom), then press 'Apply'.
+</ul>
+<p>
+Finally, it pays to be security conscious. After making these ssh changes to your computers, run:
+<p>
+<pre class="box">
+<span class="name">bill@alfa:</span> nmap 192.168.1.0-255
+</pre>
+<p>
+Change '192.168' if your internal network uses a different configuration.
+Ensure that you know what all the open ports in the resulting report are doing.
+<p>
+Enjoy!
+
+<p> 
+</div> 
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../tags/tool/">tool</a> 
+</div> 
+<a href="../..">2e5</a> &raquo;
+<a href="..">tool</a> &raquo;
+ssh
+</div> 
+ 
+<p> 
+<a href="http://validator.w3.org/check?uri=referer"> 
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a> 
+<a href="http://jigsaw.w3.org/css-validator/check/referer"> 
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a> 
+ 
+<p>&copy;2011 Bill Ola Rasmussen
+ 
+</BODY> 
+</HTML>

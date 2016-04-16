@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
+<HTML> 
+<HEAD> 
+<TITLE>V Plotter Design</TITLE> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta name="author" content="Bill Ola Rasmussen"> 
+<meta name="keywords" content="Plotter math code"> 
+<link rel="stylesheet" type="text/css" href="/style.css"> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+</HEAD> 
+<BODY> 
+<script type="text/javascript"> 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-701785-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script> 
+<div class="head"> 
+<div class="rflo"> 
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
+alt="2e5.com" ></a></div> 
+<h1>V Plotter Design</h1></div> 
+ 
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../../tags/tool/">tool</a>
+<a href="../../../tags/code/">code</a> 
+</div> 
+<a href="../../..">2e5</a> &raquo;
+<a href="../..">plotter</a> &raquo;
+<a href="..">V</a> &raquo;
+design
+</div> 
+ 
+<div class="main"> 
+ 
+    <p> 
+
+A V plotter is a minimalistic design which uses a pair of steppers, some
+string, and a pen head to create a plotter. These are sometimes made by students
+or technology sector employees as a way to avoid "real work".
+<p>
+In this article, I dig into the math behind these machines, and also write a
+program to calculate the configuration of a V setup needed to produce a working
+device.
+
+<h3>Requirements</h3>
+
+What is the optimal configuration of control lines for an area to be plotted?
+Obviously, we can't have a drawing area above the control lines &mdash; our friend gravity
+sees to that. But, can we do better than hand waving and "somewhere below the control lines"
+for the plot area? Yes: we think up some constraints and model them 
+with math and code (two more friends!):
+
+<ul>
+<li>Tension: We can imagine that the control lines have to be under some tension
+in order to be effective. For the purposes of this article we say that both string tensions
+must be in the range [ m/2, m*1.5 ], where m is the mass of the plotter head.
+Lines can neither be too slack nor too heavily loaded. The effect of this
+constraint is to prevent any line from being too close to horizontal or too close to vertical.
+<li>Resolution: There is a change in resolution when we map a change of length in one or both of the strings
+into X and Y coordinates. I.e. Coordinate system conversion causes a non-uniform step resolution.
+We say that, for each control line, a one unit change causes at
+most a 1.4 unit change in the X,Y coordinate system.  We limit plotting to the area of reasonable
+resolution. Here our definition of reasonable is a 40% change.
+</ul>
+
+To implement these requirements, we need to know how to calculate them. The next few sections
+talk math and have pretty pictures.
+
+<h3>Line Tension Calculation</h3>
+The below diagram shows a mass m suspended by two lines. Each line can (and usually will) have a different angle
+to the X axis. We wish to calculate the tension of each line in the diagram.
+<p>
+<img class="box" src="forceVector.png" alt="V plotter force vectors" width="562" height="340">
+<p>
+To describe the horizontal forces along the X axis (in balance), we write:
+<p>
+<img src="eqX.png" alt="t_{1}\cdot\cos a_{1}=t_{2}\cdot\cos a_{2}" width="229" height="23">
+<p>
+To describe the force m along the Y axis, caused by the weight of the plotter head assembly, we write:
+<p>
+<img src="eqY.png" alt="t_{1}\cdot\sin a_{1}+t_{2}\cdot\sin a_{2}=m" width="277" height="25">
+<p>
+Solving these two equations in terms of tension, we get:
+<p>
+<img src="tension1.png" alt="t_{1}=\frac{\cos a_{2} \cdot m} {\cos a_{1} \cdot \sin a_{2} + \sin a_{1} \cdot \cos a_{2}}" width="356" height="52">
+<p>
+and
+<p>
+<img src="tension2.png" alt="t_{2}=\frac{\cos a_{1} \cdot m} {\cos a_{1} \cdot \sin a_{2} + \sin a_{1} \cdot \cos a_{2}}" width="356" height="52">
+<p>
+Note that the tension equations have denominators in common.
+
+<h3>Angle Length Cartesian Conversion</h3>
+
+We wish to translate between coordinate systems:
+<ul>
+<li>From an angle and a length (here based from the origin), we wish to find an X,Y coordinate.
+<li>From an X,Y coordinate pair, we wish to find the angle and length (here to the origin).
+</ul>
+This is visualized below.
+<p>
+<img class="box" src="angleConvert.png" alt="coordinate system conversion" width="234" height="305">
+<p>
+    
+Trigonometry tells us that:
+<p>
+<img src="xy.png" alt="x,y = \cos a \cdot d, \sin a \cdot d" width="246" height="25">
+<p>
+<img src="da.png" alt="d,a = \sqrt{x^2+y^2}, \mathrm{atan2}(y,x)" width="300" height="33">
+
+<p>
+
+See Wikipedia <a href="http://en.wikipedia.org/wiki/Atan2">article on atan2</a>.
+Adjusting these formulas for non-origin locations involves a simple addition
+or subtraction adjustment.
+<p>
+I don't think there is a name for the coordinate system using two control lines.
+The closest I can find is the
+<a href="http://en.wikipedia.org/wiki/Biangular_coordinates">biangular coordinate system</a>,
+but this has more to do with the angles of the lines to the X axis than the length of the lines. As long
+as I am in confession mode, I must also say that I have not seen "V plotter" being used as the name 
+of this kind of device. I am not able to find any established name for this "thing", so necessity became the mother of invention.
+
+<h3>Law of Cosines</h3>
+The law of cosines can be used for many applications, here we use it to find an
+angle when we know the length of three legs.
+<p>
+<img class="box" src="triangle.png" alt="law of cosines triangle" width="400" height="250">
+<p>
+The law of cosines allows us to calculate the position of the print head when a
+line changes length. The basic form of the law is:
+
+<p>
+<img src="lawOfCosines.png" alt="a^2=b^2+c^2-2bc\cos\alpha" width="254" height="27">
+<p>
+Solving for &alpha; (alpha) we get:
+<p>
+<img src="alphaLawOfCosines.png" alt="\alpha = \arccos\frac{b^2+c^2-a^2}{2bc}" width="248" height="56">
+<p>
+The code uses this to map where the resolution of the print head is within an acceptable range. At certain
+points, a small change in line length will result in too large a change in the x,y coordinate system.
+<p>
+To check for resolution, we adjust a or b, then use the law of cosines to find &alpha; (alpha). Knowing &alpha; (alpha),
+length b and position A, we can use simple sine and cosine (see previous section) to find position C.
+
+<h3>Code Simulation</h3>
+Now we have enough math to code a V plotter simulation. The code below is divided into sections, each section is introduced with information to know when reading the 
+the code itself. The code sections can be pasted
+together to produce a complete Python program to run the simulation and draw the plotting area.
+<p>
+First we reference some libraries and set some constants.
+<p>
+<pre class="box">
+<span class="comment">#!/usr/bin/env python</span>
+<span class="keyword">import</span> <span class="name">sys</span><span class="operator">,</span><span class="name">Image</span><span class="operator">,</span><span class="name">ImageDraw</span>
+<span class="keyword">from</span> <span class="name">math</span> <span class="keyword">import</span> <span class="name">sqrt</span><span class="operator">,</span><span class="name">sin</span><span class="operator">,</span><span class="name">cos</span><span class="operator">,</span><span class="name">acos</span><span class="operator">,</span><span class="name">atan2</span><span class="operator">,</span><span class="name">degrees</span><span class="operator">,</span><span class="name">fabs</span>
+<span class="comment"># setup the constants</span>
+<span class="name">version</span><span class="operator">=</span><span class="number">1.7</span>
+<span class="name">outputFile</span><span class="operator">=</span><span class="string">"out.png"</span>
+<span class="name">width</span><span class="operator">,</span><span class="name">height</span><span class="operator">=</span><span class="number">800</span><span class="operator">,</span><span class="number">600</span>
+<span class="name">border</span><span class="operator">=</span><span class="number">32</span>
+<span class="comment"># V line end points</span>
+<span class="name">v1</span><span class="operator">=</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span>
+<span class="name">v2</span><span class="operator">=</span><span class="name">width</span><span class="operator">-</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span><span class="operator">-</span><span class="number">1</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span>
+</pre> 
+<p>
+Here we draw the fixed parts of the picture: the crosses showing the end points of the control lines, and the background
+for the drawing. Note that this drawing package has the origin in the upper left hand corner and a Y axis with positive values
+progressing downward.
+<p>
+<pre class="box">
+<span class="keyword">def</span> <span class="name">cross</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">p</span><span class="operator">,</span><span class="name">n</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">c</span><span class="operator">=</span><span class="string">"#000000"</span>
+    <span class="name">draw</span><span class="operator">.</span><span class="name">line</span><span class="operator">(</span><span class="operator">(</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">-</span><span class="name">n</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">+</span><span class="name">n</span><span class="operator">)</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span>
+    <span class="name">draw</span><span class="operator">.</span><span class="name">line</span><span class="operator">(</span><span class="operator">(</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-</span><span class="name">n</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">+</span><span class="name">n</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">)</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span>
+
+<span class="keyword">def</span> <span class="name">drawFixtures</span><span class="operator">(</span><span class="name">draw</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="comment"># border of calculation pixels</span>
+    <span class="name">draw</span><span class="operator">.</span><span class="name">rectangle</span><span class="operator">(</span><span class="operator">[</span><span class="name">border</span><span class="operator">-</span><span class="number">1</span><span class="operator">,</span><span class="name">border</span><span class="operator">-</span><span class="number">1</span><span class="operator">,</span><span class="name">width</span><span class="operator">-</span><span class="name">border</span><span class="operator">,</span><span class="name">height</span><span class="operator">-</span><span class="name">border</span><span class="operator">]</span><span class="operator">,</span><span class="string">"#FFFFFF"</span><span class="operator">,</span><span class="string">"#000000"</span><span class="operator">)</span>
+    <span class="comment"># V line end points</span>
+    <span class="name">cross</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">v1</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">4</span><span class="operator">)</span>
+    <span class="name">cross</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">v2</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">4</span><span class="operator">)</span>
+</pre> 
+<p>
+There is a one to one correspondence between the tension calculation code here and the
+tension calculation derivation in the first math section.
+<p>
+<pre class="box">
+<span class="keyword">def</span> <span class="name">lineTensions</span><span class="operator">(</span><span class="name">a1</span><span class="operator">,</span><span class="name">a2</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">d</span><span class="operator">=</span><span class="name">cos</span><span class="operator">(</span><span class="name">a1</span><span class="operator">)</span><span class="operator">*</span><span class="name">sin</span><span class="operator">(</span><span class="name">a2</span><span class="operator">)</span><span class="operator">+</span><span class="name">sin</span><span class="operator">(</span><span class="name">a1</span><span class="operator">)</span><span class="operator">*</span><span class="name">cos</span><span class="operator">(</span><span class="name">a2</span><span class="operator">)</span>
+    <span class="keyword">return</span> <span class="name">cos</span><span class="operator">(</span><span class="name">a2</span><span class="operator">)</span><span class="operator">/</span><span class="name">d</span><span class="operator">,</span><span class="name">cos</span><span class="operator">(</span><span class="name">a1</span><span class="operator">)</span><span class="operator">/</span><span class="name">d</span>
+
+<span class="keyword">def</span> <span class="name">tensionOk</span><span class="operator">(</span><span class="name">p</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="comment"># find angles</span>
+    <span class="name">a1</span><span class="operator">=</span><span class="name">atan2</span><span class="operator">(</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">-</span><span class="name">v1</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">,</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-</span><span class="name">v1</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)</span>
+    <span class="name">a2</span><span class="operator">=</span><span class="name">atan2</span><span class="operator">(</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">-</span><span class="name">v2</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">,</span><span class="name">v2</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)</span>
+    <span class="comment"># strings tension check</span>
+    <span class="name">t1</span><span class="operator">,</span><span class="name">t2</span><span class="operator">=</span><span class="name">lineTensions</span><span class="operator">(</span><span class="name">a1</span><span class="operator">,</span><span class="name">a2</span><span class="operator">)</span>
+    <span class="name">lo</span><span class="operator">,</span><span class="name">hi</span><span class="operator">=</span><span class="number">.5</span><span class="operator">,</span><span class="number">1.5</span>
+    <span class="keyword">return</span> <span class="name">lo</span><span class="operator">&lt;</span><span class="name">t1</span><span class="operator">&lt;</span><span class="name">hi</span> <span class="keyword">and</span> <span class="name">lo</span><span class="operator">&lt;</span><span class="name">t2</span><span class="operator">&lt;</span><span class="name">hi</span>
+</pre> 
+<p>
+Similarly, the resolution check code here is an implementation of the math in the previous section. In addition, there is a "sanity check"
+to verify that the calculated point for the triangle is the same as the point passed in to the calculation.
+<p>
+<pre class="box">
+<span class="keyword">def</span> <span class="name">dx</span><span class="operator">(</span><span class="name">p1</span><span class="operator">,</span><span class="name">p2</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="keyword">return</span> <span class="name">sqrt</span><span class="operator">(</span><span class="operator">(</span><span class="name">p1</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-</span><span class="name">p2</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)</span><span class="operator">**</span><span class="number">2</span><span class="operator">+</span><span class="operator">(</span><span class="name">p1</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">-</span><span class="name">p2</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">)</span><span class="operator">**</span><span class="number">2</span><span class="operator">)</span><span class="operator">;</span>
+
+<span class="keyword">def</span> <span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="name">b</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">alpha</span><span class="operator">=</span><span class="name">acos</span><span class="operator">(</span><span class="operator">(</span><span class="name">b</span><span class="operator">**</span><span class="number">2</span><span class="operator">+</span><span class="name">c</span><span class="operator">**</span><span class="number">2</span><span class="operator">-</span><span class="name">a</span><span class="operator">**</span><span class="number">2</span><span class="operator">)</span><span class="operator">/</span><span class="operator">(</span><span class="number">2</span><span class="operator">*</span><span class="name">b</span><span class="operator">*</span><span class="name">c</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="keyword">return</span> <span class="name">b</span><span class="operator">*</span><span class="name">cos</span><span class="operator">(</span><span class="name">alpha</span><span class="operator">)</span><span class="operator">+</span><span class="name">v1</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">,</span><span class="name">b</span><span class="operator">*</span><span class="name">sin</span><span class="operator">(</span><span class="name">alpha</span><span class="operator">)</span><span class="operator">+</span><span class="name">v1</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span>
+
+<span class="keyword">def</span> <span class="name">resolutionOk</span><span class="operator">(</span><span class="name">p</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">max</span><span class="operator">=</span><span class="number">1.4</span>
+    <span class="comment"># law of cosines calculation and nomenclature</span>
+    <span class="name">c</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">v1</span><span class="operator">,</span><span class="name">v2</span><span class="operator">)</span>
+    <span class="name">b</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">v1</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span>
+    <span class="name">a</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">v2</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span>
+    <span class="comment"># sanity check</span>
+    <span class="name">err</span><span class="operator">=</span><span class="number">.00000000001</span>
+    <span class="name">pc</span><span class="operator">=</span><span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="name">b</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span>
+    <span class="keyword">assert</span> <span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-</span><span class="name">err</span><span class="operator">&lt;</span><span class="name">pc</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">&lt;</span><span class="name">p</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">+</span><span class="name">err</span>
+    <span class="keyword">assert</span> <span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">-</span><span class="name">err</span><span class="operator">&lt;</span><span class="name">pc</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">&lt;</span><span class="name">p</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">+</span><span class="name">err</span>
+    <span class="comment"># calculate mapped differences</span>
+    <span class="name">db</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="name">b</span><span class="operator">+</span><span class="number">1</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span><span class="operator">)</span> <span class="comment"># extend left line by 1 unit</span>
+    <span class="name">da</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">+</span><span class="number">1</span><span class="operator">,</span><span class="name">b</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span><span class="operator">)</span> <span class="comment"># extend right line by 1 unit</span>
+    <span class="keyword">return</span> <span class="name">db</span><span class="operator">&lt;</span><span class="name">max</span> <span class="keyword">and</span> <span class="name">da</span><span class="operator">&lt;</span><span class="name">max</span> <span class="comment"># line pull of 1 unit does not move x,y by more than max</span>
+</pre> 
+<p>
+Each pixel in the drawing area is assigned a color based on the tension and resolution calculations. Dots are written on the
+terminal window to indicate that the calculation is underway.
+<p>
+<pre class="box">
+<span class="keyword">def</span> <span class="name">calcPixel</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">p</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="name">t</span><span class="operator">=</span><span class="name">tensionOk</span><span class="operator">(</span><span class="name">p</span><span class="operator">)</span>
+    <span class="name">r</span><span class="operator">=</span><span class="name">resolutionOk</span><span class="operator">(</span><span class="name">p</span><span class="operator">)</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> <span class="name">t</span> <span class="keyword">and</span> <span class="keyword">not</span> <span class="name">r</span><span class="operator">:</span>
+        <span class="name">draw</span><span class="operator">.</span><span class="name">point</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="string">"#3A5FBD"</span><span class="operator">)</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> <span class="name">t</span> <span class="keyword">and</span> <span class="name">r</span><span class="operator">:</span>
+        <span class="name">draw</span><span class="operator">.</span><span class="name">point</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="string">"#4876FF"</span><span class="operator">)</span>
+    <span class="keyword">if</span> <span class="name">t</span> <span class="keyword">and</span> <span class="keyword">not</span> <span class="name">r</span><span class="operator">:</span>
+        <span class="name">draw</span><span class="operator">.</span><span class="name">point</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="string">"#FF7F24"</span><span class="operator">)</span>
+    <span class="comment"># default to background color</span>
+
+<span class="keyword">def</span> <span class="name">drawPixels</span><span class="operator">(</span><span class="name">draw</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="keyword">for</span> <span class="name">y</span> <span class="keyword">in</span> <span class="name">range</span><span class="operator">(</span><span class="name">border</span><span class="operator">,</span><span class="name">height</span><span class="operator">-</span><span class="name">border</span><span class="operator">)</span><span class="operator">:</span>
+        <span class="name">sys</span><span class="operator">.</span><span class="name">stdout</span><span class="operator">.</span><span class="name">write</span><span class="operator">(</span><span class="string">'.'</span><span class="operator">)</span>
+        <span class="name">sys</span><span class="operator">.</span><span class="name">stdout</span><span class="operator">.</span><span class="name">flush</span><span class="operator">(</span><span class="operator">)</span>
+        <span class="keyword">for</span> <span class="name">x</span> <span class="keyword">in</span> <span class="name">range</span><span class="operator">(</span><span class="name">border</span><span class="operator">,</span><span class="name">width</span><span class="operator">-</span><span class="name">border</span><span class="operator">)</span><span class="operator">:</span>
+            <span class="name">calcPixel</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="operator">(</span><span class="name">x</span><span class="operator">,</span><span class="name">y</span><span class="operator">)</span><span class="operator">)</span>
+    <span class="name">sys</span><span class="operator">.</span><span class="name">stdout</span><span class="operator">.</span><span class="name">write</span><span class="operator">(</span><span class="string">'\n'</span><span class="operator">)</span>
+</pre> 
+<p>
+The main section of the program prepares an image for the calculation and writes it to disk when done.
+<p>
+<pre class="box">
+<span class="keyword">def</span> <span class="name">main</span><span class="operator">(</span><span class="operator">)</span><span class="operator">:</span>
+    <span class="keyword">print</span> <span class="string">"V plotter map, version"</span><span class="operator">,</span> <span class="name">version</span>
+
+    <span class="name">image</span> <span class="operator">=</span> <span class="name">Image</span><span class="operator">.</span><span class="name">new</span><span class="operator">(</span><span class="string">"RGB"</span><span class="operator">,</span><span class="operator">(</span><span class="name">width</span><span class="operator">,</span><span class="name">height</span><span class="operator">)</span><span class="operator">,</span><span class="string">"#D0D0D0"</span><span class="operator">)</span>
+    <span class="name">draw</span> <span class="operator">=</span> <span class="name">ImageDraw</span><span class="operator">.</span><span class="name">Draw</span><span class="operator">(</span><span class="name">image</span><span class="operator">)</span>
+
+    <span class="name">drawFixtures</span><span class="operator">(</span><span class="name">draw</span><span class="operator">)</span>
+    <span class="name">drawPixels</span><span class="operator">(</span><span class="name">draw</span><span class="operator">)</span>
+
+    <span class="name">image</span><span class="operator">.</span><span class="name">save</span><span class="operator">(</span><span class="name">outputFile</span><span class="operator">,</span><span class="string">"PNG"</span><span class="operator">)</span>
+    <span class="keyword">print</span> <span class="string">"map image written to"</span><span class="operator">,</span> <span class="name">outputFile</span>
+    <span class="keyword">print</span> <span class="string">"done."</span>
+
+<span class="keyword">if</span> <span class="name">__name__</span> <span class="operator">==</span> <span class="string">"__main__"</span><span class="operator">:</span>
+    <span class="name">main</span><span class="operator">(</span><span class="operator">)</span><span class="text"></span>
+</pre> 
+<p>
+To read code "top down" (more general to more detailed), start reading at the bottom section and work your way up.
+Oops, it's too late for me to tell you that now. Sorry.
+
+<h3>Plot Area Map</h3>
+
+The output of the program is a picture mapping locations to how well they met the specified requirements.
+
+<p>
+<img class="box" src="vPlotterMap.png" alt="V plotter design Map" width="800" height="600">
+<p>
+Colors designate:
+<ul>
+<li>Orange: poor resolution
+<li>Light Blue: too little tension in one of the lines
+<li>Dark Blue: too much tension in one of the lines (and poor resolution)
+<li>White: drawing area candidate
+</ul>
+<p>
+It is interesting to see that the area with poor resolution is a superset (entirely covers)
+the area with too much line tension. Thinking about it makes some intuitive sense: this is similar to
+a lever with a heavy weight on the short arm making the long arm move up or down a greater
+distance.
+<p>
+We see light blue sections under each "+" line control point. This also makes some intuitive sense because
+supporting a weight with a vertical line leaves no work (or tension) for an adjacent line.
+The light blue area on each side shows the loss of line tension on the side opposite. This is
+unfortunate because there is also line sag in longer lines (not covered in the above math or simulation)
+which is exacerbated by the loss of tension.
+<p>
+Given V plotter control lines sourced at the "+" markers, reasonable plotting can be done
+in the white region. For square or rectangular physical plotting surface, we can make a panel with the top
+side touching the orange area and the bottom corners touching the light blue area. For example the green
+area in the picture below:
+<p>
+<img class="box" src="surface.png" alt="drawing surface in V plotter design Map" width="400" height="300">
+<p>
+The ends of the control lines in the above picture seem to be further
+away from the plotting surface than V plotters commonly seen on the internet. Specifying different constraints
+will give different possibilities for drawing areas. We now have the tools in hand to parametrically design a V plotter
+matching the constraints we desire.
+
+<p> 
+</div> 
+
+<div class="navBar"> 
+<div class="rflo"> 
+tags:
+<a href="../../../tags/tool/">tool</a>
+<a href="../../../tags/code/">code</a> 
+</div> 
+<a href="../../..">2e5</a> &raquo;
+<a href="../..">plotter</a> &raquo;
+<a href="..">V</a> &raquo;
+design
+</div> 
+ 
+<p> 
+<div class="rflo"> 
+<div class="g-plusone"></div> 
+</div> 
+<div>
+<a href="http://validator.w3.org/check?uri=referer"> 
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a> 
+<a href="http://jigsaw.w3.org/css-validator/check/referer"> 
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a> 
+</div> 
+
+<p>&copy;2011 Bill Ola Rasmussen
+
+<script type="text/javascript">
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.async = true;
+g.src = 'https://apis.google.com/js/plusone.js';
+s.parentNode.insertBefore(g, s);
+})(document, 'script');
+</script>   
+</BODY> 
+</HTML> 
+ 

@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="650" height="330">
+	<g id="main_dimensions">
+		<g transform="translate(310,10) scale(300,300)">
+			<polygon transform="translate(-0.225,0) rotate(37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#left_flat);stroke:#000000;stroke-width:0.002"/>
+			<polygon points="-0.225,0 0.225,0 0.458,0.870 -0.458,0.870" style="fill:url(defs.svgdefs#main_flat); stroke:#000000;stroke-width:0.002"/>
+			<polygon transform="translate(0.225,0) rotate(-37.5)" points="0,0 0.345,0.832 -0.345,0.832" style="fill:url(defs.svgdefs#right_flat); stroke:#000000;stroke-width:0.002"/>
+			<g id="size-arrows" stroke="#cfcf00" stroke-width="0.01">
+				<g id="left-arrow" transform="translate(-0.42, 0.38) rotate(45)">
+					<line x1="0" y1="0" x2="0" y2="0.4"/>
+					<line x1="-0.05" y1="0.3" x2="0" y2="0.4"/>
+					<line x1="0.05" y1="0.3" x2="0" y2="0.4"/>
+				</g>
+				<g id="right-arrow" transform="translate(0.42, 0.38) rotate(-45)">
+					<line x1="0" y1="0" x2="0" y2="0.4"/>
+					<line x1="-0.05" y1="0.3" x2="0" y2="0.4"/>
+					<line x1="0.05" y1="0.3" x2="0" y2="0.4"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
