@@ -7,10 +7,8 @@ RewriteRule ^(.*)$ http://2e5.com/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.(htm(l)?|php)\ HTTP/ 
 rewriterule ^(([^/]+/)*)index\.(htm(l)?|php)$ http://2e5.com/$1 [R=301,L]
 
-<Files php.ini>
-order allow,deny
-deny from all
-</Files>
+# php.ini -> 404
+RedirectMatch 404 /php\.ini
 
 # .htaccess -> 404
 RedirectMatch 404 /\.ht
