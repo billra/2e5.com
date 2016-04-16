@@ -2,12 +2,11 @@
 <html>
 <body>
 
-<?php
-ECHO "Hello World! 2<br>";
+Pulling from github:
+<pre>
+<?php echo shell_exec("git pull 2>&1");
 ?>
-
-<?php `git pull`;
-?>
+</pre>
 
 </body>
 </html>
