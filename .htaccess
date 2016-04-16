@@ -8,7 +8,7 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.(htm(l)?|php)\ HTTP/
 rewriterule ^(([^/]+/)*)index\.(htm(l)?|php)$ http://2e5.com/$1 [R=301,L]
 
 # remove multiple slashes anywhere in url 
-RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$
+RewriteCond %{REQUEST_URI} ^(.*?)(/{2,})(.*)?$
 RewriteRule . %1/%2 [R=301,L]
 
 # php.ini -> 404
