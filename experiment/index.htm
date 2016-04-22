@@ -12,16 +12,20 @@
 <script type="text/javascript">
 	var dragging=false; // flag to indicate when shape has been clicked
 	var prevX,prevY; // strategy: track mouse move offset and add to object position
+	var prevColor;
 
 	function mouseDown(evt){
+		evt.preventDefault(); // disable Firefox drag handling
 		dragging=true;
-		prevX = evt.clientX; 
-		prevY = evt.clientY; 
+		prevX = evt.clientX;
+		prevY = evt.clientY;
+		prevColor = evt.target.getAttribute("fill");
 		evt.target.setAttribute("fill","green");
 	}
 
 	function move(evt){
 		if(!dragging){return;}
+		evt.preventDefault(); // disable Firefox drag handling
 		nowX=parseInt(evt.target.getAttribute('cx'))+evt.clientX-prevX;
 		nowY=parseInt(evt.target.getAttribute('cy'))+evt.clientY-prevY;
 		prevX = evt.clientX; 
@@ -32,7 +36,7 @@
 
 	function endMove(evt){
 		dragging=false;
-		evt.target.setAttribute("fill","yellow");
+		evt.target.setAttribute("fill",prevColor);
 	}
 </script>
 
