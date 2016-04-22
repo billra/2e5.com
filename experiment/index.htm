@@ -6,9 +6,42 @@
 
 <span style="border:1px dotted black; display:inline-block; padding:1px 1px 1px 1px">
 <svg style="display: block" width="400" height="400">
-  <circle style="cursor: move" cx="200" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" />
+  <circle style="cursor: move" cx="200" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" 
+   onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
 </svg>
 </span>
+
+<script>
+    var dragging=false;
+    var clickX, clickY; // stores cursor location upon first click
+    var moveX=0, moveY=0; // keeps track of overall transformation
+    var lastMoveX=0, lastMoveY=0; // stores previous transformation (move)
+    function mouseDown(evt){
+        evt.preventDefault(); // Needed for Firefox to allow dragging correctly
+        dragging=true;
+        clickX = evt.clientX; 
+        clickY = evt.clientY;
+        evt.target.setAttribute("fill","red");
+    }
+
+    function move(evt){
+        evt.preventDefault();
+        if(dragging){
+            moveX = lastMoveX + ( evt.clientX – clickX );
+            moveY = lastMoveY + ( evt.clientY – clickY );
+
+            evt.target.setAttribute("transform", "translate(" + moveX + "," + moveY + ")");
+        }
+    }
+
+    function endMove(evt){
+        dragging=false;
+        lastMoveX = moveX;
+        lastMoveY = moveY;
+        evt.target.setAttribute("fill","yellow");
+    }
+</script>
+
 
 </body>
 </html>
