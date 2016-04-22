@@ -34,6 +34,8 @@ function move(evt){
 	oldY=evt.clientY;
 	evt.target.setAttribute("cx",nowX);
 	evt.target.setAttribute("cy",nowY);
+	document.getElementById("xpos").innerHTML = nowX;
+	document.getElementById("ypos").innerHTML = nowY;
 }
 
 function endMove(evt){
@@ -51,6 +53,8 @@ function endMove(evt){
    onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
 </svg>
 </span>
+
+<p>Position: <span id="xpos">?</span>,<span id="ypos">?</span></p>
 
 </body>
 </html>
