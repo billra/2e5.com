@@ -9,40 +9,45 @@
 
 <p>experiment</p>
 
+<p>stage 1: click and drag balls</p>
+
 <script type="text/javascript">
-	var dragging=false; // flag to indicate when shape has been clicked
-	var prevX,prevY; // strategy: track mouse move offset and add to object position
-	var prevColor;
+var dragging=false;
+var oldX,oldY; // strategy: track mouse move offset, add to object position
+var oldColor;
 
-	function mouseDown(evt){
-		evt.preventDefault(); // disable Firefox drag handling
-		dragging=true;
-		prevX = evt.clientX;
-		prevY = evt.clientY;
-		prevColor = evt.target.getAttribute("fill");
-		evt.target.setAttribute("fill","green");
-	}
+function mouseDown(evt){
+	evt.preventDefault(); // disable Firefox drag handling
+	dragging=true;
+	oldX=evt.clientX;
+	oldY=evt.clientY;
+	oldColor=evt.target.getAttribute("fill");
+	evt.target.setAttribute("fill","green");
+}
 
-	function move(evt){
-		if(!dragging){return;}
-		evt.preventDefault(); // disable Firefox drag handling
-		nowX=parseInt(evt.target.getAttribute('cx'))+evt.clientX-prevX;
-		nowY=parseInt(evt.target.getAttribute('cy'))+evt.clientY-prevY;
-		prevX = evt.clientX; 
-		prevY = evt.clientY; 
-		evt.target.setAttribute("cx", nowX);
-		evt.target.setAttribute("cy", nowY);
-	}
+function move(evt){
+	if(!dragging){return;}
+	evt.preventDefault(); // disable Firefox drag handling
+	nowX=parseInt(evt.target.getAttribute('cx'))+evt.clientX-oldX;
+	nowY=parseInt(evt.target.getAttribute('cy'))+evt.clientY-oldY;
+	oldX=evt.clientX;
+	oldY=evt.clientY;
+	evt.target.setAttribute("cx",nowX);
+	evt.target.setAttribute("cy",nowY);
+}
 
-	function endMove(evt){
-		dragging=false;
-		evt.target.setAttribute("fill",prevColor);
-	}
+function endMove(evt){
+	if(!dragging){return;}
+	dragging=false;
+	evt.target.setAttribute("fill",oldColor);
+}
 </script>
 
 <span style="border:1px dotted black; display:inline-block; padding:1px 1px 1px 1px">
 <svg style="display: block" width="400" height="400">
-  <circle style="cursor: move" cx="200" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" 
+  <circle style="cursor: move" cx="170" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" 
+   onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
+  <circle style="cursor: move" cx="230" cy="200" r="20" stroke="blue" stroke-width="4" fill="darkorange" 
    onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
 </svg>
 </span>
