@@ -32,10 +32,16 @@ function move(evt){
 	nowY=parseInt(evt.target.getAttribute('cy'))+evt.clientY-oldY;
 	oldX=evt.clientX;
 	oldY=evt.clientY;
+	// update page html
 	evt.target.setAttribute("cx",nowX);
 	evt.target.setAttribute("cy",nowY);
 	document.getElementById("xpos").innerHTML = nowX;
 	document.getElementById("ypos").innerHTML = nowY;
+	name=evt.target.getAttribute('id');
+	// almost OOP, select html element based on svg element name
+	document.getElementById("theName").innerHTML = name;
+	document.getElementById(name+"Xpos").innerHTML = nowX;
+	document.getElementById(name+"Ypos").innerHTML = nowY;
 }
 
 function endMove(evt){
@@ -47,14 +53,16 @@ function endMove(evt){
 
 <span style="border:1px dotted black; display:inline-block; padding:1px 1px 1px 1px">
 <svg style="display: block" width="400" height="400">
-  <circle style="cursor: move" cx="170" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" 
+  <circle id="yellowCircle" style="cursor: move" cx="170" cy="200" r="20" stroke="blue" stroke-width="4" fill="yellow" 
    onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
-  <circle style="cursor: move" cx="230" cy="200" r="20" stroke="blue" stroke-width="4" fill="darkorange" 
+  <circle id="orangeCircle" style="cursor: move" cx="230" cy="200" r="20" stroke="blue" stroke-width="4" fill="darkorange" 
    onmousedown="mouseDown(evt)" onmousemove="move(evt)" onmouseup="endMove(evt)" onmouseout="endMove(evt)" />
 </svg>
 </span>
 
-<p>Position: <span id="xpos">?</span>,<span id="ypos">?</span></p>
+<p><span id="theName">?</span> position: <span id="xpos">?</span>,<span id="ypos">?</span></p>
+<p>yellow position: <span id="yellowCircleXpos">?</span>,<span id="yellowCircleYpos">?</span></p>
+<p>orange position: <span id="orangeCircleXpos">?</span>,<span id="orangeCircleYpos">?</span></p>
 
 </body>
 </html>
