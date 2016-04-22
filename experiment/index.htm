@@ -10,17 +10,17 @@
 <p>experiment</p>
 
 <script type="text/javascript">
-    var dragging=false; // flag to indicate when shape has been clicked
+	var dragging=false; // flag to indicate when shape has been clicked
 	var prevX,prevY; // strategy: track mouse move offset and add to object position
 
-    function mouseDown(evt){
+	function mouseDown(evt){
 		dragging=true;
 		prevX = evt.clientX; 
 		prevY = evt.clientY; 
 		evt.target.setAttribute("fill","green");
-    }
+	}
 
-    function move(evt){
+	function move(evt){
 		if(!dragging){return;}
 		nowX=parseInt(evt.target.getAttribute('cx'))+evt.clientX-prevX;
 		nowY=parseInt(evt.target.getAttribute('cy'))+evt.clientY-prevY;
@@ -28,12 +28,12 @@
 		prevY = evt.clientY; 
 		evt.target.setAttribute("cx", nowX);
 		evt.target.setAttribute("cy", nowY);
-    }
+	}
 
-    function endMove(evt){
+	function endMove(evt){
 		dragging=false;
 		evt.target.setAttribute("fill","yellow");
-    }
+	}
 </script>
 
 <span style="border:1px dotted black; display:inline-block; padding:1px 1px 1px 1px">
