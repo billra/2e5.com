@@ -23,6 +23,9 @@ function mouseDown(evt){
 	oldY=evt.clientY;
 	oldColor=dragitem.getAttribute("fill");
 	dragitem.setAttribute("fill","green");
+	// update html
+	name=dragitem.getAttribute('id');
+	document.getElementById("theName").innerHTML = name;
 }
 
 function move(evt){
@@ -34,12 +37,9 @@ function move(evt){
 	oldY=evt.clientY;
 	dragitem.setAttribute("cx",nowX);
 	dragitem.setAttribute("cy",nowY);
-	// update page html
-	document.getElementById("xpos").innerHTML = nowX;
-	document.getElementById("ypos").innerHTML = nowY;
+	// update html
 	name=dragitem.getAttribute('id');
 	// almost OOP, select html element based on svg element name
-	document.getElementById("theName").innerHTML = name;
 	document.getElementById(name+"Xpos").innerHTML = nowX;
 	document.getElementById(name+"Ypos").innerHTML = nowY;
 }
@@ -48,6 +48,8 @@ function endMove(evt){
 	if(!dragitem){return;}
 	dragitem.setAttribute("fill",oldColor);
 	dragitem=null;
+	// update html
+	document.getElementById("theName").innerHTML = 'nothing';
 }
 </script>
 
@@ -58,7 +60,7 @@ function endMove(evt){
 </svg>
 </span>
 
-<p><span id="theName">?</span> position: <span id="xpos">?</span>,<span id="ypos">?</span></p>
+<p><span id="theName">nothing</span> selected</p>
 <p>yellow position: <span id="yellowCircleXpos">?</span>,<span id="yellowCircleYpos">?</span></p>
 <p>orange position: <span id="orangeCircleXpos">?</span>,<span id="orangeCircleYpos">?</span></p>
 
