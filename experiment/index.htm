@@ -55,14 +55,28 @@ function endMove(evt){
 	document.getElementById("theName").innerHTML = 'nothing';
 }
 
-function editChange(formInput){
-	svgObjectId=formInput.id.substring(0,12); 
-	elem=svgContainer.getElementById(svgObjectId);
-	dimension=formInput.id.substring(12,13).toLowerCase(); // todo: OO approach, no rely on id
-	attribute="c"+dimension;
-	//console.log(attribute)
-	elem.setAttribute(attribute,formInput.value);
+// edit control wiring
+function WireEditChange(htmid,svgid,svgattr) {
+	// lookups called only once
+	var svgobj=svgContainer.getElementById(svgid);
+	var htmobj=document.getElementById(htmid);
+	// initial state: edit takes value of svg item
+    htmobj.value=svgobj.getAttribute(svgattr);
+	// function called for each change
+	htmobj.onchange = function(){
+		svgobj.setAttribute(svgattr,htmobj.value);
+	};
 }
+
+window.onload = function() {
+	// wire edit boxes to svg attribute
+	WireEditChange('yellowCircleXposEdit','yellowCircle','cx');
+	WireEditChange('yellowCircleYposEdit','yellowCircle','cy');
+	WireEditChange('orangeCircleXposEdit','orangeCircle','cx');
+	WireEditChange('orangeCircleYposEdit','orangeCircle','cy');
+
+	console.log('end of onload');
+};
 </script>
 
 <span style="display:inline-block; width:400px; height:400px; border:1px dotted black; padding:1px 1px 1px 1px; overflow:auto; resize:both">
@@ -77,13 +91,13 @@ function editChange(formInput){
 <p>orange position: <span id="orangeCircleXpos">?</span>,<span id="orangeCircleYpos">?</span></p>
 
 <form>
-<input type="number" id="yellowCircleXposEdit" onchange="editChange(this)">
-<input type="number" id="yellowCircleYposEdit" onchange="editChange(this)">
+<input type="number" id="yellowCircleXposEdit">
+<input type="number" id="yellowCircleYposEdit">
 </form>
 
 <form>
-<input type="number" id="orangeCircleXposEdit" onchange="editChange(this)">
-<input type="number" id="orangeCircleYposEdit" onchange="editChange(this)">
+<input type="number" id="orangeCircleXposEdit">
+<input type="number" id="orangeCircleYposEdit">
 </form>
 
 </body>
