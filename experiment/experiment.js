@@ -1,4 +1,4 @@
-function WireSvgToEdit(svgid, htmXid, htmYid) {
+function WireSvgToEdit(movementContainer,svgid,htmXid,htmYid) {
 	// lookups called only once
 	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
@@ -23,7 +23,7 @@ function WireSvgToEdit(svgid, htmXid, htmYid) {
 		// update html
 		theName.innerHTML=svgid;
 		// move tracked from svg container so we don't get a premature onmouseleave
-		svgContainer.onmousemove=function(evt) {
+		movementContainer.onmousemove=function(evt) {
 			evt.preventDefault(); // disable browser drag and drop
 			nowX=parseInt(svgobj.getAttribute('cx'))+evt.clientX-oldX;
 			nowY=parseInt(svgobj.getAttribute('cy'))+evt.clientY-oldY;
@@ -41,12 +41,12 @@ function WireSvgToEdit(svgid, htmXid, htmYid) {
 			// update html
 			theName.innerHTML='nothing';
 			// unwire svg object events
-			svgContainer.onmousemove=null;
-			svgContainer.onmouseup=null;
-			svgContainer.onmouseleave=null;
+			movementContainer.onmousemove=null;
+			movementContainer.onmouseup=null;
+			movementContainer.onmouseleave=null;
 		};
-		svgContainer.onmouseup=endmove;
-		svgContainer.onmouseleave=endmove;
+		movementContainer.onmouseup=endmove;
+		movementContainer.onmouseleave=endmove;
 	};
 }
 
@@ -60,6 +60,8 @@ function WireEditChange(htmobj,svgobj,svgattr) {
 }
 
 window.onload=function() {
-	WireSvgToEdit('yellowCircle','yellowCircleXposEdit','yellowCircleYposEdit');
-	WireSvgToEdit('orangeCircle','orangeCircleXposEdit','orangeCircleYposEdit');
+	WireSvgToEdit(svgContainer1,'yellowCircle1','yellowCircleXposEdit1','yellowCircleYposEdit1');
+	WireSvgToEdit(svgContainer1,'orangeCircle1','orangeCircleXposEdit1','orangeCircleYposEdit1');
+	WireSvgToEdit(svgContainer2,'yellowCircle2','yellowCircleXposEdit2','yellowCircleYposEdit2');
+	WireSvgToEdit(svgContainer2,'orangeCircle2','orangeCircleXposEdit2','orangeCircleYposEdit2');
 };
