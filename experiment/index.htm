@@ -15,50 +15,45 @@
 
 // svg object wiring
 function WireSvgChange(svgid, htmXid, htmYid) {
-	// lookups called only once
 	console.log('svg wire: ' + svgid + ' ' + htmXid + ' ' + htmYid);
+	// lookups called only once
 	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
 	var htmYobj=document.getElementById(htmYid);
-	var nameField=document.getElementById("theName");
+	var nameField=document.getElementById('theName');
 
 	// track old positions
-	var oldX,oldY; // strategy: track mouse move offset, add to object position
+	var oldX; // strategy: track mouse move offset, add to object position
+	var oldY;
 	var oldColor;
 
 	// mouse down on actual svg object
 	svgobj.onmousedown = function(evt){
 		console.log('svg event: ' + svgid + ' ' + htmXid + ' ' + htmYid);
-		evt.preventDefault(); // disable Firefox drag handling
+		evt.preventDefault(); // disable browser drag and drop
 		oldX=evt.clientX;
 		oldY=evt.clientY;
-		oldColor=svgobj.getAttribute("fill");
-		svgobj.setAttribute("fill","green");
+		oldColor=svgobj.getAttribute('fill');
+		svgobj.setAttribute('fill','green');
 		// update html
-		name=svgobj.getAttribute('id');
-		nameField.innerHTML = name;
+		nameField.innerHTML = svgid;
 		// move tracked from svg container so we don't get a premature onmouseleave
 		svgContainer.onmousemove = function(evt) {
-			evt.preventDefault(); // disable Firefox drag handling
+			evt.preventDefault(); // disable browser drag and drop
 			nowX=parseInt(svgobj.getAttribute('cx'))+evt.clientX-oldX;
 			nowY=parseInt(svgobj.getAttribute('cy'))+evt.clientY-oldY;
 			oldX=evt.clientX;
 			oldY=evt.clientY;
-			svgobj.setAttribute("cx",nowX);
-			svgobj.setAttribute("cy",nowY);
-			// update html
-			name=svgobj.getAttribute('id');
-			// almost OOP, select html element based on svg element name
-			document.getElementById(name+"Xpos").innerHTML = nowX;
-			document.getElementById(name+"Ypos").innerHTML = nowY;
+			svgobj.setAttribute('cx',nowX);
+			svgobj.setAttribute('cy',nowY);
 			// update contents of edit boxes
-			document.getElementById(name+"Xpos"+"Edit").value = nowX;
-			document.getElementById(name+"Ypos"+"Edit").value = nowY;
+			htmXobj.value = nowX;
+			htmYobj.value = nowY;
 		};
 		// likewise, end move tracked from container
 		var endmove = function(evt) {
 			console.log('end move: ' + svgid + ' ' + htmXid + ' ' + htmYid);
-			svgobj.setAttribute("fill",oldColor);
+			svgobj.setAttribute('fill',oldColor);
 			// update html
 			nameField.innerHTML = 'nothing';
 			// unwire svg object events
@@ -106,16 +101,14 @@ window.onload = function() {
 </svg>
 </span>
 
-<p><span id="theName">nothing</span> selected</p>
-<p>yellow position: <span id="yellowCircleXpos">?</span>,<span id="yellowCircleYpos">?</span></p>
-<p>orange position: <span id="orangeCircleXpos">?</span>,<span id="orangeCircleYpos">?</span></p>
+<p><span id="theName">nothing</span> being dragged</p>
 
-<form>
+<form>yellow position:
 <input type="number" id="yellowCircleXposEdit">
 <input type="number" id="yellowCircleYposEdit">
 </form>
 
-<form>
+<form>orange position:
 <input type="number" id="orangeCircleXposEdit">
 <input type="number" id="orangeCircleYposEdit">
 </form>
