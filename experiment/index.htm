@@ -20,13 +20,14 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
 	var htmYobj=document.getElementById(htmYid);
+	var nameField=document.getElementById("theName");
 
 	// track old positions
 	var oldX,oldY; // strategy: track mouse move offset, add to object position
 	var oldColor;
 
 	// mouse down on actual svg object
-	svgobj.onmousedown = function(evt){ // todo: don't need evt, use enclosing variables
+	svgobj.onmousedown = function(evt){
 		console.log('svg event: ' + svgid + ' ' + htmXid + ' ' + htmYid);
 		evt.preventDefault(); // disable Firefox drag handling
 		oldX=evt.clientX;
@@ -35,10 +36,9 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 		svgobj.setAttribute("fill","green");
 		// update html
 		name=svgobj.getAttribute('id');
-		document.getElementById("theName").innerHTML = name;
-
+		nameField.innerHTML = name;
 		// move tracked from svg container so we don't get a premature onmouseleave
-		svgContainer.onmousemove = function(evt) { // todo: don't need evt, use enclosing variables
+		svgContainer.onmousemove = function(evt) {
 			evt.preventDefault(); // disable Firefox drag handling
 			nowX=parseInt(svgobj.getAttribute('cx'))+evt.clientX-oldX;
 			nowY=parseInt(svgobj.getAttribute('cy'))+evt.clientY-oldY;
@@ -60,7 +60,7 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 			console.log('end move: ' + svgid + ' ' + htmXid + ' ' + htmYid);
 			svgobj.setAttribute("fill",oldColor);
 			// update html
-			document.getElementById("theName").innerHTML = 'nothing';
+			nameField.innerHTML = 'nothing';
 			// unwire svg object events
 			svgContainer.onmousemove = null;
 			svgContainer.onmouseup = null;
