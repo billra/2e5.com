@@ -1,0 +1,16 @@
+table {
+  width:100%;
+  border: 1px solid red;
+}
+th {
+  border: 1px solid blue;
+}
+td {
+  border: 1px solid black;
+}
+.skinny {
+  min-width:1%;
+}
+input {
+  width: 50px;
+}
