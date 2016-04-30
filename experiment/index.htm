@@ -18,7 +18,6 @@ function WireSvgToEdit(svgid, htmXid, htmYid) {
 	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
 	var htmYobj=document.getElementById(htmYid);
-	var nameField=document.getElementById('theName');
 
 	// wire edit to svg
 	WireEditChange(htmXobj,svgobj,'cx');
@@ -37,7 +36,7 @@ function WireSvgToEdit(svgid, htmXid, htmYid) {
 		oldColor=svgobj.getAttribute('fill');
 		svgobj.setAttribute('fill','green');
 		// update html
-		nameField.innerHTML=svgid;
+		theName.innerHTML=svgid;
 		// move tracked from svg container so we don't get a premature onmouseleave
 		svgContainer.onmousemove=function(evt) {
 			evt.preventDefault(); // disable browser drag and drop
@@ -55,7 +54,7 @@ function WireSvgToEdit(svgid, htmXid, htmYid) {
 		var endmove=function(evt) {
 			svgobj.setAttribute('fill',oldColor);
 			// update html
-			nameField.innerHTML='nothing';
+			theName.innerHTML='nothing';
 			// unwire svg object events
 			svgContainer.onmousemove=null;
 			svgContainer.onmouseup=null;
