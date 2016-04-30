@@ -17,7 +17,7 @@
 function WireSvgChange(svgid, htmXid, htmYid) {
 	// lookups called only once
 	console.log('svg wire: ' + svgid + ' ' + htmXid + ' ' + htmYid);
-	var svgobj=svgContainer.getElementById(svgid);
+	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
 	var htmYobj=document.getElementById(htmYid);
 
@@ -75,7 +75,7 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 function WireEditChange(htmid,svgid,svgattr) {
 	console.log('wire edit: ' + svgid + ' ' + htmid);
 	// lookups called only once
-	var svgobj=svgContainer.getElementById(svgid);
+	var svgobj=document.getElementById(svgid);
 	var htmobj=document.getElementById(htmid);
 	// initial state: edit takes value of svg item
     htmobj.value=svgobj.getAttribute(svgattr);
