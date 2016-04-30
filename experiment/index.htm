@@ -13,14 +13,16 @@
 
 <script type="text/javascript">
 
-// svg object wiring
-function WireSvgChange(svgid, htmXid, htmYid) {
-	console.log('svg wire: ' + svgid + ' ' + htmXid + ' ' + htmYid);
+function WireSvgToEdit(svgid, htmXid, htmYid) {
 	// lookups called only once
 	var svgobj=document.getElementById(svgid);
 	var htmXobj=document.getElementById(htmXid);
 	var htmYobj=document.getElementById(htmYid);
 	var nameField=document.getElementById('theName');
+
+	// wire edit to svg
+	WireEditChange(htmXobj,svgobj,'cx');
+	WireEditChange(htmYobj,svgobj,'cy');
 
 	// track old positions
 	var oldX; // strategy: track mouse move offset, add to object position
@@ -28,17 +30,16 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 	var oldColor;
 
 	// mouse down on actual svg object
-	svgobj.onmousedown = function(evt){
-		console.log('svg event: ' + svgid + ' ' + htmXid + ' ' + htmYid);
+	svgobj.onmousedown=function(evt){
 		evt.preventDefault(); // disable browser drag and drop
 		oldX=evt.clientX;
 		oldY=evt.clientY;
 		oldColor=svgobj.getAttribute('fill');
 		svgobj.setAttribute('fill','green');
 		// update html
-		nameField.innerHTML = svgid;
+		nameField.innerHTML=svgid;
 		// move tracked from svg container so we don't get a premature onmouseleave
-		svgContainer.onmousemove = function(evt) {
+		svgContainer.onmousemove=function(evt) {
 			evt.preventDefault(); // disable browser drag and drop
 			nowX=parseInt(svgobj.getAttribute('cx'))+evt.clientX-oldX;
 			nowY=parseInt(svgobj.getAttribute('cy'))+evt.clientY-oldY;
@@ -47,50 +48,36 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 			svgobj.setAttribute('cx',nowX);
 			svgobj.setAttribute('cy',nowY);
 			// update contents of edit boxes
-			htmXobj.value = nowX;
-			htmYobj.value = nowY;
+			htmXobj.value=nowX;
+			htmYobj.value=nowY;
 		};
 		// likewise, end move tracked from container
-		var endmove = function(evt) {
-			console.log('end move: ' + svgid + ' ' + htmXid + ' ' + htmYid);
+		var endmove=function(evt) {
 			svgobj.setAttribute('fill',oldColor);
 			// update html
-			nameField.innerHTML = 'nothing';
+			nameField.innerHTML='nothing';
 			// unwire svg object events
-			svgContainer.onmousemove = null;
-			svgContainer.onmouseup = null;
-			svgContainer.onmouseleave = null;
+			svgContainer.onmousemove=null;
+			svgContainer.onmouseup=null;
+			svgContainer.onmouseleave=null;
 		};
 		svgContainer.onmouseup=endmove;
 		svgContainer.onmouseleave=endmove;
 	};
 }
 
-// edit control wiring
-function WireEditChange(htmid,svgid,svgattr) {
-	console.log('wire edit: ' + svgid + ' ' + htmid);
-	// lookups called only once
-	var svgobj=document.getElementById(svgid);
-	var htmobj=document.getElementById(htmid);
+function WireEditChange(htmobj,svgobj,svgattr) {
 	// initial state: edit takes value of svg item
     htmobj.value=svgobj.getAttribute(svgattr);
 	// function called for each change
-	htmobj.onchange = function(){
+	htmobj.onchange=function(){
 		svgobj.setAttribute(svgattr,htmobj.value);
 	};
 }
 
-window.onload = function() {
-	// wire edit boxes to svg attribute
-	WireEditChange('yellowCircleXposEdit','yellowCircle','cx');
-	WireEditChange('yellowCircleYposEdit','yellowCircle','cy');
-	WireEditChange('orangeCircleXposEdit','orangeCircle','cx');
-	WireEditChange('orangeCircleYposEdit','orangeCircle','cy');
-	// wire svg to edit boxes
-	WireSvgChange('yellowCircle','yellowCircleXposEdit','yellowCircleYposEdit');
-	WireSvgChange('orangeCircle','orangeCircleXposEdit','orangeCircleYposEdit');
-
-	console.log('end of onload');
+window.onload=function() {
+	WireSvgToEdit('yellowCircle','yellowCircleXposEdit','yellowCircleYposEdit');
+	WireSvgToEdit('orangeCircle','orangeCircleXposEdit','orangeCircleYposEdit');
 };
 </script>
 
