@@ -22,7 +22,6 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 	var htmYobj=document.getElementById(htmYid);
 
 	// track old positions
-	var dragitem=null;
 	var oldX,oldY; // strategy: track mouse move offset, add to object position
 	var oldColor;
 
@@ -30,27 +29,25 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 	svgobj.onmousedown = function(evt){ // todo: don't need evt, use enclosing variables
 		console.log('svg event: ' + svgid + ' ' + htmXid + ' ' + htmYid);
 		evt.preventDefault(); // disable Firefox drag handling
-		dragitem=evt.target;
 		oldX=evt.clientX;
 		oldY=evt.clientY;
-		oldColor=dragitem.getAttribute("fill");
-		dragitem.setAttribute("fill","green");
+		oldColor=svgobj.getAttribute("fill");
+		svgobj.setAttribute("fill","green");
 		// update html
-		name=dragitem.getAttribute('id');
+		name=svgobj.getAttribute('id');
 		document.getElementById("theName").innerHTML = name;
 
 		// move tracked from svg container so we don't get a premature onmouseleave
 		svgContainer.onmousemove = function(evt) { // todo: don't need evt, use enclosing variables
-			if(!dragitem){return;}
 			evt.preventDefault(); // disable Firefox drag handling
-			nowX=parseInt(dragitem.getAttribute('cx'))+evt.clientX-oldX;
-			nowY=parseInt(dragitem.getAttribute('cy'))+evt.clientY-oldY;
+			nowX=parseInt(svgobj.getAttribute('cx'))+evt.clientX-oldX;
+			nowY=parseInt(svgobj.getAttribute('cy'))+evt.clientY-oldY;
 			oldX=evt.clientX;
 			oldY=evt.clientY;
-			dragitem.setAttribute("cx",nowX);
-			dragitem.setAttribute("cy",nowY);
+			svgobj.setAttribute("cx",nowX);
+			svgobj.setAttribute("cy",nowY);
 			// update html
-			name=dragitem.getAttribute('id');
+			name=svgobj.getAttribute('id');
 			// almost OOP, select html element based on svg element name
 			document.getElementById(name+"Xpos").innerHTML = nowX;
 			document.getElementById(name+"Ypos").innerHTML = nowY;
@@ -60,12 +57,14 @@ function WireSvgChange(svgid, htmXid, htmYid) {
 		};
 		// likewise, end move tracked from container
 		var endmove = function(evt) {
-			if(!dragitem){return;}
 			console.log('end move: ' + svgid + ' ' + htmXid + ' ' + htmYid);
-			dragitem.setAttribute("fill",oldColor);
-			dragitem=null;
+			svgobj.setAttribute("fill",oldColor);
 			// update html
 			document.getElementById("theName").innerHTML = 'nothing';
+			// unwire svg object events
+			svgContainer.onmousemove = null;
+			svgContainer.onmouseup = null;
+			svgContainer.onmouseleave = null;
 		};
 		svgContainer.onmouseup=endmove;
 		svgContainer.onmouseleave=endmove;
