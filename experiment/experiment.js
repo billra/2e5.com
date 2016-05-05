@@ -60,8 +60,8 @@ function WireEditChange(htmobj,svgobj,svgattr) {
 }
 
 window.onload=function() {
-	WireSvgToEdit(svgContainer1,'yellowCircle1','yellowCircleXposEdit1','yellowCircleYposEdit1');
-	WireSvgToEdit(svgContainer1,'orangeCircle1','orangeCircleXposEdit1','orangeCircleYposEdit1');
-	WireSvgToEdit(svgContainer2,'yellowCircle2','yellowCircleXposEdit2','yellowCircleYposEdit2');
-	WireSvgToEdit(svgContainer2,'orangeCircle2','orangeCircleXposEdit2','orangeCircleYposEdit2');
+	WireSvgToEdit(svg1,'yellowCircle1','yellowCircleXposEdit1','yellowCircleYposEdit1');
+	WireSvgToEdit(svg1,'orangeCircle1','orangeCircleXposEdit1','orangeCircleYposEdit1');
+	WireSvgToEdit(svg2,'yellowCircle2','yellowCircleXposEdit2','yellowCircleYposEdit2');
+	WireSvgToEdit(svg2,'orangeCircle2','orangeCircleXposEdit2','orangeCircleYposEdit2');
 };
