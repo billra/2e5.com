@@ -18,8 +18,8 @@ function WireSvgToEdit(movementContainer,svgid,htmXid,htmYid) {
 		evt.preventDefault(); // disable browser drag and drop
 		oldX=evt.clientX;
 		oldY=evt.clientY;
-		oldColor=svgobj.getAttribute('fill');
-		svgobj.setAttribute('fill','green');
+		oldColor=svgobj.style.fill;
+		svgobj.style.fill='green';
 		// update html
 		theName.innerHTML=svgid;
 		// move tracked from svg container so we don't get a premature onmouseleave
@@ -37,7 +37,7 @@ function WireSvgToEdit(movementContainer,svgid,htmXid,htmYid) {
 		};
 		// likewise, end move tracked from container
 		var endmove=function(evt) {
-			svgobj.setAttribute('fill',oldColor);
+			svgobj.style.fill=oldColor;
 			// update html
 			theName.innerHTML='nothing';
 			// unwire svg object events

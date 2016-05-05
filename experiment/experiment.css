@@ -22,4 +22,12 @@ svg.expand {
 }
 circle.moveable {
 	cursor: move;
+	stroke: blue;
+	stroke-width: 4;
+}
+circle.yellow {
+	fill: yellow;
+}
+circle.orange {
+	fill: darkorange;
 }
