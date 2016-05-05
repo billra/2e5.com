@@ -60,10 +60,11 @@ function WireEditChange(htmobj,svgobj,svgattr) {
 }
 
 // todo: solve code duplication
-function WireSvgToEditLine(movementContainer, svgid, svgLineid, lineend, htmXid, htmYid) {
+function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid, htmYid) {
 	// lookups called only once
 	var svgobj = document.getElementById(svgid);
 	var svgLineobj = document.getElementById(svgLineid);
+	var svgEndobj = document.getElementById(svgEndid);
 	var htmXobj = document.getElementById(htmXid);
 	var htmYobj = document.getElementById(htmYid);
 
@@ -94,8 +95,8 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, lineend, htmXid,
 			oldY = evt.clientY;
 			svgobj.setAttribute('cx', nowX);
 			svgobj.setAttribute('cy', nowY);
-			svgLineobj.setAttribute('x'+lineend, nowX);
-			svgLineobj.setAttribute('y'+lineend, nowY);
+			svgLineobj.setAttribute('x1', nowX);
+			svgLineobj.setAttribute('y1', nowY);
 			// update contents of edit boxes
 			htmXobj.value = nowX;
 			htmYobj.value = nowY;
@@ -118,6 +119,6 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, lineend, htmXid,
 window.onload = function () {
 	WireSvgToEdit(svg1,'yellowCircle1','yellowCircleXposEdit1','yellowCircleYposEdit1');
 	WireSvgToEdit(svg1,'orangeCircle1','orangeCircleXposEdit1','orangeCircleYposEdit1');
-	WireSvgToEditLine(svg2,'yellowCircle2','line2','1','yellowCircleXposEdit2','yellowCircleYposEdit2');
-	WireSvgToEditLine(svg2,'orangeCircle2','line2','2','orangeCircleXposEdit2','orangeCircleYposEdit2');
+	WireSvgToEditLine(svg2,'yellowCircle2','yellowLine2','greyCircle2','yellowCircleXposEdit2','yellowCircleYposEdit2');
+	WireSvgToEditLine(svg2,'orangeCircle2','orangeLine2','greyCircle2','orangeCircleXposEdit2','orangeCircleYposEdit2');
 };

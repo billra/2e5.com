@@ -31,3 +31,8 @@ circle.yellow {
 circle.orange {
 	fill: darkorange;
 }
+circle.grey {
+	stroke: slategrey;
+	stroke-width: 4;
+	fill: lightgrey;
+}
