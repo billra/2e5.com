@@ -64,9 +64,11 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid
 	// lookups called only once
 	var svgobj = document.getElementById(svgid);
 	var svgLineobj = document.getElementById(svgLineid);
-	var svgEndobj = document.getElementById(svgEndid);
 	var htmXobj = document.getElementById(htmXid);
 	var htmYobj = document.getElementById(htmYid);
+	var svgEndobj = document.getElementById(svgEndid);
+	var baseX = svgEndobj.getAttribute('cx');
+	var baseY = svgEndobj.getAttribute('cy');
 
 	// wire edit to svg
 	WireEditChange(htmXobj, svgobj, 'cx');
@@ -97,6 +99,10 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid
 			svgobj.setAttribute('cy', nowY);
 			svgLineobj.setAttribute('x1', nowX);
 			svgLineobj.setAttribute('y1', nowY);
+
+			var angleDeg = Math.atan2(baseY - nowY, baseX - nowX) * 180 / Math.PI;
+			document.getElementById('theAngle' ).textContent = angleDeg; // todo: as a parameter
+
 			// update contents of edit boxes
 			htmXobj.value = nowX;
 			htmYobj.value = nowY;
