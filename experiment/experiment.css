@@ -1,5 +1,4 @@
 table {
-  width:100%;
   border: 1px solid red;
 }
 th {
@@ -10,6 +9,9 @@ td {
 }
 .skinny {
   min-width:1%;
+}
+.wide {
+  width:100%;
 }
 input {
   width: 50px;
