@@ -1,0 +1,13 @@
+<svg id="svg2" width="1500mm" height="1000mm" xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<style type="text/css">
+		circle.moveable {cursor: move; stroke: blue; stroke-width: 4;}
+		circle.yellow {fill: yellow;}
+		circle.orange {fill: darkorange;}
+		circle.grey {stroke: slategrey; stroke-width: 4; fill: lightgrey;}
+	</style>
+	<circle id="greyCircle2" class="grey" cx="20mm" cy="990mm" r="15"></circle>
+	<line id="yellowLine2" x1="20mm" y1="23.5mm" x2="20mm" y2="990mm" stroke="black" stroke-width="2"></line>
+	<line id="orangeLine2" x1="1480mm" y1="35mm" x2="20mm" y2="990mm" stroke="black" stroke-width="2"></line>
+	<circle style="" id="yellowCircle2" class="moveable yellow" cx="20mm" cy="23.5mm" r="15"></circle>
+	<circle id="orangeCircle2" class="moveable orange" cx="1480mm" cy="35mm" r="15"></circle>
+</svg>
