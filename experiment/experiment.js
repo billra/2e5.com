@@ -128,3 +128,13 @@ window.onload = function () {
 	WireSvgToEditLine(svg2,'yellowCircle2','yellowLine2','greyCircle2','yellowCircleXposEdit2','yellowCircleYposEdit2');
 	WireSvgToEditLine(svg2,'orangeCircle2','orangeLine2','greyCircle2','orangeCircleXposEdit2','orangeCircleYposEdit2');
 };
+
+function saveSvg() {
+	var link = document.createElement("a");
+	link.download = "drawing.svg"; // download
+	// link.target = "_blank"; // open in new tab
+	link.href = "data:image/svg+xml;utf8," + svg2.outerHTML; // encoding?
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+}
