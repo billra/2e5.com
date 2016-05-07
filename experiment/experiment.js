@@ -59,6 +59,16 @@ function WireEditChange(htmobj, svgobj, svgattr) {
 	};
 }
 
+function WireEditChange2(htmobj, svgobj, svgattr, svgLineobj, svgLineattr) {
+	// initial state: edit takes value of svg item
+	htmobj.value = svgobj.getAttribute(svgattr);
+	// function called for each change
+	htmobj.onchange = function () {
+		svgobj.setAttribute(svgattr, htmobj.value);
+		svgLineobj.setAttribute(svgLineattr, htmobj.value);
+	};
+}
+
 // todo: solve code duplication
 function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid, htmYid) {
 	// lookups called only once
@@ -71,8 +81,8 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid
 	var baseY = svgEndobj.getAttribute('cy');
 
 	// wire edit to svg
-	WireEditChange(htmXobj, svgobj, 'cx');
-	WireEditChange(htmYobj, svgobj, 'cy');
+	WireEditChange2(htmXobj, svgobj, 'cx', svgLineobj, 'x1');
+	WireEditChange2(htmYobj, svgobj, 'cy', svgLineobj, 'y1');
 
 	// track old positions
 	var oldX; // strategy: track mouse move offset, add to object position
