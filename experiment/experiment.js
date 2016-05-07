@@ -1,3 +1,7 @@
+// experiment in js svg interaction
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=- Two Balls -=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 function WireSvgToEdit(movementContainer, svgid, htmXid, htmYid) {
 	// lookups called only once
 	var svgobj = document.getElementById(svgid);
@@ -58,6 +62,8 @@ function WireEditChange(htmobj, svgobj, svgattr) {
 		svgobj.setAttribute(svgattr, htmobj.value);
 	};
 }
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=- Two Balls, Two Lines -=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 function WireEditChange2(htmobj, svgobj, svgattr, svgLineobj, svgLineattr) {
 	// initial state: edit takes value of svg item
@@ -132,13 +138,6 @@ function WireSvgToEditLine(movementContainer, svgid, svgLineid, svgEndid, htmXid
 	};
 }
 
-window.onload = function () {
-	WireSvgToEdit(svg1, 'yellowCircle1', 'yellowCircleXposEdit1', 'yellowCircleYposEdit1');
-	WireSvgToEdit(svg1, 'orangeCircle1', 'orangeCircleXposEdit1', 'orangeCircleYposEdit1');
-	WireSvgToEditLine(svg2, 'yellowCircle2', 'yellowLine2', 'greyCircle2', 'yellowCircleXposEdit2', 'yellowCircleYposEdit2');
-	WireSvgToEditLine(svg2, 'orangeCircle2', 'orangeLine2', 'greyCircle2', 'orangeCircleXposEdit2', 'orangeCircleYposEdit2');
-};
-
 function saveSvg() {
 	var link = document.createElement("a");
 	link.download = "drawing.svg"; // download
@@ -148,3 +147,38 @@ function saveSvg() {
 	link.click();
 	document.body.removeChild(link);
 }
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=- Angle Control -=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+function createAngleControl(svgid, rotAngleid, openAngleid, rotAngle, openAngle) {
+	var svgobj = document.getElementById(svgid);
+	var rotAngleobj = document.getElementById(rotAngleid);
+	var openAngleobj = document.getElementById(openAngleid);
+
+	var svgNS = "http://www.w3.org/2000/svg";
+
+	var obj = document.createElementNS(svgNS, "circle");
+	obj.setAttribute("id", "todo");
+	obj.setAttribute("cx", 50);
+	obj.setAttribute("cy", 50);
+	obj.setAttribute("r", 20);
+	obj.setAttribute("class","moveable orange")
+	//obj.setAttribute("fill", "orange");
+	//obj.setAttribute("stroke", "slategrey");
+	//obj.setAttribute("stroke-width", 4);
+
+	svgobj.appendChild(obj);
+
+	rotAngleobj.textContent = rotAngle;
+	openAngleobj.textContent = openAngle;
+}
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+window.onload = function () {
+	WireSvgToEdit(svg1, 'yellowCircle1', 'yellowCircleXposEdit1', 'yellowCircleYposEdit1');
+	WireSvgToEdit(svg1, 'orangeCircle1', 'orangeCircleXposEdit1', 'orangeCircleYposEdit1');
+	WireSvgToEditLine(svg2, 'yellowCircle2', 'yellowLine2', 'greyCircle2', 'yellowCircleXposEdit2', 'yellowCircleYposEdit2');
+	WireSvgToEditLine(svg2, 'orangeCircle2', 'orangeLine2', 'greyCircle2', 'orangeCircleXposEdit2', 'orangeCircleYposEdit2');
+	createAngleControl("andgleDisplay3", "rotationAngle3", "openAngle3", 90, 15)
+};
