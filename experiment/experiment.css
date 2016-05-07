@@ -20,7 +20,7 @@ svg.expand {
 	height: 100%;
 	display: block;
 }
-circle.moveable {
+circle.movable {
 	cursor: move;
 	stroke: blue;
 	stroke-width: 4;

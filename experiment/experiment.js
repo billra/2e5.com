@@ -162,7 +162,7 @@ function createAngleControl(svgid, rotAngleid, openAngleid, rotAngle, openAngle)
 	obj.setAttribute("cx", 50);
 	obj.setAttribute("cy", 50);
 	obj.setAttribute("r", 20);
-	obj.setAttribute("class","moveable orange")
+	obj.setAttribute("class","movable orange")
 	//obj.setAttribute("fill", "orange");
 	//obj.setAttribute("stroke", "slategrey");
 	//obj.setAttribute("stroke-width", 4);
