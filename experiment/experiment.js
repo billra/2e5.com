@@ -150,6 +150,13 @@ function saveSvg() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- Angle Control -=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+function calcMove(pt, dx, angle) {
+	return {
+		x: pt.x + dx * Math.cos(angle),
+		y: pt.y + dx * Math.sin(angle)
+	};
+}
+
 function createAngleControl(svgid, rotAngleid, openAngleid, rotAngle, openAngle) {
 	var svgobj = document.getElementById(svgid);
 	var rotAngleobj = document.getElementById(rotAngleid);
@@ -157,20 +164,35 @@ function createAngleControl(svgid, rotAngleid, openAngleid, rotAngle, openAngle)
 	var svgNS = "http://www.w3.org/2000/svg";
 
 	var bcr = svgobj.getBoundingClientRect();
+	var center = { x: bcr.width / 2, y: bcr.height / 2 };
+	var radius = Math.min(center.x, center.y);
+	var raLegLen = radius - 25;
+	var oaLeglen = radius - 30;
+	var dest = calcMove(center, raLegLen, rotAngle);
+
+	console.log('raleglen', raLegLen)
+	console.log('center x', center.x, 'y', center.y)
+	console.log('dest x', dest.x, 'y', dest.y)
 
 	var obj = document.createElementNS(svgNS, "circle");
 	obj.setAttribute("id", "todo");
-	obj.setAttribute("cx", bcr.width / 2);
-	obj.setAttribute("cy", bcr.width / 2);
+	obj.setAttribute("cx", dest.x);
+	obj.setAttribute("cy", dest.y);
 	obj.setAttribute("r", 20);
 	obj.setAttribute("class", "movable orange")
 
 	svgobj.appendChild(obj);
 
-	rotAngleobj.textContent = rotAngle;
-	openAngleobj.textContent = openAngle;
+	rotAngleobj.textContent = degrees(rotAngle);
+	openAngleobj.textContent = degrees(openAngle);
 }
 
+function radians(degrees) {
+	return degrees * Math.PI / 180;
+};
+function degrees(radians) {
+	return radians * 180 / Math.PI;
+};
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 window.onload = function () {
@@ -178,5 +200,5 @@ window.onload = function () {
 	WireSvgToEdit(svg1, 'orangeCircle1', 'orangeCircleXposEdit1', 'orangeCircleYposEdit1');
 	WireSvgToEditLine(svg2, 'yellowCircle2', 'yellowLine2', 'greyCircle2', 'yellowCircleXposEdit2', 'yellowCircleYposEdit2');
 	WireSvgToEditLine(svg2, 'orangeCircle2', 'orangeLine2', 'greyCircle2', 'orangeCircleXposEdit2', 'orangeCircleYposEdit2');
-	createAngleControl("andgleDisplay3", "rotationAngle3", "openAngle3", 90, 15)
+	createAngleControl("andgleDisplay3", "rotationAngle3", "openAngle3", radians(90), radians(15))
 };
