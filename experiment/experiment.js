@@ -154,18 +154,16 @@ function createAngleControl(svgid, rotAngleid, openAngleid, rotAngle, openAngle)
 	var svgobj = document.getElementById(svgid);
 	var rotAngleobj = document.getElementById(rotAngleid);
 	var openAngleobj = document.getElementById(openAngleid);
-
 	var svgNS = "http://www.w3.org/2000/svg";
+
+	var bcr = svgobj.getBoundingClientRect();
 
 	var obj = document.createElementNS(svgNS, "circle");
 	obj.setAttribute("id", "todo");
-	obj.setAttribute("cx", 50);
-	obj.setAttribute("cy", 50);
+	obj.setAttribute("cx", bcr.width / 2);
+	obj.setAttribute("cy", bcr.width / 2);
 	obj.setAttribute("r", 20);
-	obj.setAttribute("class","movable orange")
-	//obj.setAttribute("fill", "orange");
-	//obj.setAttribute("stroke", "slategrey");
-	//obj.setAttribute("stroke-width", 4);
+	obj.setAttribute("class", "movable orange")
 
 	svgobj.appendChild(obj);
 
