@@ -12,6 +12,7 @@
 <body>
 
 <p>experiment 2</p>
+<p>dynamic execution of code</p>
 
 <p>normal textarea</p>
 <textarea style="border:solid 1px black;">line 1
@@ -19,9 +20,19 @@ line 2
 </textarea>
 
 <p>codemirror text area</p>
-<textarea id="editor" style="border:solid 1px black;">line 1
-line 2
+<textarea id="editor">executing an alert:
+<script>
+  alert('hello');
+</script>
 </textarea>
+<button onclick="submit_iframe();">To Frame</button>
+<button onclick="submit_div();">To Div</button>
+<p>frame result:</p>
+<iframe id="result"></iframe>
+<button onclick="clear_iframe();">Clear Frame</button>
+<div id="divName">asdf</div>
+
+
 </body>
 <script>
 	var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -29,5 +40,31 @@ line 2
 		mode: "javascript",
 		theme: "mdn-like"
 	});
+	function submit_iframe() {
+		editor.save();
+		var code = document.getElementById("editor").value;
+		var data_url = "data:text/html;charset=utf-8," + code;
+		document.getElementById("result").src = data_url;
+	}
+	function clear_iframe() {
+		document.getElementById("result").src = "data:text/html;charset=utf-8,";
+	}
+	function submit_div() {
+		editor.save();
+		var code = document.getElementById("editor").value;
+		//document.getElementById("divName").innerHTML = code;
+
+		var newdiv = document.createElement('div');
+
+		var p = document.createElement('p');
+		p.innerHTML = "Dynamically added text";
+		newdiv.appendChild(p);
+
+		var script = document.createElement('script');
+		script.innerHTML = "alert('i am here');";
+		newdiv.appendChild(script);
+
+		document.getElementById('divName').appendChild(newdiv);
+	}
 </script>
 </html>
