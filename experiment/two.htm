@@ -11,28 +11,18 @@
 </HEAD>
 <body>
 
-<p>experiment 2</p>
-<p>dynamic execution of code</p>
-
-<p>normal textarea</p>
-<textarea style="border:solid 1px black;">line 1
-line 2
-</textarea>
+<p>experiment 2: dynamic execution of code</p>
 
 <p>codemirror text area</p>
-<textarea id="editor">executing an alert:
-<script>
-  alert('hello');
-</script>
-</textarea>
-<button onclick="submit_iframe();">To Frame</button>
-<button onclick="submit_div();">To Div</button>
-<p>frame result:</p>
-<iframe id="result"></iframe>
-<button onclick="clear_iframe();">Clear Frame</button>
-<div id="divName">asdf</div>
+<textarea id="editor">document.getElementById("divTarget").innerHTML = Math.floor((Math.random() * 100) + 1);</textarea>
 
+<button onclick="run_code();">Run</button>
 
+<p>The calculated value is:
+<span id="divTarget">(enter code and press 'run')</span>
+</p>
+
+<div id="dynamicCode">blank</div>
 </body>
 <script>
 	var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -40,31 +30,15 @@ line 2
 		mode: "javascript",
 		theme: "mdn-like"
 	});
-	function submit_iframe() {
+	function run_code() {
 		editor.save();
 		var code = document.getElementById("editor").value;
-		var data_url = "data:text/html;charset=utf-8," + code;
-		document.getElementById("result").src = data_url;
-	}
-	function clear_iframe() {
-		document.getElementById("result").src = "data:text/html;charset=utf-8,";
-	}
-	function submit_div() {
-		editor.save();
-		var code = document.getElementById("editor").value;
-		document.getElementById("divName").innerHTML = '';
-
-		var newdiv = document.createElement('div');
-
-		var p = document.createElement('p');
-		p.innerHTML = "Dynamically added text";
-		newdiv.appendChild(p);
+		document.getElementById("dynamicCode").innerHTML = ''; // clear previous children
 
 		var script = document.createElement('script');
-		script.innerHTML = "alert('i am here');";
-		newdiv.appendChild(script);
+		script.innerHTML = code;
 
-		document.getElementById('divName').appendChild(newdiv);
+		document.getElementById('dynamicCode').appendChild(script);
 	}
 </script>
 </html>
