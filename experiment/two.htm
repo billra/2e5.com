@@ -14,7 +14,7 @@
 <p>experiment 2: dynamic execution of code</p>
 
 <p>codemirror text area</p>
-<textarea id="editor">document.getElementById("divTarget").innerHTML = Math.floor((Math.random() * 100) + 1);</textarea>
+<textarea id="editor">showResult(Math.floor((Math.random() * 100) + 1));</textarea>
 
 <button onclick="run_code();">Run</button>
 
@@ -39,6 +39,9 @@
 		script.innerHTML = code;
 
 		document.getElementById('dynamicCode').appendChild(script);
+	}
+	function showResult(val) {
+		document.getElementById("divTarget").innerHTML = val;
 	}
 </script>
 </html>
