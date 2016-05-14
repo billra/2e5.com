@@ -1,10 +1,11 @@
 var editor;
 var dynCode;
 var result;
+var textContainer;
 
 function run_code() {
 	editor.save();
-	var code = editor.value;
+	var code = textContainer.value;
 	var script = document.createElement('script');
 	script.innerHTML = code;
 	dynCode.innerHTML = ''; // clear previous children
@@ -20,7 +21,8 @@ function showResult(val) {
 window.onload = function () {
 	dynCode = document.getElementById("dynamicCode");
 	result = document.getElementById("divTarget");
-	editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+	textContainer = document.getElementById("editor");
+	editor = CodeMirror.fromTextArea(textContainer, {
 		lineNumbers: true,
 		mode: "javascript",
 		theme: "mdn-like"
