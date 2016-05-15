@@ -19,13 +19,16 @@
 for (i = 0; i < 4; ++i) {
 	text += Math.floor((Math.random() * 100) + 1).toString() + ' ';
 }
-showResult(text);</textarea>
+showResult(text);
+log('logging code result:',text);</textarea>
 
 <button onclick="run_code();">Run</button>
 
 <p>The calculated value is:
 <span id="divTarget">(enter code and press 'run')</span>
 </p>
+
+<div id="consoleLog"></div>
 
 <div id="dynamicCode">blank</div>
 </body>
