@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<TITLE>experiment two</TITLE>
+<meta charset="utf-8">
+<meta name="author" content="Bill Ola Rasmussen"> 
+<link rel="stylesheet" type="text/css" href="experiment.css">
+</head>
+<body>
+<p>experiment 3: ace editor and window setup</p>
+<table width="100%">
+<tr>
+<td colspan="2">
+SVG window placeholder<br>
+<br>
+asdf<br>
+asdf<br>
+<button onclick="run_code();">Fn1</button><button onclick="run_code();">Fn2</button><button onclick="run_code();">Fn3</button><button onclick="run_code();">Fn4</button>
+</td>
+</tr>
+<tr>
+<td>
+
+<div id="editor" style="position:relative; height: 450px; ">function foo(items) {
+	var x = "All this is syntax highlighted";
+	return x;
+}</div>
+<button onclick="run_code();">Fn1</button><button onclick="run_code();">Fn2</button>
+
+</td>
+<td>
+
+<div id="logWindow" style="position:relative; height: 450px; ">log report:
+one
+last line</div>
+<button onclick="run_code();">Fn1</button><button onclick="run_code();">Fn2</button>
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"></script>
+<script>
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/chrome");
+editor.getSession().setMode("ace/mode/javascript");
+var log = ace.edit("logWindow");
+log.setTheme("ace/theme/chrome");
+log.setReadOnly(true);
+//editor.getSession().setMode("ace/mode/javascript");
+</script>
+</body>
+</html>
