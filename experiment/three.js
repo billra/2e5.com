@@ -1,3 +1,14 @@
+var svgEdit;
+
+function svgClear() {
+	svgEdit.innerHTML = '';
+}
+
+function svgSerialize() {
+	var svgXml = (new XMLSerializer).serializeToString(svgEdit);
+	logMsg(svgXml);
+}
+
 var codeEdit;
 
 function codeClear() {
@@ -43,4 +54,5 @@ function setupEditControls() {
 
 window.onload = function () {
 	setupEditControls();
+	svgEdit = document.getElementById("svgWindow");
 }
