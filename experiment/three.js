@@ -10,19 +10,19 @@ function logMsg(msg) {
 	logEdit.scrollToLine(session.getLength());
 }
 
-function clearLog() {
+function logClean() {
 	logEdit.setValue('Log Entries:');
 	logEdit.clearSelection();
 }
 
 function setupEditControls() {
-	var editor = ace.edit("editor");
-	editor.setTheme("ace/theme/chrome");
-	editor.getSession().setMode("ace/mode/javascript");
+	var codeEdit = ace.edit("codeWindow");
+	codeEdit.setTheme("ace/theme/chrome");
+	codeEdit.getSession().setMode("ace/mode/javascript");
 	logEdit = ace.edit("logWindow");
 	logEdit.setTheme("ace/theme/chrome");
 	logEdit.setReadOnly(true);
-	clearLog();
+	logClean();
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
