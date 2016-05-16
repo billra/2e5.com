@@ -1,6 +1,6 @@
 var logEdit;
 
-function logMsg(msg) {
+function logMsg() {
 	var args = Array.prototype.slice.call(arguments);
 	var session = logEdit.getSession();
 	session.insert({
