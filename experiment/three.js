@@ -1,3 +1,17 @@
+var codeEdit;
+
+function codeClear() {
+	codeEdit.setValue('');
+}
+
+function codeUndo() {
+	codeEdit.undo();
+}
+
+function codeRedo() {
+	codeEdit.redo();
+}
+
 var logEdit;
 
 function logMsg() {
@@ -10,19 +24,19 @@ function logMsg() {
 	logEdit.scrollToLine(session.getLength());
 }
 
-function logClean() {
+function logClear() {
 	logEdit.setValue('Log Entries:');
 	logEdit.clearSelection();
 }
 
 function setupEditControls() {
-	var codeEdit = ace.edit("codeWindow");
+	codeEdit = ace.edit("codeWindow");
 	codeEdit.setTheme("ace/theme/chrome");
 	codeEdit.getSession().setMode("ace/mode/javascript");
 	logEdit = ace.edit("logWindow");
 	logEdit.setTheme("ace/theme/chrome");
 	logEdit.setReadOnly(true);
-	logClean();
+	logClear();
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
