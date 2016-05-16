@@ -10,6 +10,11 @@ function logMsg(msg) {
 	logEdit.scrollToLine(session.getLength());
 }
 
+function clearLog() {
+	logEdit.setValue('Log Entries:');
+	logEdit.clearSelection();
+}
+
 function setupEditControls() {
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/chrome");
@@ -17,6 +22,7 @@ function setupEditControls() {
 	logEdit = ace.edit("logWindow");
 	logEdit.setTheme("ace/theme/chrome");
 	logEdit.setReadOnly(true);
+	clearLog();
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
