@@ -9,6 +9,17 @@ function svgSerialize() {
 	logMsg(svgXml);
 }
 
+function svgBall() {
+	var svgNS = "http://www.w3.org/2000/svg";
+	var obj = document.createElementNS(svgNS, "circle");
+	obj.setAttribute("id", "todo");
+	obj.setAttribute("cx", 290);
+	obj.setAttribute("cy",200);
+	obj.setAttribute("r", 20);
+	obj.setAttribute("style", "stroke:blue;stroke-width:4;fill:cyan;");
+	svgEdit.appendChild(obj);
+}
+
 var codeEdit;
 
 function codeClear() {
