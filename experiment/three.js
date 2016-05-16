@@ -7,6 +7,7 @@ function logMsg(msg) {
 		row: session.getLength(),
 		column: 0
 	}, "\n" + args.join(' '));
+	logEdit.scrollToLine(session.getLength());
 }
 
 function setupEditControls() {
