@@ -1,4 +1,4 @@
 # robots.txt for http://2e5.com/
 User-agent: *
-Disallow: /19*.pdf$
+Disallow: /*19*.pdf$
 #Disallow: /*.pdf$
