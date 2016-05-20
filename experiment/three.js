@@ -51,6 +51,16 @@ function logClear() {
 	logEdit.clearSelection();
 }
 
+var dynCode;
+
+function runCode() {
+	var code = codeEdit.getValue();
+	var script = document.createElement('script');
+	script.innerHTML = 'try{' + code + '}catch(e){log("Code Error:",e.message);}';
+	dynCode.innerHTML = ''; // clear previous children
+	dynCode.appendChild(script);
+}
+
 function setupEditControls() {
 	codeEdit = ace.edit("codeWindow");
 	codeEdit.setTheme("ace/theme/chrome");
@@ -59,6 +69,7 @@ function setupEditControls() {
 	logEdit.setTheme("ace/theme/chrome");
 	logEdit.setReadOnly(true);
 	logClear();
+	dynCode = document.getElementById("dynamicCode");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-

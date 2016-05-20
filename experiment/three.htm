@@ -18,7 +18,7 @@
 <circle id="yellowCircle1" style="stroke:blue;stroke-width:4;fill:yellow;" cx="170" cy="200" r="20"/>
 <circle id="orangeCircle1" style="stroke:blue;stroke-width:4;fill:darkorange;" cx="230" cy="200" r="20"/>
 </svg>
-<button onclick="run_code();">Fn1</button><button onclick="run_code();">Fn2</button><button onclick="svgBall();">Ball</button><button onclick="svgSerialize();">Serialize</button><button onclick="svgClear();">Clear</button>
+<button onclick="todo();">Fn1</button><button onclick="todo();">Fn2</button><button onclick="svgBall();">Ball</button><button onclick="svgSerialize();">Serialize</button><button onclick="svgClear();">Clear</button>
 </td>
 </tr>
 <tr>
@@ -28,16 +28,17 @@
 	var x = "All this is syntax highlighted";
 	return x;
 }</div>
-<button onclick="run_code();">Fn1</button><button onclick="run_code();">Fn2</button><button onclick="codeClear();">Clear</button><button onclick="codeUndo();">Undo</button><button onclick="codeRedo();">Redo</button>
+<button onclick="todo();">Fn1</button><button onclick="runCode();">Run</button><button onclick="codeClear();">Clear</button><button onclick="codeUndo();">Undo</button><button onclick="codeRedo();">Redo</button>
 
 </td>
 <td class="half">
 
 <div id="logWindow" class="acedit">placeholder</div>
-<button onclick="run_code();">Fn1</button><button onclick="logMsg('testing',1,2,3,'...');">TestLog</button><button onclick="logClear();">Clear</button>
+<button onclick="todo();">Fn1</button><button onclick="logMsg('testing',1,2,3,'...');">TestLog</button><button onclick="logClear();">Clear</button>
 </td>
 </tr>
 </table>
 
+<div id="dynamicCode">blank</div>
 </body>
 </html>
