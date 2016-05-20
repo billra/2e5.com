@@ -81,15 +81,18 @@ function runCode() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-function setupEditControls() {
+function setupCodeWindow() {
 	codeEdit = ace.edit("codeWindow");
 	codeEdit.setTheme("ace/theme/chrome");
 	codeEdit.getSession().setMode("ace/mode/javascript");
+	codeEdit.setValue('// your JavaScript code here\nlogMsg("hello world");')
+}
+
+function setupLogWindow() {
 	logEdit = ace.edit("logWindow");
 	logEdit.setTheme("ace/theme/chrome");
 	logEdit.setReadOnly(true);
 	logClear();
-	dynCode = document.getElementById("dynamicCode");
 }
 
 function setupSvgWindow() {
@@ -100,6 +103,8 @@ function setupSvgWindow() {
 }
 
 window.onload = function () {
-	setupEditControls();
+	setupCodeWindow();
+	setupLogWindow();
 	setupSvgWindow();
+	dynCode = document.getElementById("dynamicCode");
 }
