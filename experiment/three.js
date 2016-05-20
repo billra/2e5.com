@@ -77,7 +77,7 @@ var dynCode;
 function runCode() {
 	var code = codeEdit.getValue();
 	var script = document.createElement('script');
-	script.innerHTML = code;
+	script.innerHTML = 'try{' + code + '}catch(e){logMsg("Code Error:",e.message);}';
 	dynCode.innerHTML = ''; // clear previous children
 	dynCode.appendChild(script);
 }
