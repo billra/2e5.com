@@ -11,13 +11,7 @@ function svgSerialize() {
 }
 
 function svgBall() {
-	var obj = document.createElementNS(svgNS, "circle");
-	obj.setAttribute("id", "todo");
-	obj.setAttribute("cx", 290);
-	obj.setAttribute("cy",200);
-	obj.setAttribute("r", 20);
-	obj.setAttribute("style", "stroke:blue;stroke-width:4;fill:cyan;");
-	svgEdit.appendChild(obj);
+	svgAppend('<circle id="todo" style="stroke:blue;stroke-width:4;fill:cyan;" cx="290" cy="200" r="20"/>');
 }
 
 function svgGrid() {
@@ -34,11 +28,14 @@ function svgGrid() {
 </defs>\
 <rect width="100%" height="100%" fill="url(#grid)" />'
 
+	svgAppend(code);
+}
+
+function svgAppend(code) {
 	// svg from string, one way to do it: render and copy
 	var container = document.createElement('div');
-	var svgfragment = '<svg>' + code + '</svg>';
-	container.innerHTML = svgfragment;
-	Array.prototype.slice.call(container.childNodes[0].childNodes).forEach(function (el) { svgEdit.appendChild(el) })
+	container.innerHTML = '<svg>' + code + '</svg>';
+	Array.prototype.slice.call(container.childNodes[0].childNodes).forEach(function (el) { svgEdit.appendChild(el) });
 }
 
 var codeEdit;
@@ -82,6 +79,8 @@ function runCode() {
 	dynCode.appendChild(script);
 }
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 function setupEditControls() {
 	codeEdit = ace.edit("codeWindow");
 	codeEdit.setTheme("ace/theme/chrome");
@@ -93,9 +92,14 @@ function setupEditControls() {
 	dynCode = document.getElementById("dynamicCode");
 }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=- main -=-=-=-=-=-=-=-=-=-=-=-=-=-
+function setupSvgWindow() {
+	svgEdit = document.getElementById("svgWindow");
+	svgAppend('<circle id="yellowCircle1" style="stroke:blue;stroke-width:4;fill:yellow;" cx="170" cy="200" r="20"/>'); // example initialization
+	svgAppend('<circle id="orangeCircle1" style="stroke:blue;stroke-width:4;fill:darkorange;" cx="230" cy="200" r="20"/>');
+	svgGrid();
+}
 
 window.onload = function () {
 	setupEditControls();
-	svgEdit = document.getElementById("svgWindow");
+	setupSvgWindow();
 }
