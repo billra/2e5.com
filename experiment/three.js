@@ -2,7 +2,7 @@ var makePath = function () { // closure style classes
 	var elements = [];
 	return {
 		svgStr: function () {
-			return elements.reduce(function (x, elem) { return x + elem.part(); }, '<path d="') + '" stroke="black" stroke-width="2pt" />';
+			return elements.reduce(function (x, elem) { return x + elem.part(); }, '<path d="') + '"stroke="black"stroke-width="1pt"fill="none"/>';
 		},
 		add: function(element){
 			elements.push(element);
