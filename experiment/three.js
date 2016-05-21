@@ -1,3 +1,39 @@
+var makePath = function () { // closure style classes
+	var elements = [];
+	return {
+		svgStr: function () {
+			return elements.reduce(function (x, elem) { return x + elem.part(); }, '<path d="') + '" stroke="black" stroke-width="2pt" />';
+		},
+		add: function(element){
+			elements.push(element);
+			return this; // enable method chaining
+		},
+		perimeterLength: function () {
+			return elements.reduce(function (x, elem) { return x + elem.perimeterLength(); }, 0);
+		}
+	};
+};
+
+var makeCurrentLocation = function (x, y) {
+	return {
+		part: function () { return 'M' + x + ',' + y; },
+		perimeterLength: function () { return 0; }
+	};
+};
+
+var makeEdge = function (angleDeg, length) {
+	var angleRad = radians(angleDeg);
+	var xMove = length * Math.cos(angleRad);
+	var yMove = length * Math.sin(angleRad);
+	return {
+		part: function () { return 'l' + xMove + ',' + yMove; },
+		perimeterLength: function () { return length; }
+	};
+};
+
+function radians(degrees) { return degrees * Math.PI / 180; };
+function degrees(radians) {	return radians * 180 / Math.PI; };
+
 var svgEdit;
 var svgNS = "http://www.w3.org/2000/svg";
 
@@ -93,7 +129,17 @@ function setupCodeWindow() {
 	codeEdit = ace.edit("codeWindow");
 	codeEdit.setTheme("ace/theme/chrome");
 	codeEdit.getSession().setMode("ace/mode/javascript");
-	codeEdit.setValue('// your JavaScript code here\nlogMsg("hello world");')
+	// codeEdit.setValue('// your JavaScript code here\nlogMsg("hello world");')
+	codeEdit.setValue('// your JavaScript code here\n'+
+'logMsg("hello world");\n'+
+'var x = makePath()\n'+
+'  .add(makeCurrentLocation(200,100))\n'+
+'  .add(makeEdge(25,500))\n'+
+'  .add(makeEdge(50,200));\n'+
+'logMsg("len:",x.perimeterLength());\n'+
+'logMsg("svg:",x.svgStr());\n'+
+'svgAppend(x.svgStr());');
+	codeEdit.clearSelection();
 }
 
 function setupLogWindow() {
