@@ -31,6 +31,21 @@ function makeEdge(angleDeg, length) {
 	};
 };
 
+function makeNotch(angleDeg, angleOpenDeg, length) {
+	var halfAngleOpenDeg = angleOpenDeg / 2;
+	var angleInRad = radians(angleDeg - halfAngleOpenDeg);
+	var angleOutRad = radians(angleDeg + halfAngleOpenDeg - 180);
+	var xIn = length * Math.cos(angleInRad);
+	var yIn = length * Math.sin(angleInRad);
+	var xOut = length * Math.cos(angleOutRad);
+	var yOut = length * Math.sin(angleOutRad);
+	return {
+		part: function () { return 'l' + xIn + ',' + yIn + 'l' + xOut + ',' + yOut; },
+		perimeterLength: function () { return 0; }
+	};
+
+}
+
 function radians(degrees) { return degrees * Math.PI / 180; };
 function degrees(radians) {	return radians * 180 / Math.PI; };
 
@@ -135,6 +150,7 @@ function setupCodeWindow() {
 'var x = makePath()\n'+
 '  .add(makeCurrentLocation(200,100))\n'+
 '  .add(makeEdge(25,500))\n'+
+'  .add(makeNotch(180,20,100))\n'+
 '  .add(makeEdge(50,200));\n'+
 'logMsg("len:",x.perimeterLength());\n'+
 'logMsg("svg:",x.svgStr());\n'+
