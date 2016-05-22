@@ -1,4 +1,4 @@
-var makePath = function () { // closure style classes
+function makePath() { // closure style classes
 	var elements = [];
 	return {
 		svgStr: function () {
@@ -14,14 +14,14 @@ var makePath = function () { // closure style classes
 	};
 };
 
-var makeCurrentLocation = function (x, y) {
+function makeCurrentLocation(x, y) {
 	return {
 		part: function () { return 'M' + x + ',' + y; },
 		perimeterLength: function () { return 0; }
 	};
 };
 
-var makeEdge = function (angleDeg, length) {
+function makeEdge(angleDeg, length) {
 	var angleRad = radians(angleDeg);
 	var xMove = length * Math.cos(angleRad);
 	var yMove = length * Math.sin(angleRad);
