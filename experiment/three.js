@@ -4,7 +4,7 @@ function makePath() { // closure style classes
 		svgStr: function () {
 			return elements.reduce(function (x, elem) { return x + elem.part(); }, '<path d="') + '"stroke="black"stroke-width="1pt"fill="none"/>';
 		},
-		add: function(element){
+		add: function (element) {
 			elements.push(element);
 			return this; // enable method chaining
 		},
@@ -12,14 +12,14 @@ function makePath() { // closure style classes
 			return elements.reduce(function (x, elem) { return x + elem.perimeterLength(); }, 0);
 		}
 	};
-};
+}
 
 function makeCurrentLocation(x, y) {
 	return {
 		part: function () { return 'M' + x + ',' + y; },
 		perimeterLength: function () { return 0; }
 	};
-};
+}
 
 function makeEdge(angleDeg, length) {
 	var angleRad = radians(angleDeg);
@@ -29,7 +29,7 @@ function makeEdge(angleDeg, length) {
 		part: function () { return 'l' + xMove + ',' + yMove; },
 		perimeterLength: function () { return length; }
 	};
-};
+}
 
 function makeNotch(angleDeg, angleOpenDeg, length) {
 	var halfAngleOpenDeg = angleOpenDeg / 2;
@@ -43,11 +43,10 @@ function makeNotch(angleDeg, angleOpenDeg, length) {
 		part: function () { return 'l' + xIn + ',' + yIn + 'l' + xOut + ',' + yOut; },
 		perimeterLength: function () { return 0; }
 	};
-
 }
 
 function radians(degrees) { return degrees * Math.PI / 180; };
-function degrees(radians) {	return radians * 180 / Math.PI; };
+function degrees(radians) { return radians * 180 / Math.PI; };
 
 var svgEdit;
 var svgNS = "http://www.w3.org/2000/svg";
@@ -94,7 +93,7 @@ function svgProperties() {
 	var len = curve.getTotalLength();
 	var pos = curve.getPointAtLength(len);
 	var bbox = curve.getBBox();
-	logMsg("path len", len, 'end xy', pos.x, pos.y, 'bbox:', bbox.x, bbox.y, bbox.x+bbox.width, bbox.y+bbox.height, bbox.style);
+	logMsg("path len", len, 'end xy', pos.x, pos.y, 'bbox:', bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height, bbox.style);
 }
 
 var codeEdit;
@@ -145,15 +144,15 @@ function setupCodeWindow() {
 	codeEdit.setTheme("ace/theme/chrome");
 	codeEdit.getSession().setMode("ace/mode/javascript");
 	// codeEdit.setValue('// your JavaScript code here\nlogMsg("hello world");')
-	codeEdit.setValue('// your JavaScript code here\n'+
-'logMsg("hello world");\n'+
-'var x = makePath()\n'+
-'  .add(makeCurrentLocation(200,100))\n'+
-'  .add(makeEdge(25,500))\n'+
-'  .add(makeNotch(180,20,100))\n'+
-'  .add(makeEdge(50,200));\n'+
-'logMsg("len:",x.perimeterLength());\n'+
-'logMsg("svg:",x.svgStr());\n'+
+	codeEdit.setValue('// your JavaScript code here\n' +
+'logMsg("hello world");\n' +
+'var x = makePath()\n' +
+'  .add(makeCurrentLocation(200,100))\n' +
+'  .add(makeEdge(25,500))\n' +
+'  .add(makeNotch(180,20,100))\n' +
+'  .add(makeEdge(50,200));\n' +
+'logMsg("len:",x.perimeterLength());\n' +
+'logMsg("svg:",x.svgStr());\n' +
 'svgAppend(x.svgStr());');
 	codeEdit.clearSelection();
 }
