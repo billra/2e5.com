@@ -22,26 +22,30 @@ function makeCurrentLocation(x, y) {
 }
 
 function makeEdge(angleDeg, length) {
-	var angleRad = radians(angleDeg);
-	var xMove = length * Math.cos(angleRad);
-	var yMove = length * Math.sin(angleRad);
+	var end = move(angleDeg, length);
 	return {
-		part: function () { return 'l' + xMove + ',' + yMove; },
+		part: function () { return 'l' + end.x + ',' + end.y; },
 		perimeterLength: function () { return length; }
 	};
 }
 
 function makeNotch(angleDeg, angleOpenDeg, length) {
 	var halfAngleOpenDeg = angleOpenDeg / 2;
-	var angleInRad = radians(angleDeg - halfAngleOpenDeg);
-	var angleOutRad = radians(angleDeg + halfAngleOpenDeg - 180);
-	var xIn = length * Math.cos(angleInRad);
-	var yIn = length * Math.sin(angleInRad);
-	var xOut = length * Math.cos(angleOutRad);
-	var yOut = length * Math.sin(angleOutRad);
+	var angleInDeg = angleDeg - halfAngleOpenDeg;
+	var angleOutDeg = angleDeg + halfAngleOpenDeg - 180;
+	var endIn = move(angleInDeg, length);
+	var endOut = move(angleOutDeg, length);
 	return {
-		part: function () { return 'l' + xIn + ',' + yIn + 'l' + xOut + ',' + yOut; },
+		part: function () { return 'l' + endIn.x + ',' + endIn.y + 'l' + endOut.x + ',' + endOut.y; },
 		perimeterLength: function () { return 0; }
+	};
+}
+
+function move(angleDeg, length) {
+	var angleRad = radians(angleDeg);
+	return {
+		x: length * Math.cos(angleRad),
+		y: length * Math.sin(angleRad)
 	};
 }
 
