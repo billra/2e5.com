@@ -3,19 +3,11 @@
 <HEAD>
 <TITLE>Parametric Kite Design</TITLE>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="author" content="Bill Ola Rasmussen"> 
+<meta name="author" content="Bill Ola Rasmussen">
 <meta name="keywords" content="Parametric, Kite Design, Rhino, Python">
 <link rel="stylesheet" type="text/css" href="/style.css">
 <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
-<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
-<!-- Google Analytics -->
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-701785-1', 'auto');
-ga('send', 'pageview');
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<!-- End Google Analytics -->
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
 </HEAD>
 <body>
 <div class="head">
@@ -37,8 +29,8 @@ parametric
 </div>
 <div class="main">
 
-<p> 
- 
+<p>
+
 This article describes how to use Python Rhino Automation for Parametric Kite Design.
 <h3>Terminology</h3>
 <a href="http://www.python.org">Python</a> is a high level programming language with clear syntax and powerful built in data types. I have been a C++ programmer for a number of years, but Python is my first choice for quick development and concise code.
@@ -53,7 +45,7 @@ A program such as foilmaker (stable link needed) or <a href="http://www.surfplan
 <p>
 When a kite designer is not satisfied with the available parameters or how the parameters are solved, two paths are left: using a CAD program or implementing a new kite design program to cater for their special needs. Examples:
 <ul>
-<li><a href="http://www.redhot.freeuk.com/Hangtime.htm">Hangtime kite design software</a> takes the "new kite design program" approach to achieve long panels with smooth lines for inflatable kites. 
+<li><a href="http://www.redhot.freeuk.com/Hangtime.htm">Hangtime kite design software</a> takes the "new kite design program" approach to achieve long panels with smooth lines for inflatable kites.
 <li><a href="http://members.shaw.ca/kiteman">Tom White</a> has programs which specialize in NPW single skin kites.
 <li><a href="http://foilivier.free.fr">Olivier</a> gives an excellent walkthrough of the complete customization of all parameters of kite design available when using a CAD program.
 </ul>
@@ -62,7 +54,7 @@ The "new kite design program" solution removes the limitations of the mainstream
 <p>
 This article aims to achieve the best of both worlds: ultimate flexibility of a CAD program, combined with the ease of changing fundamental design parameters. Caveat et emptor: nothing is free! This requires some (relatively simple, depending on your ambition) programming. I don't take any credit here - I beleive it was Andy Wardley who pioneered
 parametric kite design using Perl. Check out
-<a href="http://www.template-toolkit.org/tpc5/kitesurfing/index.html">his article</a> to see the other area he pioneered.  
+<a href="http://www.template-toolkit.org/tpc5/kitesurfing/index.html">his article</a> to see the other area he pioneered.
 <h3>Automating Rhino with Python</h3>
 There are three approaches or levels to automating Rhino:
 <ol>
@@ -77,7 +69,7 @@ Rhino has a command window which can be used tell Rhino what to do.
 <p>
 <img class="box" src="rhinocommand.jpg" width="166" height="72" alt="Rhino command window">
 <p>
-Copy the following text and paste it into the command window, and some lines will show up in the Rhino viewport. 
+Copy the following text and paste it into the command window, and some lines will show up in the Rhino viewport.
 <p><div class="box">
 line 10,10 20,20<br>
 line 3,4 22.5,3
@@ -97,7 +89,7 @@ instead of editing the command code directly. To elaborate on this I will go thr
 <li>Trailing edge length.
 </ul>
 
-The code is all in one file, but described here in three blocks. The first block sets up the parameters and 
+The code is all in one file, but described here in three blocks. The first block sets up the parameters and
 converts them into values usable for the calculations.
 <p>
 <pre class="box">
@@ -265,7 +257,7 @@ Adding the ratio calculation and reporting is left as a excercise for the reader
 
 <a href="http://www.flickr.com/photos/billra/27175709/" title="Bill's flickr account"><img class="rbox" src="http://farm1.static.flickr.com/21/27175709_e472053963_s.jpg" width="75" height="75" alt="arc" /></a>
 When even more control over Rhino is desired, COM automation can be employed to interface to Rhino.
-This opens up the possibility to manipulate objects after drawing them. 
+This opens up the possibility to manipulate objects after drawing them.
 I will leave this for an entirely new article, as this one has already grown large
 enough. Until then, you can click on the image to see a kite model created using Python via the Rhino COM interface.
 
@@ -306,5 +298,3 @@ parametric
 
 </BODY>
 </HTML>
-
-

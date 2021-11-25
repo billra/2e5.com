@@ -1,42 +1,34 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
-<HTML> 
-<HEAD> 
-<TITLE>Site Feed</TITLE> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-<META NAME="author" CONTENT="Bill Ola Rasmussen"> 
-<meta name="keywords" content="feed atom newsreader"> 
-<link rel="stylesheet" type="text/css" href="/style.css"> 
-<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
-<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+<TITLE>Site Feed</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META NAME="author" CONTENT="Bill Ola Rasmussen">
+<meta name="keywords" content="feed atom newsreader">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
 <link rel="alternate" type="application/atom+xml" href="http://2e5.com/feed/atom.xml" title="Atom Feed for 2e5.com">
-<!-- Google Analytics -->
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-701785-1', 'auto');
-ga('send', 'pageview');
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<!-- End Google Analytics -->
-</HEAD> 
+</HEAD>
 <body>
 
-<div class="head"> 
-<div class="rflo"> 
-<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42" alt="2e5.com" ></a></div> 
-<h1>Site Feed</h1></div> 
- 
-<div class="navBar"> 
+<div class="head">
+<div class="rflo">
+<a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42" alt="2e5.com" ></a></div>
+<h1>Site Feed</h1></div>
+
+<div class="navBar">
 <div class="rflo">
 <a href="../tags/tool/">tool</a>
-</div> 
+</div>
 <a href="..">2e5</a> &raquo;
 feed
-</div> 
- 
-<div class="main"> 
-<p> 
+</div>
 
-<img class="rbox" src="brFeed_256_230.png" alt="large feed icon" width="256" height="230"> 
+<div class="main">
+<p>
+
+<img class="rbox" src="brFeed_256_230.png" alt="large feed icon" width="256" height="230">
 <p>
 This article describes the bare metal mechanics of a site or blog feed.
 Layers of abstraction have been piled upon what is actually a simple
@@ -55,9 +47,9 @@ Details follow.
 Autodiscovery is code in a HTML page which tells browsers (or other software)
 that the site contains a feed. When visiting a site with autodiscovery, a
 browser indicates the presence of a feed on the site. For example, Firefox
-indicates a feed with an icon in the address bar: 
-<p> 
-<img class="box" src="feedMark.png" alt="browser feed display" width="405" height="64"> 
+indicates a feed with an icon in the address bar:
+<p>
+<img class="box" src="feedMark.png" alt="browser feed display" width="405" height="64">
 <p>
 Clicking on the feed icon will begin the subscription process for the site feed.
 <p>
@@ -86,11 +78,11 @@ mature specification and can clearly indicate if content is Text or Html.
 The overall structure of an Atom feed looks like:
 <p>
 <pre class="box">
-<span style="color:purple;">&lt;?xml version="1.0" encoding="utf-8"?&gt; 
+<span style="color:purple;">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;</span>
 <span style="color:blue;"><i>... feed information ...</i></span>
 <span style="color:maroon;"><i>... feed entries ...</i></span>
-<span style="color:purple;">&lt;/feed&gt;</span>  
+<span style="color:purple;">&lt;/feed&gt;</span>
 </pre>
 <p>
 No surprises here. Just a plain vanilla Atom 1.0 xml package.
@@ -99,19 +91,19 @@ No surprises here. Just a plain vanilla Atom 1.0 xml package.
 The feed information section gives information about the entire feed.
 <p>
 <pre class="box">
-  <span style="color:blue;">&lt;updated&gt;2011-01-11T14:30:02Z&lt;/updated&gt; 
-  &lt;title type="text"&gt;2e5.com&lt;/title&gt; 
-  &lt;subtitle type="text"&gt;maker musings&lt;/subtitle&gt; 
-  &lt;link rel="self" type="application/atom+xml" href="http://2e5.com/feed/atom.xml"/&gt; 
-  &lt;link rel="alternate" type="text/html" hreflang="en" href="http://2e5.com/"/&gt; 
-  &lt;id&gt;urn:uuid:219b0366-844a-473b-a1b0-dcfc4a7b0e29&lt;/id&gt; 
-  &lt;icon&gt;feedIcon.jpg&lt;/icon&gt; 
-  &lt;logo&gt;feedLogo.jpg&lt;/logo&gt; 
-  &lt;rights&gt;&copy; 2011 Bill Ola Rasmussen&lt;/rights&gt; 
-  &lt;author&gt; 
-    &lt;name&gt;Bill Ola Rasmussen&lt;/name&gt; 
-    &lt;email&gt;billra@gmail.com&lt;/email&gt; 
-    &lt;uri&gt;http://2e5.com/&lt;/uri&gt; 
+  <span style="color:blue;">&lt;updated&gt;2011-01-11T14:30:02Z&lt;/updated&gt;
+  &lt;title type="text"&gt;2e5.com&lt;/title&gt;
+  &lt;subtitle type="text"&gt;maker musings&lt;/subtitle&gt;
+  &lt;link rel="self" type="application/atom+xml" href="http://2e5.com/feed/atom.xml"/&gt;
+  &lt;link rel="alternate" type="text/html" hreflang="en" href="http://2e5.com/"/&gt;
+  &lt;id&gt;urn:uuid:219b0366-844a-473b-a1b0-dcfc4a7b0e29&lt;/id&gt;
+  &lt;icon&gt;feedIcon.jpg&lt;/icon&gt;
+  &lt;logo&gt;feedLogo.jpg&lt;/logo&gt;
+  &lt;rights&gt;&copy; 2011 Bill Ola Rasmussen&lt;/rights&gt;
+  &lt;author&gt;
+    &lt;name&gt;Bill Ola Rasmussen&lt;/name&gt;
+    &lt;email&gt;billra@gmail.com&lt;/email&gt;
+    &lt;uri&gt;http://2e5.com/&lt;/uri&gt;
   &lt;/author&gt;</span>
 </pre>
 <p>
@@ -126,7 +118,7 @@ processing of the site url. I must poliely disagree. I recommend that you use a 
 <li><em>logo</em>: should be an image with a 2:1 (wide) aspect ratio.
 </ul>
 Both the icon and the logo are used by some feed readers to display information about the feed.
-<p> 
+<p>
 The Atom Syndication Format is described in <a href="http://tools.ietf.org/html/rfc4287">RFC 4287</a>. Read this
 to understand all Atom feed fields.
 <p>
@@ -136,39 +128,39 @@ One or more feed entries follow the feed information section.
 Here is a typical feed entry:
 <p>
 <pre class="box">
-  <span style="color:maroon;">&lt;entry&gt; 
-    &lt;updated&gt;2011-01-11T16:30:02Z&lt;/updated&gt; 
-    &lt;title&gt;Volkite&lt;/title&gt; 
-    &lt;category term="kite"/&gt; 
-    &lt;link href="http://2e5.com/kite/volkite/" /&gt; 
-    &lt;id&gt;urn:uuid:39670cdc-ed32-45bc-9154-ee7ee4acd37a&lt;/id&gt; 
-    &lt;summary&gt;Volkite, a new design&lt;/summary&gt; 
-    &lt;content type="html"&gt; 
- 
-&amp;lt;img class="rbox" src="http://2e5.com/kite/volkite/IMG_3368_left_front_1s.jpg" width="400" height="765" alt="Volkite front left view"&gt; 
-&amp;lt;p&gt; 
+  <span style="color:maroon;">&lt;entry&gt;
+    &lt;updated&gt;2011-01-11T16:30:02Z&lt;/updated&gt;
+    &lt;title&gt;Volkite&lt;/title&gt;
+    &lt;category term="kite"/&gt;
+    &lt;link href="http://2e5.com/kite/volkite/" /&gt;
+    &lt;id&gt;urn:uuid:39670cdc-ed32-45bc-9154-ee7ee4acd37a&lt;/id&gt;
+    &lt;summary&gt;Volkite, a new design&lt;/summary&gt;
+    &lt;content type="html"&gt;
+
+&amp;lt;img class="rbox" src="http://2e5.com/kite/volkite/IMG_3368_left_front_1s.jpg" width="400" height="765" alt="Volkite front left view"&gt;
+&amp;lt;p&gt;
 Volkite is a kite with two skin foil construction on the leading edge and single
 skin for the rest of the canopy. It is lighter and uses less material than a standard
 parafoil.
-&amp;lt;p&gt; 
+&amp;lt;p&gt;
 &amp;lt;ul&gt;&amp;lt;li&gt; Flat aspect ratio: 3
-&amp;lt;/li&gt;&amp;lt;li&gt; Area: 1.5 m&amp;lt;sup&gt;2&amp;lt;/sup&gt; 
+&amp;lt;/li&gt;&amp;lt;li&gt; Area: 1.5 m&amp;lt;sup&gt;2&amp;lt;/sup&gt;
 &amp;lt;/li&gt;&amp;lt;li&gt; Tip to Tip: 212 cm
 &amp;lt;/li&gt;&amp;lt;li&gt; Chord: 70.5 cm
-&amp;lt;/li&gt;&amp;lt;/ul&gt; 
- 
+&amp;lt;/li&gt;&amp;lt;/ul&gt;
+
 The LE has 14 cells comprised of 7 mini-ribs and 6 full ribs.
 The mini-ribs stop short of the point where the lower and upper skin
 meet, allowing for air passage between adjoining cells. This also helps
 to avoid the pucker distortion which can occur when a rib narrows to join
 two skins.
-&amp;lt;p&gt; 
+&amp;lt;p&gt;
 Working with a (partially) single skinned kite is illuminating because it clearly shows
 when a section of canopy is not not contributing to lift.
 &amp;lt;p&gt;
-&amp;lt;a href="http://2e5.com/kite/volkite/"&gt;Read More at 2e5.com&lt;/a&gt;    
- 
-    &lt;/content&gt; 
+&amp;lt;a href="http://2e5.com/kite/volkite/"&gt;Read More at 2e5.com&lt;/a&gt;
+
+    &lt;/content&gt;
   &lt;/entry&gt;</span>
 </pre>
 <p>
@@ -194,66 +186,66 @@ create a path to the image.
 Finally, notice the css style specification: class="rbox". This is actually ignored
 in the feed, as there is no header to reference the style sheet definition.
 To maintain the original look and feel, the css style information needs to be folded back in to the html
-using an 
+using an
 <a href="http://www.google.com/search?q=inline+style+converter">inline style converter</a>.
 
 <h4>Complete Atom Feed Example</h4>
 Putting it all together:
 <p>
 <pre class="box">
-<span style="color:purple;">&lt;?xml version="1.0" encoding="utf-8"?&gt; 
+<span style="color:purple;">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;</span>
- 
-  <span style="color:blue;">&lt;updated&gt;2011-01-11T14:30:02Z&lt;/updated&gt; 
-  &lt;title type="text"&gt;2e5.com&lt;/title&gt; 
-  &lt;subtitle type="text"&gt;maker musings&lt;/subtitle&gt; 
-  &lt;link rel="self" type="application/atom+xml" href="http://2e5.com/feed/atom.xml"/&gt; 
-  &lt;link rel="alternate" type="text/html" hreflang="en" href="http://2e5.com/"/&gt; 
-  &lt;id&gt;urn:uuid:219b0366-844a-473b-a1b0-dcfc4a7b0e29&lt;/id&gt; 
-  &lt;icon&gt;feedIcon.jpg&lt;/icon&gt; 
-  &lt;logo&gt;feedLogo.jpg&lt;/logo&gt; 
-  &lt;rights&gt;&copy; 2011 Bill Ola Rasmussen&lt;/rights&gt; 
-  &lt;author&gt; 
-    &lt;name&gt;Bill Ola Rasmussen&lt;/name&gt; 
-    &lt;email&gt;billra@gmail.com&lt;/email&gt; 
-    &lt;uri&gt;http://2e5.com/&lt;/uri&gt; 
+
+  <span style="color:blue;">&lt;updated&gt;2011-01-11T14:30:02Z&lt;/updated&gt;
+  &lt;title type="text"&gt;2e5.com&lt;/title&gt;
+  &lt;subtitle type="text"&gt;maker musings&lt;/subtitle&gt;
+  &lt;link rel="self" type="application/atom+xml" href="http://2e5.com/feed/atom.xml"/&gt;
+  &lt;link rel="alternate" type="text/html" hreflang="en" href="http://2e5.com/"/&gt;
+  &lt;id&gt;urn:uuid:219b0366-844a-473b-a1b0-dcfc4a7b0e29&lt;/id&gt;
+  &lt;icon&gt;feedIcon.jpg&lt;/icon&gt;
+  &lt;logo&gt;feedLogo.jpg&lt;/logo&gt;
+  &lt;rights&gt;&copy; 2011 Bill Ola Rasmussen&lt;/rights&gt;
+  &lt;author&gt;
+    &lt;name&gt;Bill Ola Rasmussen&lt;/name&gt;
+    &lt;email&gt;billra@gmail.com&lt;/email&gt;
+    &lt;uri&gt;http://2e5.com/&lt;/uri&gt;
   &lt;/author&gt;</span>
- 
-  <span style="color:maroon;">&lt;entry&gt; 
-    &lt;updated&gt;2011-01-11T16:30:02Z&lt;/updated&gt; 
-    &lt;title&gt;Volkite&lt;/title&gt; 
-    &lt;category term="kite"/&gt; 
-    &lt;link href="http://2e5.com/kite/volkite/" /&gt; 
-    &lt;id&gt;urn:uuid:39670cdc-ed32-45bc-9154-ee7ee4acd37a&lt;/id&gt; 
-    &lt;summary&gt;Volkite, a new design&lt;/summary&gt; 
-    &lt;content type="html"&gt; 
- 
-&amp;lt;img class="rbox" src="http://2e5.com/kite/volkite/IMG_3368_left_front_1s.jpg" width="400" height="765" alt="Volkite front left view"&gt; 
-&amp;lt;p&gt; 
+
+  <span style="color:maroon;">&lt;entry&gt;
+    &lt;updated&gt;2011-01-11T16:30:02Z&lt;/updated&gt;
+    &lt;title&gt;Volkite&lt;/title&gt;
+    &lt;category term="kite"/&gt;
+    &lt;link href="http://2e5.com/kite/volkite/" /&gt;
+    &lt;id&gt;urn:uuid:39670cdc-ed32-45bc-9154-ee7ee4acd37a&lt;/id&gt;
+    &lt;summary&gt;Volkite, a new design&lt;/summary&gt;
+    &lt;content type="html"&gt;
+
+&amp;lt;img class="rbox" src="http://2e5.com/kite/volkite/IMG_3368_left_front_1s.jpg" width="400" height="765" alt="Volkite front left view"&gt;
+&amp;lt;p&gt;
 Volkite is a kite with two skin foil construction on the leading edge and single
 skin for the rest of the canopy. It is lighter and uses less material than a standard
 parafoil.
-&amp;lt;p&gt; 
+&amp;lt;p&gt;
 &amp;lt;ul&gt;&amp;lt;li&gt; Flat aspect ratio: 3
-&amp;lt;/li&gt;&amp;lt;li&gt; Area: 1.5 m&amp;lt;sup&gt;2&amp;lt;/sup&gt; 
+&amp;lt;/li&gt;&amp;lt;li&gt; Area: 1.5 m&amp;lt;sup&gt;2&amp;lt;/sup&gt;
 &amp;lt;/li&gt;&amp;lt;li&gt; Tip to Tip: 212 cm
 &amp;lt;/li&gt;&amp;lt;li&gt; Chord: 70.5 cm
-&amp;lt;/li&gt;&amp;lt;/ul&gt; 
- 
+&amp;lt;/li&gt;&amp;lt;/ul&gt;
+
 The LE has 14 cells comprised of 7 mini-ribs and 6 full ribs.
 The mini-ribs stop short of the point where the lower and upper skin
 meet, allowing for air passage between adjoining cells. This also helps
 to avoid the pucker distortion which can occur when a rib narrows to join
 two skins.
-&amp;lt;p&gt; 
+&amp;lt;p&gt;
 Working with a (partially) single skinned kite is illuminating because it clearly shows
 when a section of canopy is not not contributing to lift.
 &amp;lt;p&gt;
-&amp;lt;a href="http://2e5.com/kite/volkite/"&gt;Read More at 2e5.com&lt;/a&gt;    
- 
-    &lt;/content&gt; 
+&amp;lt;a href="http://2e5.com/kite/volkite/"&gt;Read More at 2e5.com&lt;/a&gt;
+
+    &lt;/content&gt;
   &lt;/entry&gt;</span>
- 
+
 <span style="color:purple;">&lt;/feed&gt;</span>
 </pre>
 <p>
@@ -283,7 +275,7 @@ I use the following procedure for making a new entry in the 2e5.com Atom feed:
 <li>Copy an existing feed entry to a position just under the feed information section.
 <li>Generate a new UUID for this entry.
 <li>Use the current time for the <em>updated</em> sections in both the feed information section and this new entry.
-<li>Update the <em>title</em>, <em>summary</em>, etc. sections in the new entry. 
+<li>Update the <em>title</em>, <em>summary</em>, etc. sections in the new entry.
 <li>Replace the <em>content</em> section of the new entry. (see below)
 </ul>
 <p>
@@ -302,29 +294,29 @@ procedure:
 That's all there is to incorporating a feed into your site. Creating feed entries by hand is not difficult, and knowledge
 of exactly how things work makes troubleshooting site feed problems much easier.
 
-<p> 
-</div> 
-<div class="navBar"> 
+<p>
+</div>
+<div class="navBar">
 <div class="rflo">
 <a href="../tags/tool/">tool</a>
-</div> 
+</div>
 <a href="..">2e5</a> &raquo;
 feed
-</div> 
- 
+</div>
+
 <p>
 <div class="rflo">
 <a href="http://fusion.google.com/add?feedurl=http%3A//2e5.com/feed/atom.xml">
 <img src="add.gif" alt="Add to Google" height="17" width="104"></a>
 <a type="application/atom+xml" href="atom.xml">
 <img src="feed-icon-28x28.png" width="28" height="28" alt="2e5.com Atom Feed" ></a>
-<div class="g-plusone"></div> 
+<div class="g-plusone"></div>
 </div>
 <div>
-<a href="http://validator.w3.org/check?uri=referer"> 
-<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a> 
-<a href="http://jigsaw.w3.org/css-validator/check/referer"> 
-<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a> 
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a>
 <a href="http://feed1.w3.org/check.cgi?url=http%3A//2e5.com/feed/atom.xml">
 <img src="valid-atom.png" alt="[Valid Atom 1.0]" title="Validate my Atom 1.0 feed" height="31" width="88"></a>
 </div>
@@ -338,8 +330,6 @@ g.async = true;
 g.src = 'https://apis.google.com/js/plusone.js';
 s.parentNode.insertBefore(g, s);
 })(document, 'script');
-</script>  
-</BODY> 
-</HTML> 
- 
- 
+</script>
+</BODY>
+</HTML>

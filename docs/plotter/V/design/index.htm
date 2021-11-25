@@ -1,45 +1,37 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"> 
-<HTML> 
-<HEAD> 
-<TITLE>V Plotter Design</TITLE> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-<meta name="author" content="Bill Ola Rasmussen"> 
-<meta name="keywords" content="Plotter math code"> 
-<link rel="stylesheet" type="text/css" href="/style.css"> 
-<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
-<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon"> 
-<!-- Google Analytics -->
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-701785-1', 'auto');
-ga('send', 'pageview');
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<!-- End Google Analytics -->
-</HEAD> 
-<BODY> 
- 
-<div class="head"> 
-<div class="rflo"> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+<TITLE>V Plotter Design</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Bill Ola Rasmussen">
+<meta name="keywords" content="Plotter math code">
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+</HEAD>
+<BODY>
+
+<div class="head">
+<div class="rflo">
 <a href="http://2e5.com/"><img src="/img/2e5.jpg" width="277" height="42"
-alt="2e5.com" ></a></div> 
-<h1>V Plotter Design</h1></div> 
- 
-<div class="navBar"> 
-<div class="rflo"> 
+alt="2e5.com" ></a></div>
+<h1>V Plotter Design</h1></div>
+
+<div class="navBar">
+<div class="rflo">
 tags:
 <a href="../../../tags/tool/">tool</a>
-<a href="../../../tags/code/">code</a> 
-</div> 
+<a href="../../../tags/code/">code</a>
+</div>
 <a href="../../..">2e5</a> &raquo;
 <a href="../..">plotter</a> &raquo;
 <a href="..">V</a> &raquo;
 design
-</div> 
- 
-<div class="main"> 
- 
-    <p> 
+</div>
+
+<div class="main">
+
+    <p>
 
 A V plotter is a minimalistic design which uses a pair of steppers, some
 string, and a pen head to create a plotter. These are sometimes made by students
@@ -54,7 +46,7 @@ device.
 What is the optimal configuration of control lines for an area to be plotted?
 Obviously, we can't have a drawing area above the control lines &mdash; our friend gravity
 sees to that. But, can we do better than hand waving and "somewhere below the control lines"
-for the plot area? Yes: we think up some constraints and model them 
+for the plot area? Yes: we think up some constraints and model them
 with math and code (two more friends!):
 
 <ul>
@@ -108,7 +100,7 @@ This is visualized below.
 <p>
 <img class="box" src="angleConvert.png" alt="coordinate system conversion" width="234" height="305">
 <p>
-    
+
 Trigonometry tells us that:
 <p>
 <img src="xy.png" alt="x,y = \cos a \cdot d, \sin a \cdot d" width="246" height="25">
@@ -125,7 +117,7 @@ I don't think there is a name for the coordinate system using two control lines.
 The closest I can find is the
 <a href="http://en.wikipedia.org/wiki/Biangular_coordinates">biangular coordinate system</a>,
 but this has more to do with the angles of the lines to the X axis than the length of the lines. As long
-as I am in confession mode, I must also say that I have not seen "V plotter" being used as the name 
+as I am in confession mode, I must also say that I have not seen "V plotter" being used as the name
 of this kind of device. I am not able to find any established name for this "thing", so necessity became the mother of invention.
 
 <h3>Law of Cosines</h3>
@@ -151,7 +143,7 @@ To check for resolution, we adjust a or b, then use the law of cosines to find &
 length b and position A, we can use simple sine and cosine (see previous section) to find position C.
 
 <h3>Code Simulation</h3>
-Now we have enough math to code a V plotter simulation. The code below is divided into sections, each section is introduced with information to know when reading the 
+Now we have enough math to code a V plotter simulation. The code below is divided into sections, each section is introduced with information to know when reading the
 the code itself. The code sections can be pasted
 together to produce a complete Python program to run the simulation and draw the plotting area.
 <p>
@@ -169,7 +161,7 @@ First we reference some libraries and set some constants.
 <span class="comment"># V line end points</span>
 <span class="name">v1</span><span class="operator">=</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span>
 <span class="name">v2</span><span class="operator">=</span><span class="name">width</span><span class="operator">-</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span><span class="operator">-</span><span class="number">1</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">2</span>
-</pre> 
+</pre>
 <p>
 Here we draw the fixed parts of the picture: the crosses showing the end points of the control lines, and the background
 for the drawing. Note that this drawing package has the origin in the upper left hand corner and a Y axis with positive values
@@ -187,7 +179,7 @@ progressing downward.
     <span class="comment"># V line end points</span>
     <span class="name">cross</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">v1</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">4</span><span class="operator">)</span>
     <span class="name">cross</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="name">v2</span><span class="operator">,</span><span class="name">border</span><span class="operator">/</span><span class="number">4</span><span class="operator">)</span>
-</pre> 
+</pre>
 <p>
 There is a one to one correspondence between the tension calculation code here and the
 tension calculation derivation in the first math section.
@@ -205,7 +197,7 @@ tension calculation derivation in the first math section.
     <span class="name">t1</span><span class="operator">,</span><span class="name">t2</span><span class="operator">=</span><span class="name">lineTensions</span><span class="operator">(</span><span class="name">a1</span><span class="operator">,</span><span class="name">a2</span><span class="operator">)</span>
     <span class="name">lo</span><span class="operator">,</span><span class="name">hi</span><span class="operator">=</span><span class="number">.5</span><span class="operator">,</span><span class="number">1.5</span>
     <span class="keyword">return</span> <span class="name">lo</span><span class="operator">&lt;</span><span class="name">t1</span><span class="operator">&lt;</span><span class="name">hi</span> <span class="keyword">and</span> <span class="name">lo</span><span class="operator">&lt;</span><span class="name">t2</span><span class="operator">&lt;</span><span class="name">hi</span>
-</pre> 
+</pre>
 <p>
 Similarly, the resolution check code here is an implementation of the math in the previous section. In addition, there is a "sanity check"
 to verify that the calculated point for the triangle is the same as the point passed in to the calculation.
@@ -233,7 +225,7 @@ to verify that the calculated point for the triangle is the same as the point pa
     <span class="name">db</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">,</span><span class="name">b</span><span class="operator">+</span><span class="number">1</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span><span class="operator">)</span> <span class="comment"># extend left line by 1 unit</span>
     <span class="name">da</span><span class="operator">=</span><span class="name">dx</span><span class="operator">(</span><span class="name">p</span><span class="operator">,</span><span class="name">calcPointB</span><span class="operator">(</span><span class="name">a</span><span class="operator">+</span><span class="number">1</span><span class="operator">,</span><span class="name">b</span><span class="operator">,</span><span class="name">c</span><span class="operator">)</span><span class="operator">)</span> <span class="comment"># extend right line by 1 unit</span>
     <span class="keyword">return</span> <span class="name">db</span><span class="operator">&lt;</span><span class="name">max</span> <span class="keyword">and</span> <span class="name">da</span><span class="operator">&lt;</span><span class="name">max</span> <span class="comment"># line pull of 1 unit does not move x,y by more than max</span>
-</pre> 
+</pre>
 <p>
 Each pixel in the drawing area is assigned a color based on the tension and resolution calculations. Dots are written on the
 terminal window to indicate that the calculation is underway.
@@ -257,7 +249,7 @@ terminal window to indicate that the calculation is underway.
         <span class="keyword">for</span> <span class="name">x</span> <span class="keyword">in</span> <span class="name">range</span><span class="operator">(</span><span class="name">border</span><span class="operator">,</span><span class="name">width</span><span class="operator">-</span><span class="name">border</span><span class="operator">)</span><span class="operator">:</span>
             <span class="name">calcPixel</span><span class="operator">(</span><span class="name">draw</span><span class="operator">,</span><span class="operator">(</span><span class="name">x</span><span class="operator">,</span><span class="name">y</span><span class="operator">)</span><span class="operator">)</span>
     <span class="name">sys</span><span class="operator">.</span><span class="name">stdout</span><span class="operator">.</span><span class="name">write</span><span class="operator">(</span><span class="string">'\n'</span><span class="operator">)</span>
-</pre> 
+</pre>
 <p>
 The main section of the program prepares an image for the calculation and writes it to disk when done.
 <p>
@@ -277,7 +269,7 @@ The main section of the program prepares an image for the calculation and writes
 
 <span class="keyword">if</span> <span class="name">__name__</span> <span class="operator">==</span> <span class="string">"__main__"</span><span class="operator">:</span>
     <span class="name">main</span><span class="operator">(</span><span class="operator">)</span><span class="text"></span>
-</pre> 
+</pre>
 <p>
 To read code "top down" (more general to more detailed), start reading at the bottom section and work your way up.
 Oops, it's too late for me to tell you that now. Sorry.
@@ -320,31 +312,31 @@ away from the plotting surface than V plotters commonly seen on the internet. Sp
 will give different possibilities for drawing areas. We now have the tools in hand to parametrically design a V plotter
 matching the constraints we desire.
 
-<p> 
-</div> 
+<p>
+</div>
 
-<div class="navBar"> 
-<div class="rflo"> 
+<div class="navBar">
+<div class="rflo">
 tags:
 <a href="../../../tags/tool/">tool</a>
-<a href="../../../tags/code/">code</a> 
-</div> 
+<a href="../../../tags/code/">code</a>
+</div>
 <a href="../../..">2e5</a> &raquo;
 <a href="../..">plotter</a> &raquo;
 <a href="..">V</a> &raquo;
 design
-</div> 
- 
-<p> 
-<div class="rflo"> 
-<div class="g-plusone"></div> 
-</div> 
+</div>
+
+<p>
+<div class="rflo">
+<div class="g-plusone"></div>
+</div>
 <div>
-<a href="http://validator.w3.org/check?uri=referer"> 
-<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a> 
-<a href="http://jigsaw.w3.org/css-validator/check/referer"> 
-<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a> 
-</div> 
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="/img/valid-html401.png" alt="Validate HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+<img src="/img/valid-css.png" alt="Validate CSS" height="31" width="88"></a>
+</div>
 
 <p>&copy;2011 Bill Ola Rasmussen
 
@@ -356,7 +348,6 @@ g.async = true;
 g.src = 'https://apis.google.com/js/plusone.js';
 s.parentNode.insertBefore(g, s);
 })(document, 'script');
-</script>   
-</BODY> 
-</HTML> 
- 
+</script>
+</BODY>
+</HTML>
