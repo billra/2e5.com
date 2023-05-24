@@ -1,3 +1,3 @@
 repository for 2e5.com website
-* http://billra.github.io/2e5.com/
-* http://www.2e5.com
+* https://billra.github.io/2e5.com/
+* https://www.2e5.com
